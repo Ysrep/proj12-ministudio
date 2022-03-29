@@ -120,6 +120,21 @@ class Example extends Phaser.Scene {
     zombs.forEach(function (zomb) {
       zomb.update();
     });
+
+    this.input.keyboard.on('keyup', function(e) {
+      if (e.key == 2) {
+        this.scene.start("Example2");
+      }
+    }, this );
+  }
+}
+class Example2 extends Phaser.Scene {
+  constructor() {
+    super({key:"Example2"});
+  }
+
+  create() {
+    this.text = this.add.text(0,0,"Welcome", { font:"40px Impact"});
   }
 }
 
@@ -130,7 +145,7 @@ const config = {
   height: 768,
   backgroundColor: '#0d0d0d',
   parent: 'phase-example',
-  scene: [Example]
+  scene: [Example, Example2]
 };
 
 var game = new Phaser.Game(config);
