@@ -2,21 +2,41 @@
 var zombs = [];
 var dude;
 var scene;
+var cursor = [];
+
 
 class Dude extends Phaser.GameObjects.Image {
-  constructor(scene, x, y){
+  constructor(scene, x, y) {
     super(scene, x, y, 'cara');
-  
+
     this.startX = x;
     this.startY = y;
   }
 
+  
+  
+
   update() {
-    this.x += 1;
-    this.y += 1;
+
+    if (cursor.up.isDown){
+      this.y -= 5;
+    }
+    if (cursor.down.isDown){
+      this.y += 5;
+    }
+    if (cursor.left.isDown){
+      this.x -= 5;
+    }
+    if (cursor.right.isDown){
+      this.x += 5;
+    }
+    
+    
   }
 
 }
+
+
 
 class Zomb extends Phaser.GameObjects.Image {
   constructor(scene, x, y) {
@@ -46,20 +66,22 @@ class Example extends Phaser.Scene {
 
     this.load.audio('bread', [
       'assets/bread.mp3'
-  ]);
+    ]);
   }
 
   create() {
     scene = this;
     dude = this.add.existing(new Dude(this, 100, 100));
-    zombs.push(this.add.existing(new Zomb(this, 100, 500, dude)));
-
+    for(let i=0; i < 5; i++){
+      zombs.push(this.add.existing(new Zomb(this, Math.random() * 800, Math.random() * 500, dude)));
+    }
     this.sound.pauseOnBlur = false;
 
     var music = this.sound.add('bread');
-
+    cursor = this.input.keyboard.createCursorKeys()
+    console.log(cursor);
     music.play();
-}
+  }
 
   update() {
 
@@ -71,13 +93,14 @@ class Example extends Phaser.Scene {
   }
 }
 
+
 const config = {
   type: Phaser.AUTO,
   width: 925,
   height: 800,
   backgroundColor: '#ababab',
-  parent : 'phase-example',
-  scene: [ Example ]
+  parent: 'phase-example',
+  scene: [Example]
 };
 
-const game = new Phaser.Game(config);
+var game = new Phaser.Game(config);
