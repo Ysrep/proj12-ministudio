@@ -9,13 +9,13 @@ class Dude extends Phaser.GameObjects.Image {
   
     this.startX = x;
     this.startY = y;
+
   }
 
   update() {
     this.x += 1;
     this.y += 1;
   }
-
 }
 
 class Zomb extends Phaser.GameObjects.Image {
@@ -46,13 +46,16 @@ class Example extends Phaser.Scene {
 
     this.load.audio('bread', [
       'assets/bread.mp3'
-  ]);
+    ]);
   }
 
   create() {
     scene = this;
     dude = this.add.existing(new Dude(this, 100, 100));
-    zombs.push(this.add.existing(new Zomb(this, 100, 500, dude)));
+
+    for(let i=0; i < 5; i++){
+      zombs.push(this.add.existing(new Zomb(this, Math.random() * 800, Math.random() * 500, dude)));
+    }
 
     this.sound.pauseOnBlur = false;
 
@@ -77,7 +80,8 @@ const config = {
   height: 800,
   backgroundColor: '#ababab',
   parent : 'phase-example',
-  scene: [ Example ]
+  scene: [ Example ],
+ 
 };
 
 const game = new Phaser.Game(config);
