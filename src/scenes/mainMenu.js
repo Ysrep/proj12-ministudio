@@ -4,9 +4,9 @@ class MainMenu extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('main', 'assets/menu/main.jpg');
-        this.load.image('sButton', 'assets/menu/settingsButton.png');
-        this.game.load.spritesheet('startButton', 'assets/menu/startButton.png', 193, 71);
+        this.load.image('main', '../assets/sprite/menu/main.jpg');
+        this.load.image('sButton', '../assets/sprite/menu/settingsButton.png');
+        this.game.load.spritesheet('startButton', '../assets/sprite/menu/startButton.png', 193, 71);
     }
 
     create() {

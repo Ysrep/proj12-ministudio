@@ -8,13 +8,13 @@ class Example extends Phaser.Scene {
     }
   
     preload() {
-      this.load.image('cara', 'assets/cara.png');
-      this.load.image('zomb', 'assets/zomb.png');
+      this.load.image('cara', '../assets/sprite/cara.png');
+      this.load.image('zomb', '../assets/sprite/zomb.png');
   
       this.load.audio('bread', [
-        'assets/bread.mp3'
+        '../assets/SFX/bread.mp3'
       ]);
-      this.load.atlas('isoblocks', 'assets/mediumSus.png', 'sus.json');
+      this.load.atlas('isoblocks', '../assets/sprite/mediumSus.png', 'sus.json');
     }
   
     create() {
