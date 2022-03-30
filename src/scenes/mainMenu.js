@@ -5,32 +5,35 @@ class MainMenu extends Phaser.Scene {
 
   preload() {
     this.load.image('main', 'src/assets/sprite/menu/main.jpg');
-    this.load.image('sButton', 'src/assets/sprite/menu/settingsButton.png');
-    this.load.spritesheet('startButton', 'src/assets/sprite/menu/startButton.png', { frameWidth: 193, frameHeight: 71 });
-
+    this.load.image('logo', 'src/assets/sprite/menu/logo.png');
     /*this.load.audio('bread', [
       'src/assets/SFX/bread.mp3'
     ]);*/
   }
 
   create() {
-    const bg = this.add.tileSprite(0, 0, 1024, 768, 'main');
-    //const stb = this.game.add.button(game.world.centerX - 95, 400, 'startButton', startAction, this, 2, 1, 0);
-    //const sb = this.add.image(0, 0, 'sButton');
+    var bg = this.add.tileSprite(512, 384, 1024, 768, 'main');
+    var lg = this.add.image(512, 384, 'logo');
+    var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+    var text = this.add.text(300, 384, "~Press Any Key for Start~", style);
+    text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+
     //var music = this.sound.add('bread');
     //this.sound.pauseOnBlur = false;
     //music.play();
   }
 
   update() {
-    /*this.input.keyboard.on('keyup', function(e) {
-      if (e.key == 2) {
+    this.input.keyboard.on('keyup', function(e) {
+      if (e.key == 1) {
         this.scene.start("Example2");
       }
-    }, this );*/
+      if (e.key == 2) {
+        this.scene.start("Example");
+      }
+      if (e.key == 3) {
+          this.scene.start("Map1");
+      }
+    }, this );
   }
-
-  startAction() {
-    this.scene.start("Example");
-  } 
 }
