@@ -18,6 +18,7 @@ class MainMenu extends Phaser.Scene {
     //const stb = this.game.add.button(game.world.centerX - 95, 400, 'startButton', startAction, this, 2, 1, 0);
     //const sb = this.add.image(0, 0, 'sButton');
     //var music = this.sound.add('bread');
+    //this.sound.pauseOnBlur = false;
     //music.play();
   }
 
