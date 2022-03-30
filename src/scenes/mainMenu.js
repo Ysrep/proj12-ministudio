@@ -1,25 +1,35 @@
 class MainMenu extends Phaser.Scene {
-    constructor() {
-        super({ key: "MainMenu" });
-    }
+  constructor() {
+    super({ key: "MainMenu" });
+  }
 
-    preload() {
-        this.load.image('main', '../assets/sprite/menu/main.jpg');
-        this.load.image('sButton', '../assets/sprite/menu/settingsButton.png');
-        this.game.load.spritesheet('startButton', '../assets/sprite/menu/startButton.png', 193, 71);
-    }
+  preload() {
+    this.load.image('main', 'src/assets/sprite/menu/main.jpg');
+    this.load.image('sButton', 'src/assets/sprite/menu/settingsButton.png');
+    this.load.spritesheet('startButton', 'src/assets/sprite/menu/startButton.png', { frameWidth: 193, frameHeight: 71 });
 
-    create() {
-        const bg = this.game.add.tileSprite(0, 0, 1024, 768, 'main');
-        //const stb = this.game.add.button(game.world.centerX - 95, 400, 'startButton', startAction, this, 2, 1, 0);
-        //const sb = this.add.image(0, 0, 'sButton');
-    }
+    /*this.load.audio('bread', [
+      'src/assets/SFX/bread.mp3'
+    ]);*/
+  }
 
-    startAction() {
-        this.scene.start("Example");
-    }
+  create() {
+    const bg = this.add.tileSprite(0, 0, 1024, 768, 'main');
+    //const stb = this.game.add.button(game.world.centerX - 95, 400, 'startButton', startAction, this, 2, 1, 0);
+    //const sb = this.add.image(0, 0, 'sButton');
+    //var music = this.sound.add('bread');
+    //music.play();
+  }
 
-    update() {
+  update() {
+    /*this.input.keyboard.on('keyup', function(e) {
+      if (e.key == 2) {
+        this.scene.start("Example2");
+      }
+    }, this );*/
+  }
 
-    }
+  startAction() {
+    this.scene.start("Example");
+  } 
 }
