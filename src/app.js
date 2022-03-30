@@ -7,7 +7,7 @@ const config = {
   backgroundColor: '#0d0d0d',
   parent: 'phase-example',
 
-  scene: [ Map1, MainMenu, Example2 ]
+  scene: [ MainMenu, Example, Map1, Example2 ]
 
   /*physics: {
     default: 'matter',
