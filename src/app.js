@@ -7,11 +7,11 @@ const config = {
   backgroundColor: '#0d0d0d',
   parent: 'phase-example',
 
-  scene: [ Map1, MainMenu, Example2 ],
+  scene: [ Map, MainMenu, Example2 ],
   physics: {
     default: 'arcade',
     arcade: {
-        debug: true
+        debug: flase
     }
   }
 
