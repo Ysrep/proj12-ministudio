@@ -1,16 +1,28 @@
 const map = [
-  [3, 1, 1, 1, 1, 4],
-  [2, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 2],
-  [6, 1, 1, 1, 1, 5]
+  [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4],
+  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+  [6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5]
 ];
-
+var dude;
+var cursor = [];
+var moveok = true;
 var Xdegrees = 0;
 var Ydegrees = 0;
 var degrees = 0;
+var angle = 0;
 var Maxbullets = 1000;//max amunition. there's still not a realoading system so keep this var with high number so we don't run out of ammo
+
 //create a group for the bullets
 class BulletGroup extends Phaser.Physics.Arcade.Group
 {
@@ -66,16 +78,12 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 }
 
 
-
-var angle = 0;
-
-
-class Map1 extends Phaser.Scene {
-  constructor () {
-    super({ key: "Map1" });
+class Map extends Phaser.Scene {
+  constructor() {
+    super({ key: "Map" });
     this.bulletGroup;
   }
-//manage the click and trigger the shoot method
+  //manage the click and trigger the shoot method
   addEvents() {
     this.input.on('pointerdown', pointer => {
         this.shootBullet();
@@ -83,23 +91,30 @@ class Map1 extends Phaser.Scene {
   }
   //trigger the shoot
   shootBullet() {
-      this.bulletGroup.fireBullet(dude.x, dude.y - 20, Ydegrees, Xdegrees);
+      this.bulletGroup.fireBullet(dude.x, dude.y, Ydegrees, Xdegrees);
   }
-  
-  preload () {
-    this.load.image('grass','src/assets/sprite/grass.png');
-    this.load.image('wall','src/assets/sprite/wall.png');
-    this.load.image('cara', 'src/assets/sprite/cara.png');
+
+  preload() {
+    this.load.image('grass', 'src/assets/sprite/grass.png');
+    this.load.image('wall', 'src/assets/sprite/wall.png');
+    this.load.image('carac', 'src/assets/sprite/cara.png');
+    this.load.image('zomb', 'src/assets/sprite/zomb.png');
     this.load.image('bullet', 'src/assets/sprite/bullet.png');
   }
 
-  create () {
+  create() {
     var world;
     var isoY;
     var isoX;
-    cursor = this.input.keyboard.createCursorKeys();
-    
 
+    //dude = this.add.existing(new Dude(this, 100, 100));
+    dude = this.physics.add.sprite(500, 500, 'carac');
+    cursor = this.input.keyboard.createCursorKeys()
+    dude.setDepth(1)
+    for (let i = 0; i < 5; i++) {
+      zombs.push(this.add.existing(new Zomb(this, Math.random() * 800, Math.random() * 500, dude)));
+      zombs[i].setDepth(1)
+    }
     for (let r = 0; r < map.length; r++) {
       for (let c = 0; c < map[0].length; c++) {
         switch (map[r][c]) {
@@ -107,36 +122,46 @@ class Map1 extends Phaser.Scene {
             world = this.add.sprite(500, 500, 'grass');
             break;
           case 1:
-            world = this.add.sprite(500, 500, 'wall');
+            world = this.physics.add.sprite(500, 500, 'wall');
+            world.body.pushable = false
             break;
-
           case 2:
-            world = this.add.sprite(500, 500, 'wall');
+            world = this.physics.add.sprite(500, 500, 'wall');
+            world.body.pushable = false
             break;
-
           case 3:
-            world = this.add.sprite(500, 500, 'wall');
+            world = this.physics.add.sprite(500, 500, 'wall');
+            world.body.pushable = false
             break;
-
           case 4:
-            world = this.add.sprite(500, 500, 'wall');
+            world = this.physics.add.sprite(500, 500, 'wall');
+            world.body.pushable = false
             break;
           case 5:
-            world = this.add.sprite(500, 500, 'wall');
+            world = this.physics.add.sprite(500, 500, 'wall');
+            world.body.pushable = false
             break;
           case 6:
-            world = this.add.sprite(500, 500, 'wall');
+            world = this.physics.add.sprite(500, 500, 'wall');
+            world.body.pushable = false
             break;
           default:
             break;
         }
-        isoX = (800 + r * 20) - (300 + c *27 );
-        isoY = ((400 + r * 31) + (300 + c * 31)) / 2;
-                
+
+        isoX = (800 + r * 20) - (300 + c * 20);
+        isoY = ((400 + r * 23) + (300 + c * 23)) / 2;
+              
+        this.physics.add.collider(dude, world, function () {
+          console.log("nike les collisions")
+          moveok = false;
+        });
+             
         // world = this.add.sprite(r * 50, c * 50, 'grass');
         Phaser.Display.Align.In.Center(world, this.add.zone(isoX, isoY, 800, 600));
       }
     }
+
 
     dude = this.add.existing(new Dude(this, 100, 100));//add the character
 
@@ -172,6 +197,23 @@ class Map1 extends Phaser.Scene {
   }
 
   update () {
-    dude.update(cursor);//update the dude controls
+    if (moveok === false) {
+      dude.setVelocityX(0);
+      dude.setVelocityY(0);
+    }else if (cursor.up.isDown) {
+      dude.setVelocityY(-160);
+    }else if (cursor.down.isDown) {
+      dude.setVelocityY(160);
+    }else if (cursor.left.isDown) {
+      dude.setVelocityX(-160);
+    }
+    else if (cursor.right.isDown) {
+      dude.setVelocityX(160);
+    }
+    moveok = true;
+    zombs.forEach(function (zomb) {
+      zomb.update();
+    });
+
   }
 }

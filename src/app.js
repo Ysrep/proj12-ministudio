@@ -1,5 +1,3 @@
-
-
 const config = {
   type: Phaser.AUTO,
   width: 1024,
@@ -7,22 +5,23 @@ const config = {
   backgroundColor: '#0d0d0d',
   parent: 'phase-example',
 
-  scene: [ Map1, MainMenu, Example2 ],
+  scene: [Map,MainMenu],
   physics: {
     default: 'arcade',
     arcade: {
-        debug: true
+        debug: false
     }
   }
-
+}
+const game = new Phaser.Game(config);
   /*physics: {
     default: 'matter',
     matter: {
       gravity : {y:0},
       debug: true
     }
-  },*/
-
+  },
+  scene: [MainMenu, Map]
 };
 
-var game = new Phaser.Game(config);
+var game = new Phaser.Game(config);*/
