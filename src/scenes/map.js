@@ -36,8 +36,7 @@ class BulletGroup extends Phaser.Physics.Arcade.Group
 			bullet.fire(x, y, Yangle, Xangle);
 
 		}
-	}
-
+  }
 }
 //bullet properties
 class Bullet extends Phaser.Physics.Arcade.Sprite {
@@ -50,7 +49,8 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 		this.body.reset(x, y);
 		this.setActive(true);
 		this.setVisible(true);
-
+    var timer = scene.time.delayedCall(5000, callback, args, scope);
+    if(timer<=0)this.body.destroy;
 		this.setVelocityY(Yangle*3);//multiplied by 3 so the bullets are faster
     this.setVelocityX(Xangle*3);//multiplied by 3 so the bullets are faster
 	}
@@ -91,6 +91,7 @@ class Map extends Phaser.Scene {
     this.load.image('grass','src/assets/sprite/grass.png');
     this.load.image('wall','src/assets/sprite/wall.png');
     this.load.image('cara', 'src/assets/sprite/cara.png');
+    this.load.image('zomb', 'src/assets/sprite/zomb.png');
     this.load.image('bullet', 'src/assets/sprite/bullet.png');
   }
 
@@ -137,6 +138,7 @@ class Map extends Phaser.Scene {
 
     
     dude = this.add.existing(new Dude(this, 100, 100));//add the character
+    zomb = this.add.existing(new Zomb(this, 100, 100));//add the character
 
     this.bulletGroup = new BulletGroup(this);//create a bullet group
 		this.addEvents();//call the method to trigger the shoot
@@ -171,6 +173,6 @@ class Map extends Phaser.Scene {
 
   update () {
     dude.update(cursor);
-    dude.update(cursor);//update the dude controls
+    zomb.update();//update the dude controls
   }
 } 
