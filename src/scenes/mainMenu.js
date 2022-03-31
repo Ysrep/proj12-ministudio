@@ -6,9 +6,9 @@ class MainMenu extends Phaser.Scene {
   preload() {
     this.load.image('main', 'src/assets/sprite/menu/main.jpg');
     this.load.image('logo', 'src/assets/sprite/menu/logo.png');
-    /*this.load.audio('bread', [
+    this.load.audio('bread', [
       'src/assets/SFX/bread.mp3'
-    ]);*/
+    ]);
   }
 
   create() {
@@ -18,22 +18,16 @@ class MainMenu extends Phaser.Scene {
     var text = this.add.text(300, 384, "~Press Any Key for Start~", style);
     text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
 
-    //var music = this.sound.add('bread');
-    //this.sound.pauseOnBlur = false;
-    //music.play();
+    var music = this.sound.add('bread');
+    this.sound.pauseOnBlur = false;
+    music.play();
   }
 
   update() {
-    this.input.keyboard.on('keyup', function(e) {
-      if (e.key == 1) {
-        this.scene.start("Example2");
+    this.input.keyboard.on('keyup', function (e) {
+      if (e.key == 0) {
+        this.scene.start("Map");
       }
-      if (e.key == 2) {
-        this.scene.start("Example");
-      }
-      if (e.key == 3) {
-          this.scene.start("Map1");
-      }
-    }, this );
+    }, this);
   }
 }
