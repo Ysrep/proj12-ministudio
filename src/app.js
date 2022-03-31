@@ -5,7 +5,7 @@ const config = {
   backgroundColor: '#0d0d0d',
   parent: 'phase-example',
 
-  scene: [ Map, MainMenu, Example2 ],
+  scene: [ MainMenu, Map, Example2 ],
   physics: {
     default: 'arcade',
     arcade: {
