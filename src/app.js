@@ -3,9 +3,8 @@ const config = {
   width: 1024,
   height: 768,
   backgroundColor: '#0d0d0d',
-  parent: 'phase-example',
-
-  scene: [ Map, MainMenu, Example2 ],
+  parent: 'phase-MapS',
+  scene:[Map],
   physics: {
     default: 'arcade',
     arcade: {
@@ -21,7 +20,7 @@ var game = new Phaser.Game(config);
       debug: true
     }
   },
-  scene: [MainMenu, Map]
+  scene: [Map]
 };
 
 var game = new Phaser.Game(config);*/
