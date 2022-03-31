@@ -5,7 +5,7 @@ const config = {
   backgroundColor: '#0d0d0d',
   parent: 'phase-example',
 
-  scene: [Map,MainMenu],
+  scene: [ Map, MainMenu, Example2 ],
   physics: {
     default: 'arcade',
     arcade: {
@@ -13,7 +13,7 @@ const config = {
     }
   }
 }
-const game = new Phaser.Game(config);
+var game = new Phaser.Game(config);
   /*physics: {
     default: 'matter',
     matter: {

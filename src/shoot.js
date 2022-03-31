@@ -63,5 +63,3 @@ class Main extends Phaser.Scene {
         this.laserGroup.fireLaser(this.character.x, this.character.y - 20, Ydegrees, Xdegrees);
     }
 }
-
-export default Main;

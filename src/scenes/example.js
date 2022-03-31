@@ -1,28 +1,27 @@
 var zombs = [];
 var dude;
 var scene;
-
 class Example extends Phaser.Scene {
     constructor() {
       super({key:"Example"});
     }
   
     preload() {
-      this.load.image('cara', 'src/assets/sprite/cara.png');
-      this.load.image('zomb', 'src/assets/sprite/zomb.png');
-  
+      this.load.image('cara', './assets/sprite/cara.png');
+      this.load.image('zomb', './assets/sprite/zomb.png');
+
       this.load.audio('bread', [
-       'src/assets/SFX/bread.mp3'
+        '../assets/SFX/bread.mp3'
       ]);
-      this.load.atlas('isoblocks', 'src/assets/sprite/grass.png', 'sus.json');
+      this.load.atlas('isoblocks', './assets/sprite/mediumSus.png', 'sus.json');
     }
-  
+
     create() {
-      
+
       //create the map *****
       var mapWidth = 40;
       var mapHeight = 40;
-  
+
       var tileWidthHalf = 20;
       var tileHeightHalf = 12;
   
@@ -58,6 +57,7 @@ class Example extends Phaser.Scene {
               blocks.push(tile);
           }
       }
+
       //camera option *****
       this.cameras.main.zoom = 0.62;
       this.cameras.main.scrollX = -110;
@@ -66,17 +66,18 @@ class Example extends Phaser.Scene {
         zombs.push(this.add.existing(new Zomb(this, Math.random() * 800, Math.random() * 500, dude)));
       }
       this.sound.pauseOnBlur = false;
-  
+
       var music = this.sound.add('bread');
       cursor = this.input.keyboard.createCursorKeys()
+      console.log(cursor);
       music.play();
     }
-  
+
     update() {
-      
-  
+
+
       dude.update();
-  
+
       zombs.forEach(function (zomb) {
         zomb.update();
       });
