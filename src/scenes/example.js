@@ -10,7 +10,6 @@ class Example extends Phaser.Scene {
     preload() {
       this.load.image('cara', './assets/sprite/cara.png');
       this.load.image('zomb', './assets/sprite/zomb.png');
-  
       this.load.audio('bread', [
         '../assets/SFX/bread.mp3'
       ]);
@@ -18,6 +17,8 @@ class Example extends Phaser.Scene {
     }
   
     create() {
+      
+      //create the map *****
       var mapWidth = 40;
       var mapHeight = 40;
   
@@ -56,9 +57,10 @@ class Example extends Phaser.Scene {
               blocks.push(tile);
           }
       }
-  
+      //camera option *****
       this.cameras.main.zoom = 0.62;
       this.cameras.main.scrollX = -110;
+      //*****
       for (let i = 0; i < 5; i++) {
         zombs.push(this.add.existing(new Zomb(this, Math.random() * 800, Math.random() * 500, dude)));
       }
@@ -66,11 +68,11 @@ class Example extends Phaser.Scene {
   
       var music = this.sound.add('bread');
       cursor = this.input.keyboard.createCursorKeys()
-      console.log(cursor);
       music.play();
     }
   
     update() {
+      
   
       dude.update();
   

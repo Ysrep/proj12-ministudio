@@ -6,7 +6,6 @@ class Dude extends Phaser.GameObjects.Image {
     this.startX = x;
     this.startY = y;
   }
-
   update(cursor) {
     if (cursor.up.isDown) {
       this.y -= 5;
