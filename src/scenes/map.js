@@ -1,4 +1,3 @@
-
 const map = [
   [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4],
   [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
@@ -15,30 +14,66 @@ const map = [
   [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
   [6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5]
 ];
-var dude;
-var cursor = [];
-var moveok = true;
+
 var Xdegrees = 0;
 var Ydegrees = 0;
 var degrees = 0;
 var angle = 0;
 var Maxbullets = 1000;//max amunition. there's still not a realoading system so keep this var with high number so we don't run out of ammo
 //create a group for the bullets
-class BulletGroup extends Phaser.Physics.Arcade.Group {
-  constructor(scene) {
-    // Call the super constructor, passing in a world and a scene
-    super(scene.physics.world, scene);
+class BulletGroup extends Phaser.Physics.Arcade.Group
+{
+	constructor(scene) {
+		// Call the super constructor, passing in a world and a scene
+		super(scene.physics.world, scene);
 
-    // Initialize the group
-    this.createMultiple({
-      classType: Bullet,
-      frameQuantity: Maxbullets, // Create 30 instances in the pool
-      active: false,
-      visible: false,
-      key: 'bullet'
-    })
+		// Initialize the group
+		this.createMultiple({
+			classType: Bullet,
+			frameQuantity: Maxbullets, // Create 30 instances in the pool
+			active: false,
+			visible: false,
+			key: 'bullet'
+		}) 
 
-  }
+	}
+    //will call the class bullet when triggered
+    fireBullet(x, y, Yangle, Xangle) {
+		// Get the first available sprite in the group
+		const bullet = this.getFirstDead(false);
+		if (bullet) {
+			bullet.fire(x, y, Yangle, Xangle);
+
+		}
+	}
+
+}
+//bullet properties
+class Bullet extends Phaser.Physics.Arcade.Sprite {
+	constructor(scene, x, y) {
+		super(scene, x, y, 'bullet');
+
+	}
+    //fire bullets depending on the postion and angle (angle is calculate in the 'create' part of the scene)
+    fire(x, y, Yangle, Xangle) {
+		this.body.reset(x, y);
+		this.setActive(true);
+		this.setVisible(true);
+
+		this.setVelocityY(Yangle*3);//multiplied by 3 so the bullets are faster
+    this.setVelocityX(Xangle*3);//multiplied by 3 so the bullets are faster
+	}
+
+    preUpdate(time, delta) {
+		super.preUpdate(time, delta);
+
+		if (this.y <= 0) {
+			this.setActive(false);
+			this.setVisible(false);
+		}
+	}
+
+
   //will call the class bullet when triggered
   fireBullet(x, y, Yangle, Xangle) {
     // Get the first available sprite in the group
@@ -49,30 +84,8 @@ class BulletGroup extends Phaser.Physics.Arcade.Group {
     }
   }
 }
-class Bullet extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y) {
-    super(scene, x, y, 'bullet');
 
-  }
-  //fire bullets depending on the postion and angle (angle is calculate in the 'create' part of the scene)
-  fire(x, y, Yangle, Xangle) {
-    this.body.reset(x, y);
-    this.setActive(true);
-    this.setVisible(true);
 
-    this.setVelocityY(Yangle * 3);//multiplied by 3 so the bullets are faster
-    this.setVelocityX(Xangle * 3);//multiplied by 3 so the bullets are faster
-  }
-
-  preUpdate(time, delta) {
-    super.preUpdate(time, delta);
-
-    if (this.y <= 0) {
-      this.setActive(false);
-      this.setVisible(false);
-    }
-  }
-}
 
 class Map extends Phaser.Scene {
   constructor() {
@@ -100,7 +113,7 @@ class Map extends Phaser.Scene {
 
   }
 
-  create() {
+  create () {
     var world;
     var isoY;
     var isoX;

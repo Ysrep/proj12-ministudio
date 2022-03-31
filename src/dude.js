@@ -6,10 +6,6 @@ class Dude extends Phaser.GameObjects.Image {
     super(scene, x, y, 'cara', { key: "dude" });
     this.startX = x;
     this.startY = y;
-
-    this.speed = 2;
-    this.dx;
-    this.dy;
   }
 
   update(cursor, moveok, dude) {
