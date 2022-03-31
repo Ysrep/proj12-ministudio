@@ -2,10 +2,11 @@ var cursor = [];
 var moveok;
 
 class Dude extends Phaser.GameObjects.Image {
-  constructor(scene, x, y) {
+  constructor(scene, x, y, hp) {
     super(scene, x, y, 'cara', { key: "dude" });
     this.startX = x;
     this.startY = y;
+    hp = 5;
   }
 
   update(cursor, moveok, dude) {
