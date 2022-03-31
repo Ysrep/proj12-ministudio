@@ -11,22 +11,20 @@ class Dude extends Phaser.GameObjects.Image {
     this.dy;
   }
 
-  update(cursor) {
-    if (cursor.up.isDown) {
-      this.dy = -1;
-      this.y += this.dy*this.speed;
+  update(cursor, moveok) {
+    if (moveok === false) {
+      this.setVelocityX(0);
+      this.setVelocityY(0);
+    }else if (cursor.up.isDown) {
+      this.setVelocityY(-160);
+    }else if (cursor.down.isDown) {
+      this.setVelocityY(160);
+    }else if (cursor.left.isDown) {
+      this.setVelocityX(-160);
     }
-    if (cursor.down.isDown) {
-      this.dy = +1;
-      this.y += this.dy*this.speed;
+    else if (cursor.right.isDown) {
+      this.setVelocityX(160);
     }
-    if (cursor.left.isDown) {
-      this.dx = -1;
-      this.x += this.dx*this.speed;
-    }
-    if (cursor.right.isDown) {
-      this.dx = 1;
-      this.x += this.dx*this.speed;
-    }
+    moveok = true;
   }
 }

@@ -21,7 +21,7 @@ var moveok = true;
 
 
 
-class Map extends Phaser.Scene {
+class Map1 extends Phaser.Scene {
   constructor() {
     super();
   }
@@ -38,10 +38,10 @@ class Map extends Phaser.Scene {
     var isoY;
     var isoX;
 
-    //dude = this.add.existing(new Dude(this, 100, 100));
+    //ude = this.physics.add.sprite(100,100, new Dude(this, 100, 100));
     dude = this.physics.add.sprite(500, 500, 'carac');
     cursor = this.input.keyboard.createCursorKeys()
-    dude.setDepth(1)
+    dude.setDepth(2)
     for (let i = 0; i < 5; i++) {
       zombs.push(this.add.existing(new Zomb(this, Math.random() * 800, Math.random() * 500, dude)));
       zombs[i].setDepth(1)
@@ -114,23 +114,3 @@ class Map extends Phaser.Scene {
     });
   }
 }
-
-
-const config = {
-  type: Phaser.AUTO,
-  width: 1024,
-  height: 768,
-  backgroundColor: '#0d0d0d',
-  parent: 'phase-MapS',
-  physics: {
-      default: 'arcade',
-      arcade: {
-          gravity: { y: 0 },
-          debug: false,
-          checkCollision: true
-      }
-  },
-  scene: [Map]
-};
-
-var game = new Phaser.Game(config);
