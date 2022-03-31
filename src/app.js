@@ -1,5 +1,3 @@
-
-
 const config = {
   type: Phaser.AUTO,
   width: 1024,
@@ -14,15 +12,15 @@ const config = {
         debug: flase
     }
   }
-
+}
   /*physics: {
     default: 'matter',
     matter: {
       gravity : {y:0},
       debug: true
     }
-  },*/
-
+  },
+  scene: [MainMenu, Map]
 };
 
-var game = new Phaser.Game(config);
+var game = new Phaser.Game(config);*/

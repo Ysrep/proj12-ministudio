@@ -12,7 +12,7 @@ class Example extends Phaser.Scene {
       this.load.image('zomb', 'src/assets/sprite/zomb.png');
   
       this.load.audio('bread', [
-        '../assets/SFX/bread.mp3'
+       'src/assets/SFX/bread.mp3'
       ]);
       this.load.atlas('isoblocks', 'src/assets/sprite/grass.png', 'sus.json');
     }

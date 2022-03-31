@@ -81,6 +81,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 
 class Map extends Phaser.Scene {
   constructor() {
+<<<<<<< HEAD
     super({ key: "Map" });
     this.bulletGroup;
   }
@@ -93,6 +94,9 @@ class Map extends Phaser.Scene {
   //trigger the shoot
   shootBullet() {
       this.bulletGroup.fireBullet(dude.x, dude.y - 20, Ydegrees, Xdegrees);
+=======
+    super({ key : "Map" });
+>>>>>>> 8a1e6a24d9d52738a35c635c604b0b6e37bb7097
   }
 
   preload() {
@@ -218,23 +222,3 @@ class Map extends Phaser.Scene {
 
   }
 }
-
-
-const config = {
-  type: Phaser.AUTO,
-  width: 1024,
-  height: 768,
-  backgroundColor: '#0d0d0d',
-  parent: 'phase-MapS',
-  physics: {
-      default: 'arcade',
-      arcade: {
-          gravity: { y: 0 },
-          debug: false,
-          checkCollision: true
-      }
-  },
-  scene: [Map]
-};
-
-var game = new Phaser.Game(config);
