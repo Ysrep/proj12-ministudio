@@ -124,7 +124,6 @@ class Zombies extends Phaser.Physics.Arcade.Sprite {
 		this.setActive(true);
 		this.setVisible(true);
 
-    
 		this.setVelocityY(30);//multiplied by 3 so the bullets are faster
     this.setVelocityX(30);//multiplied by 3 so the bullets are faster
 
@@ -150,7 +149,6 @@ class Zombies extends Phaser.Physics.Arcade.Sprite {
     }
   }
 }
-
 
 class Map extends Phaser.Scene {
   constructor() {
