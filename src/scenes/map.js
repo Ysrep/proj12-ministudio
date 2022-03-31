@@ -1,4 +1,3 @@
-
 const map = [
   [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4],
   [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
@@ -18,8 +17,6 @@ const map = [
 var dude;
 var cursor = [];
 var moveok = true;
-
-
 
 class Map extends Phaser.Scene {
   constructor() {
