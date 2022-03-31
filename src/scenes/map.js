@@ -30,6 +30,7 @@ class Map extends Phaser.Scene {
     this.load.image('grass', 'src/assets/sprite/grass.png');
     this.load.image('wall', 'src/assets/sprite/wall.png');
     this.load.image('carac', 'src/assets/sprite/cara.png');
+    this.load.image('zomb', 'src/assets/sprite/zomb.png');
   }
 
   create() {
@@ -43,6 +44,7 @@ class Map extends Phaser.Scene {
     dude.setDepth(1)
     for (let i = 0; i < 5; i++) {
       zombs.push(this.add.existing(new Zomb(this, Math.random() * 800, Math.random() * 500, dude)));
+      zombs[i].setDepth(1)
     }
     for (let r = 0; r < map.length; r++) {
       for (let c = 0; c < map[0].length; c++) {
