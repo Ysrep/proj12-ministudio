@@ -19,7 +19,8 @@ var Xdegrees = 0;
 var Ydegrees = 0;
 var degrees = 0;
 var angle = 0;
-var Maxbullets = 1000;//max amunition. there's still not a realoading system so keep this var with high number so we don't run out of ammo
+var Maxbullets = 500;
+
 //create a group for the bullets
 class BulletGroup extends Phaser.Physics.Arcade.Group
 {
@@ -35,7 +36,6 @@ class BulletGroup extends Phaser.Physics.Arcade.Group
 			visible: false,
 			key: 'bullet'
 		}) 
-
 	}
     //will call the class bullet when triggered
     fireBullet(x, y, Yangle, Xangle) {
@@ -45,7 +45,7 @@ class BulletGroup extends Phaser.Physics.Arcade.Group
 			bullet.fire(x, y, Yangle, Xangle);
 
 		}
-  }
+	}
 }
 //bullet properties
 class Bullet extends Phaser.Physics.Arcade.Sprite {
@@ -58,32 +58,12 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 		this.body.reset(x, y);
 		this.setActive(true);
 		this.setVisible(true);
-    
+
 		this.setVelocityY(Yangle*3);//multiplied by 3 so the bullets are faster
     this.setVelocityX(Xangle*3);//multiplied by 3 so the bullets are faster
 	}
 
-    preUpdate(time, delta) {
-		super.preUpdate(time, delta);
-
-		if (this.y <= 0) {
-			this.setActive(false);
-			this.setVisible(false);
-		}
-	}
-
-
-  //will call the class bullet when triggered
-  fireBullet(x, y, Yangle, Xangle) {
-    // Get the first available sprite in the group
-    const bullet = this.getFirstDead(false);
-    if (bullet) {
-      bullet.fire(x, y, Yangle, Xangle);
-
-    }
-  }
 }
-
 
 
 class Map extends Phaser.Scene {
@@ -183,12 +163,6 @@ class Map extends Phaser.Scene {
         Phaser.Display.Align.In.Center(world, this.add.zone(isoX, isoY, 800, 600));
       }
     }
-
-    
-    dude = this.add.existing(new Dude(this, 100, 100));//add the character
-    //zomb = this.add.existing(new Zomb(this, 100, 100));//add the character
-
-    this.bulletGroup = new BulletGroup(this);//create a bullet group
 		this.addEvents();//call the method to trigger the shoot
     //aiming
     this.input.on('pointermove', function (pointer) {
@@ -218,10 +192,26 @@ class Map extends Phaser.Scene {
     }, this);
   }
 
-  update () {
-    dude.update(cursor);
-    //zomb.update();//update the dude controls
+  update() {
+    if (moveok === false) {
+      dude.setVelocityX(0);
+      dude.setVelocityY(0);
+    } else if (cursor.up.isDown) {
+      dude.setVelocityY(-160);
+    } else if (cursor.down.isDown) {
+      dude.setVelocityY(160);
+    } else if (cursor.left.isDown) {
+      dude.setVelocityX(-160);
+    }
+    else if (cursor.right.isDown) {
+      dude.setVelocityX(160);
+    }
+    moveok = true;
+    zombs.forEach(function (zomb) {
+      zomb.setVelocityX(0);
+      zomb.setVelocityY(0);
+      zomb.x += (dude.x - zomb.x) * 0.01;
+      zomb.y += (dude.y - zomb.y) * 0.01;
+    });
   }
 }
-
-
