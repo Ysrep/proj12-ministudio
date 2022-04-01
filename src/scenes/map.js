@@ -120,7 +120,6 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 class Zombies extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y) {
 		super(scene, x, y, 'zomb');
-
 	}
     //fire bullets depending on the postion and angle (angle is calculate in the 'create' part of the scene)
     Spawn(x, y) {
