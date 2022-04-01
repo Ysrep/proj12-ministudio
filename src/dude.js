@@ -1,4 +1,5 @@
 var cursor = []
+moveok = false;
 
 class Dude extends Phaser.GameObjects.Image {
 

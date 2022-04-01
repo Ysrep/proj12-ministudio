@@ -22,6 +22,18 @@ var angle = 0;
 var timer = 0;
 var Maxbullets = 10;
 var Maxzombies = 10;//max amunition. there's still not a realoading system so keep this var with high number so we don't run out of ammo
+
+//set Score variables
+var score = 0;
+var scoreText;
+
+var text;
+var graphics;
+var hsv;
+var timerEvents = [];
+var scoreMultiplicator = 1;
+
+
 //create a group for the bullets
 class BulletGroup extends Phaser.Physics.Arcade.Group
 {
@@ -191,6 +203,13 @@ class Map extends Phaser.Scene {
     var isoY;
     var isoX;
     this.add.tileSprite(512, 384, 1024, 768, 'map');
+
+    /*Print Score & Timer */
+    var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+    scoreText = this.add.text(16, 16, 'score: 0', style);
+
+    text = this.add.text(32, 32);
+    timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(10000, 10000), loop: true }));
     
 
     //dude = this.add.existing(new Dude(this, 100, 100));
@@ -252,6 +271,10 @@ class Map extends Phaser.Scene {
         this.physics.add.overlap(this.ZombiesGroup, this.bulletGroup, function (ZombiesGroup, bulletGroup) {
           bulletGroup.destroy();
           ZombiesGroup.destroy();
+
+          //update score
+          score += 10*scoreMultiplicator;
+          scoreText.setText('Score: ' + score);
           
         });
 
@@ -289,6 +312,7 @@ class Map extends Phaser.Scene {
     }, this);
   }
 
+
   update()
   {
     if (cursor.up.isDown)
@@ -319,6 +343,16 @@ class Map extends Phaser.Scene {
    
     this.ZombiesGroup.x += (dude.x - this.ZombiesGroup.x) * 0.01;
     this.ZombiesGroup.y += (dude.y - this.ZombiesGroup.y) * 0.01;
+
+    //timer reinitialize
+    var output = [];
+    output.push('Event.progress: ' + timerEvents[0].getProgress().toString().substr(0, 4));
+    if (timerEvents[0].getProgress().toString().substr(0, 4) == 0.9) 
+    {
+      console.log("+15 multiplicator");
+      scoreMultiplicator += 1 ;
+    }
+    text.setText(output);
   }
 
 }
