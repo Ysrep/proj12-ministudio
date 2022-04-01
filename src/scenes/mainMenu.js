@@ -26,7 +26,7 @@ class MainMenu extends Phaser.Scene {
 
     var music = this.sound.add('bread');
     this.sound.pauseOnBlur = false;
-    music.play();
+    //music.play();
   }
 
   update() {

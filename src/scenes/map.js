@@ -29,7 +29,17 @@ var degrees = 0;
 var angle = 0;
 var timer = 0;
 var Maxbullets = 100;
-var Maxzombies = 15;//max amunition. there's still not a realoading system so keep this var with high number so we don't run out of ammo
+var Maxzombies = 10;//max amunition. there's still not a realoading system so keep this var with high number so we don't run out of ammo
+
+//set Score variables
+var score = 0;
+var scoreText;
+
+var text;
+var timerEvents = [];
+var scoreMultiplicator = 1;
+
+
 //create a group for the bullets
 class BulletGroup extends Phaser.Physics.Arcade.Group {
 	constructor(scene) {
@@ -93,8 +103,8 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 		this.setActive(true);
 		this.setVisible(true);
 
-		this.setVelocityY(Yangle*7);//multiplied by 3 so the bullets are faster
-    this.setVelocityX(Xangle*7);//multiplied by 3 so the bullets are faster
+		this.setVelocityY(Yangle*10);//multiplied by 3 so the bullets are faster
+    this.setVelocityX(Xangle*10);//multiplied by 3 so the bullets are faster
 	}
 
     preUpdate(time, delta) {
@@ -113,7 +123,6 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     const bullet = this.getFirstDead(false);
     if (bullet) {
       bullet.fire(x, y, Yangle, Xangle);
-
     }
   }
 }
@@ -168,6 +177,11 @@ class Map extends Phaser.Scene {
   //trigger the shoot
   shootBullet() {
     this.bulletGroup.fireBullet(dude.x, dude.y, Ydegrees, Xdegrees);
+    //screenShake
+    this.input.on('pointerdown', function () {
+      this.cameras.main.shake(100, 0.002);
+    }, this);
+    
   }
 
   updateCounter(){
@@ -185,10 +199,13 @@ class Map extends Phaser.Scene {
   }
 
   create () {
+    this.cameras.main.setBounds(0, 0, 1024, 768);
     var ground;
     var world;
     var isoY;
     var isoX;
+
+    
     
     //dude = this.physics.add.sprite(100,100, new Dude(this, 100, 100));
     dude = this.physics.add.sprite(500, 500, 'carac');
@@ -196,6 +213,17 @@ class Map extends Phaser.Scene {
     dude.setDepth(1)
     this.bulletGroup = new BulletGroup(this);//create a bullet group
     this.ZombiesGroup = new ZombiesGroup(this);//create a bullet group
+
+    //Camera settings
+    this.cameras.main.startFollow(dude, true, 0.09, 0.09);
+    this.cameras.main.setZoom(1.5);
+
+    /*Print Score & Timer */
+    var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+    scoreText = this.add.text(16, 16, 'score: 0', style);
+
+    text = this.add.text(32, 32);
+    timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(10000, 10000), loop: true }));
 
 
     for (let i = 0; i < Maxzombies; i++) {
@@ -256,6 +284,10 @@ class Map extends Phaser.Scene {
         this.physics.add.overlap(this.ZombiesGroup, this.bulletGroup, function (ZombiesGroup, bulletGroup) {
           bulletGroup.destroy();
           ZombiesGroup.destroy();
+
+          //update score
+          score += 10*scoreMultiplicator;
+          scoreText.setText('Score: ' + score);
           
         });
         // world = this.add.sprite(r * 50, c * 50, 'grass');
@@ -270,6 +302,7 @@ class Map extends Phaser.Scene {
         angle = Phaser.Math.Angle.BetweenPoints(dude, pointer);//give an angle between the character and the pointer
         degrees = Phaser.Math.RadToDeg(angle);//change the angle in radians into degrees ( easier to work with )
         //calculate the angle of th X and Y axis. angle will be used for the shooting method so the bullet goes in the right direction
+
         if(degrees>0){
             Xdegrees = (-degrees)+90;
         }
@@ -291,25 +324,46 @@ class Map extends Phaser.Scene {
     }, this);
   }
 
-  update() {
-    if (moveok === false) {
-      dude.setVelocityX(0);
-      dude.setVelocityY(0);
-    } else if (cursor.up.isDown) {
-      dude.setVelocityY(-100);
-    } else if (cursor.down.isDown) {
-      dude.setVelocityY(100);
-    } else if (cursor.left.isDown) {
-      dude.setVelocityX(-100);
-    }
-    else if (cursor.right.isDown) {
-      dude.setVelocityX(100);
-    }
-    moveok = true;
-   
- 
-      this.ZombiesGroup.x += (dude.x - this.ZombiesGroup.x) * 0.01;
-      this.ZombiesGroup.y += (dude.y - this.ZombiesGroup.y) * 0.01;
 
+  update()
+  {
+    if (cursor.up.isDown)
+    {
+      dude.setVelocityY(-160)
+    }
+    else if (cursor.down.isDown)
+    {
+      dude.setVelocityY(160)
+    }
+    else if (cursor.left.isDown)
+    {
+      dude.setVelocityX(-160)
+    }
+    else if (cursor.right.isDown)
+    {
+      dude.setVelocityX(160)
+    }
+    else 
+    {
+      dude.setVelocityX(0)
+      dude.setVelocityY(0)
+    }
+
+    /*zombs.forEach(function (zomb) {
+      zomb.update()
+    })*/
+   
+    this.ZombiesGroup.x += (dude.x - this.ZombiesGroup.x) * 0.01;
+    this.ZombiesGroup.y += (dude.y - this.ZombiesGroup.y) * 0.01;
+
+    //timer reinitialize
+    var output = [];
+    output.push('Event.progress: ' + timerEvents[0].getProgress().toString().substr(0, 4));
+    if (timerEvents[0].getProgress().toString().substr(0, 4) == 0.9) 
+    {
+      console.log("+15 multiplicator");
+      scoreMultiplicator += 1 ;
+    }
+    text.setText(output);
   }
 }
