@@ -14,7 +14,8 @@ const map = [
   [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
   [6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5]
 ];
-
+var cursor = [];
+var moveok;
 var Xdegrees = 0;
 var Ydegrees = 0;
 var degrees = 0;
@@ -81,6 +82,7 @@ class ZombiesGroup extends Phaser.Physics.Arcade.Group
 class Bullet extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y) {
 		super(scene, x, y, 'bullet');
+
 	}
     //fire bullets depending on the postion and angle (angle is calculate in the 'create' part of the scene)
     fire(x, y, Yangle, Xangle) {
@@ -192,7 +194,7 @@ class Map extends Phaser.Scene {
     this.add.tileSprite(512, 384, 1024, 768, 'map');
     
 
-    //dude = this.physics.add.sprite(100,100, new Dude(this, 100, 100));
+    //ude = this.physics.add.sprite(100,100, new Dude(this, 100, 100));
     dude = this.physics.add.sprite(500, 500, 'carac');
     cursor = this.input.keyboard.createCursorKeys()
     dude.setDepth(1)

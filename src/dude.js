@@ -8,7 +8,16 @@ class Dude extends Phaser.GameObjects.Image {
     this.startY = y;
   }
 
-  update(cursor, moveok, dude) {
+  preload(){
+    this.load.image('cara', 'src/assets/sprite/cara.png');
+  }
+
+  create(){
+    dude = this.add.image(100,100,'cara');
+  }
+ 
+
+  update(cursor, moveok) {
     if (moveok === false) {
       dude.setVelocityX(0);
       dude.setVelocityY(0);
