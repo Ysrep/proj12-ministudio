@@ -28,8 +28,6 @@ var score = 0;
 var scoreText;
 
 var text;
-var graphics;
-var hsv;
 var timerEvents = [];
 var scoreMultiplicator = 1;
 
@@ -101,8 +99,8 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 		this.setActive(true);
 		this.setVisible(true);
 
-		this.setVelocityY(Yangle*3);//multiplied by 3 so the bullets are faster
-    this.setVelocityX(Xangle*3);//multiplied by 3 so the bullets are faster
+		this.setVelocityY(Yangle*10);//multiplied by 3 so the bullets are faster
+    this.setVelocityX(Xangle*10);//multiplied by 3 so the bullets are faster
 	}
 
     preUpdate(time, delta) {
@@ -121,7 +119,6 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     const bullet = this.getFirstDead(false);
     if (bullet) {
       bullet.fire(x, y, Yangle, Xangle);
-
     }
   }
 }
@@ -180,7 +177,11 @@ class Map extends Phaser.Scene {
   //trigger the shoot
   shootBullet() {
     this.bulletGroup.fireBullet(dude.x, dude.y, Ydegrees, Xdegrees);
-
+    //screenShake
+    this.input.on('pointerdown', function () {
+      this.cameras.main.shake(100, 0.002);
+    }, this);
+    
   }
 
   updateCounter(){
@@ -199,17 +200,13 @@ class Map extends Phaser.Scene {
   }
 
   create () {
+    this.cameras.main.setBounds(0, 0, 1024, 768);
     var world;
     var isoY;
     var isoX;
     this.add.tileSprite(512, 384, 1024, 768, 'map');
 
-    /*Print Score & Timer */
-    var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
-    scoreText = this.add.text(16, 16, 'score: 0', style);
-
-    text = this.add.text(32, 32);
-    timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(10000, 10000), loop: true }));
+    
     
 
     //dude = this.add.existing(new Dude(this, 100, 100));
@@ -219,13 +216,24 @@ class Map extends Phaser.Scene {
     this.bulletGroup = new BulletGroup(this);//create a bullet group
     this.ZombiesGroup = new ZombiesGroup(this);//create a bullet group
 
+    //Camera settings
+    this.cameras.main.startFollow(dude, true, 0.09, 0.09);
+    this.cameras.main.setZoom(1.5);
+
+    /*Print Score & Timer */
+    var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+    scoreText = this.add.text(16, 16, 'score: 0', style);
+
+    text = this.add.text(32, 32);
+    timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(10000, 10000), loop: true }));
+
 
     for (let i = 0; i < Maxzombies; i++) {
       this.updateCounter();
 
     }
     this.physics.add.collider(dude, this.ZombiesGroup, function () {
-    }); 
+    });
  
     for (let r = 0; r < map.length; r++) {
       for (let c = 0; c < map[0].length; c++) {
@@ -289,6 +297,7 @@ class Map extends Phaser.Scene {
         angle = Phaser.Math.Angle.BetweenPoints(dude, pointer);//give an angle between the character and the pointer
         degrees = Phaser.Math.RadToDeg(angle);//change the angle in radians into degrees ( easier to work with )
         //calculate the angle of th X and Y axis. angle will be used for the shooting method so the bullet goes in the right direction
+
         if(degrees>0){
             Xdegrees = (-degrees)+90;
         }
