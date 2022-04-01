@@ -19,8 +19,9 @@ var Xdegrees = 0;
 var Ydegrees = 0;
 var degrees = 0;
 var angle = 0;
-var Maxbullets = 500;
-
+var timer = 0;
+var Maxbullets = 10;
+var Maxzombies = 10;//max amunition. there's still not a realoading system so keep this var with high number so we don't run out of ammo
 //create a group for the bullets
 class BulletGroup extends Phaser.Physics.Arcade.Group
 {
@@ -47,6 +48,33 @@ class BulletGroup extends Phaser.Physics.Arcade.Group
 		}
 	}
 }
+class ZombiesGroup extends Phaser.Physics.Arcade.Group
+{
+	constructor(scene) {
+		// Call the super constructor, passing in a world and a scene
+		super(scene.physics.world, scene);
+
+		// Initialize the group
+		this.createMultiple({
+			classType: Zombies,
+			frameQuantity: Maxzombies, // Create 30 instances in the pool
+			active: false,
+			visible: false,
+			key: 'zomb'
+		}) 
+
+	}
+    //will call the class bullet when triggered
+    ZombiesSpwan(x, y) {
+		// Get the first available sprite in the group
+		const zombie = this.getFirstDead(false);
+		if (zombie) {
+			zombie.Spawn(x, y);
+
+		}
+	}
+
+}
 //bullet properties
 class Bullet extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y) {
@@ -64,12 +92,50 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 	}
 
 }
+class Zombies extends Phaser.Physics.Arcade.Sprite {
+	constructor(scene, x, y) {
+		super(scene, x, y, 'zomb');
+
+	}
+    //fire bullets depending on the postion and angle (angle is calculate in the 'create' part of the scene)
+    Spawn(x, y) {
+		this.body.reset(x, y);
+		this.setActive(true);
+		this.setVisible(true);
+
+    
+		this.setVelocityY(30);//multiplied by 3 so the bullets are faster
+    this.setVelocityX(30);//multiplied by 3 so the bullets are faster
+
+	}
+
+    preUpdate(time, delta) {
+		super.preUpdate(time, delta);
+
+		if (this.y <= 0) {
+			this.setActive(false);
+			this.setVisible(false);
+		}
+	}
+
+
+  //will call the class bullet when triggered
+  ZombiesSpwan(x, y) {
+    // Get the first available sprite in the group
+    const zombie = this.getFirstDead(false);
+    if (zombie) {
+      zombie.Spawn(x, y);
+
+    }
+  }
+}
 
 
 class Map extends Phaser.Scene {
   constructor() {
     super({ key: "Map" });
     this.bulletGroup;
+    this.ZombiesGroup;
   }
   //manage the click and trigger the shoot method
   addEvents() {
@@ -80,6 +146,12 @@ class Map extends Phaser.Scene {
   //trigger the shoot
   shootBullet() {
     this.bulletGroup.fireBullet(dude.x, dude.y, Ydegrees, Xdegrees);
+
+  }
+
+  updateCounter(){
+    this.ZombiesGroup.ZombiesSpwan(Math.random() * 800, Math.random() * 500, Ydegrees, Xdegrees);
+
   }
 
   preload() {
@@ -97,22 +169,22 @@ class Map extends Phaser.Scene {
     var isoY;
     var isoX;
     this.add.tileSprite(512, 384, 1024, 768, 'map');
+    
 
-    //dude = this.add.existing(new Dude(this, 100, 100));
+    //ude = this.physics.add.sprite(100,100, new Dude(this, 100, 100));
     dude = this.physics.add.sprite(500, 500, 'carac');
     cursor = this.input.keyboard.createCursorKeys()
     dude.setDepth(1)
     this.bulletGroup = new BulletGroup(this);//create a bullet group
-    for (let i = 0; i < 5; i++) {
-      zombs[i] = this.physics.add.sprite(Math.random() * 800, Math.random() * 500, 'zomb');
-      zombs[i].setDepth(1)
-      zombs[i].setBounce(1)
-      this.physics.add.collider(dude, zombs[i], function () {
-      });
-  
-      this.physics.add.collider(zombs, zombs[i], function () {
-      });
+    this.ZombiesGroup = new ZombiesGroup(this);//create a bullet group
+
+
+    for (let i = 0; i < Maxzombies; i++) {
+      this.updateCounter();
+
     }
+    this.physics.add.collider(dude, this.ZombiesGroup, function () {
+    }); 
  
     for (let r = 0; r < map.length; r++) {
       for (let c = 0; c < map[0].length; c++) {
@@ -155,7 +227,10 @@ class Map extends Phaser.Scene {
 
           moveok = false;
         });
-        this.physics.add.collider(zombs, this.bulletGroup, function () {
+        this.physics.add.overlap(this.ZombiesGroup, this.bulletGroup, function (ZombiesGroup, bulletGroup) {
+          bulletGroup.destroy();
+          ZombiesGroup.destroy();
+          
         });
 
 
@@ -207,11 +282,10 @@ class Map extends Phaser.Scene {
       dude.setVelocityX(160);
     }
     moveok = true;
-    zombs.forEach(function (zomb) {
-      zomb.setVelocityX(0);
-      zomb.setVelocityY(0);
-      zomb.x += (dude.x - zomb.x) * 0.01;
-      zomb.y += (dude.y - zomb.y) * 0.01;
-    });
+   
+ 
+      this.ZombiesGroup.x += (dude.x - this.ZombiesGroup.x) * 0.01;
+      this.ZombiesGroup.y += (dude.y - this.ZombiesGroup.y) * 0.01;
+
   }
 }
