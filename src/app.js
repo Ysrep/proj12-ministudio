@@ -12,7 +12,7 @@ const config = {
         checkCollision: true
       }
   },
-  scene: [MainMenu, Map1, GameOver]
+  scene: [MainMenu, Map, GameOver]
 };
 
 var game = new Phaser.Game(config);

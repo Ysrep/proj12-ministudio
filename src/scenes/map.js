@@ -20,6 +20,9 @@ const map = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
+var dude;
+var cursor;
+var moveok;
 var Xdegrees = 0;
 var Ydegrees = 0;
 var degrees = 0;
@@ -151,7 +154,7 @@ class Zombies extends Phaser.Physics.Arcade.Sprite {
 
 
 
-class Map1 extends Phaser.Scene {
+class Map extends Phaser.Scene {
   constructor() {
     super({ key: "Map" });
     this.bulletGroup;
@@ -188,8 +191,7 @@ class Map1 extends Phaser.Scene {
     var isoY;
     var isoX;
     
-
-    //ude = this.physics.add.sprite(100,100, new Dude(this, 100, 100));
+    //dude = this.physics.add.sprite(100,100, new Dude(this, 100, 100));
     dude = this.physics.add.sprite(500, 500, 'carac');
     cursor = this.input.keyboard.createCursorKeys()
     dude.setDepth(1)
@@ -202,6 +204,7 @@ class Map1 extends Phaser.Scene {
 
     }
     this.physics.add.collider(dude, this.ZombiesGroup, function () {
+
     }); 
  
     for (let r = 0; r < map.length; r++) {
@@ -227,7 +230,7 @@ class Map1 extends Phaser.Scene {
             break;
           case 4:
             ground = this.add.sprite(500, 500, 'gravel');
-            world = this.physics.add.sprite(0,0, 'arche');
+            world = this.physics.add.sprite(123,50, 'arche');
             world.body.pushable = false;
             break;
           case 5:
@@ -247,7 +250,7 @@ class Map1 extends Phaser.Scene {
         isoX = (0 + r * 20) - (0 + c * 20);
         isoY = ((0 + r * 23) + (0 + c * 23)) / 2;
 
-        this.physics.add.collider(dude, ground, function () {
+        this.physics.add.collider(dude, world, function () {
           moveok = false;
         });
 
@@ -311,5 +314,3 @@ class Map1 extends Phaser.Scene {
 
   }
 }
-
-
