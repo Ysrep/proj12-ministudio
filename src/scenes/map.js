@@ -1,18 +1,23 @@
 const map = [
-  [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5]
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
 var Xdegrees = 0;
@@ -20,11 +25,10 @@ var Ydegrees = 0;
 var degrees = 0;
 var angle = 0;
 var timer = 0;
-var Maxbullets = 10;
-var Maxzombies = 10;//max amunition. there's still not a realoading system so keep this var with high number so we don't run out of ammo
+var Maxbullets = 100;
+var Maxzombies = 15;//max amunition. there's still not a realoading system so keep this var with high number so we don't run out of ammo
 //create a group for the bullets
-class BulletGroup extends Phaser.Physics.Arcade.Group
-{
+class BulletGroup extends Phaser.Physics.Arcade.Group {
 	constructor(scene) {
 		// Call the super constructor, passing in a world and a scene
 		super(scene.physics.world, scene);
@@ -37,7 +41,6 @@ class BulletGroup extends Phaser.Physics.Arcade.Group
 			visible: false,
 			key: 'bullet'
 		}) 
-
 	}
     //will call the class bullet when triggered
     fireBullet(x, y, Yangle, Xangle) {
@@ -45,13 +48,11 @@ class BulletGroup extends Phaser.Physics.Arcade.Group
 		const bullet = this.getFirstDead(false);
 		if (bullet) {
 			bullet.fire(x, y, Yangle, Xangle);
-
 		}
 	}
-
 }
-class ZombiesGroup extends Phaser.Physics.Arcade.Group
-{
+
+class ZombiesGroup extends Phaser.Physics.Arcade.Group {
 	constructor(scene) {
 		// Call the super constructor, passing in a world and a scene
 		super(scene.physics.world, scene);
@@ -75,8 +76,8 @@ class ZombiesGroup extends Phaser.Physics.Arcade.Group
 
 		}
 	}
-
 }
+
 //bullet properties
 class Bullet extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y) {
@@ -89,8 +90,8 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 		this.setActive(true);
 		this.setVisible(true);
 
-		this.setVelocityY(Yangle*3);//multiplied by 3 so the bullets are faster
-    this.setVelocityX(Xangle*3);//multiplied by 3 so the bullets are faster
+		this.setVelocityY(Yangle*7);//multiplied by 3 so the bullets are faster
+    this.setVelocityX(Xangle*7);//multiplied by 3 so the bullets are faster
 	}
 
     preUpdate(time, delta) {
@@ -127,7 +128,6 @@ class Zombies extends Phaser.Physics.Arcade.Sprite {
     
 		this.setVelocityY(30);//multiplied by 3 so the bullets are faster
     this.setVelocityX(30);//multiplied by 3 so the bullets are faster
-
 	}
 
     preUpdate(time, delta) {
@@ -139,14 +139,12 @@ class Zombies extends Phaser.Physics.Arcade.Sprite {
 		}
 	}
 
-
   //will call the class bullet when triggered
   ZombiesSpwan(x, y) {
     // Get the first available sprite in the group
     const zombie = this.getFirstDead(false);
     if (zombie) {
       zombie.Spawn(x, y);
-
     }
   }
 }
@@ -168,29 +166,27 @@ class Map1 extends Phaser.Scene {
   //trigger the shoot
   shootBullet() {
     this.bulletGroup.fireBullet(dude.x, dude.y, Ydegrees, Xdegrees);
-
   }
 
   updateCounter(){
     this.ZombiesGroup.ZombiesSpwan(Math.random() * 800, Math.random() * 500, Ydegrees, Xdegrees);
-
   }
 
   preload() {
     this.load.image('grass', 'src/assets/sprite/grass.png');
+    this.load.image('gravel', 'src/assets/sprite/gravier.png');
     this.load.image('wall', 'src/assets/sprite/wall.png');
     this.load.image('carac', 'src/assets/sprite/cara.png');
     this.load.image('zomb', 'src/assets/sprite/zomb.png');
-    this.load.image('map', 'src/assets/sprite/map.png');
     this.load.image('bullet', 'src/assets/sprite/bullet.png');
-
+    this.load.image('arche', 'src/assets/sprite/archeeliza.png');
   }
 
   create () {
+    var ground;
     var world;
     var isoY;
     var isoX;
-    this.add.tileSprite(512, 384, 1024, 768, 'map');
     
 
     //ude = this.physics.add.sprite(100,100, new Dude(this, 100, 100));
@@ -212,55 +208,61 @@ class Map1 extends Phaser.Scene {
       for (let c = 0; c < map[0].length; c++) {
         switch (map[r][c]) {
           case 0:
-            world = this.add.sprite(500, 500, 'grass');
+            ground = this.add.sprite(500, 500, 'gravel');
             break;
           case 1:
-            world = this.physics.add.sprite(500, 500, 'wall');
-            world.body.pushable = false
+            ground = this.add.sprite(500, 500, 'gravel');
+            world = this.physics.add.sprite(500, 500, 'arche');
+            world.body.pushable = false;
             break;
           case 2:
-            world = this.physics.add.sprite(500, 500, 'wall');
-            world.body.pushable = false
+            ground = this.add.sprite(500, 500, 'gravel');
+            world = this.physics.add.sprite(500, 500, 'arche');
+            world.body.pushable = false;
             break;
           case 3:
-            world = this.physics.add.sprite(500, 500, 'wall');
-            world.body.pushable = false
+            ground = this.add.sprite(500, 500, 'gravel');
+            world = this.physics.add.sprite(500, 500, 'arche');
+            world.body.pushable = false;
             break;
           case 4:
-            world = this.physics.add.sprite(500, 500, 'wall');
-            world.body.pushable = false
+            ground = this.add.sprite(500, 500, 'gravel');
+            world = this.physics.add.sprite(0,0, 'arche');
+            world.body.pushable = false;
             break;
           case 5:
-            world = this.physics.add.sprite(500, 500, 'wall');
-            world.body.pushable = false
+            ground = this.add.sprite(500, 500, 'gravel');
+            world = this.physics.add.sprite(500, 500, 'arche');
+            world.body.pushable = false;
             break;
           case 6:
-            world = this.physics.add.sprite(500, 500, 'wall');
-            world.body.pushable = false
+            ground = this.add.sprite(500, 500, 'gravel');
+            world = this.physics.add.sprite(500, 500, 'arche');
+            world.body.pushable = false;
             break;
           default:
             break;
         }
 
-        isoX = (800 + r * 20) - (300 + c * 20);
-        isoY = ((400 + r * 23) + (300 + c * 23)) / 2;
+        isoX = (0 + r * 20) - (0 + c * 20);
+        isoY = ((0 + r * 23) + (0 + c * 23)) / 2;
 
-        this.physics.add.collider(dude, world, function () {
-
+        this.physics.add.collider(dude, ground, function () {
           moveok = false;
         });
+
         this.physics.add.overlap(this.ZombiesGroup, this.bulletGroup, function (ZombiesGroup, bulletGroup) {
           bulletGroup.destroy();
           ZombiesGroup.destroy();
           
         });
-
-
         // world = this.add.sprite(r * 50, c * 50, 'grass');
-        Phaser.Display.Align.In.Center(world, this.add.zone(isoX, isoY, 800, 600));
+        Phaser.Display.Align.In.Center(ground, this.add.zone(isoX, isoY, 800, 600));
       }
     }
+
 		this.addEvents();//call the method to trigger the shoot
+
     //aiming
     this.input.on('pointermove', function (pointer) {
         angle = Phaser.Math.Angle.BetweenPoints(dude, pointer);//give an angle between the character and the pointer
@@ -284,8 +286,6 @@ class Map1 extends Phaser.Scene {
         if(-90>degrees && degrees>=-180){
             Ydegrees = -(degrees+180);
         }
-
-
     }, this);
   }
 
@@ -294,14 +294,14 @@ class Map1 extends Phaser.Scene {
       dude.setVelocityX(0);
       dude.setVelocityY(0);
     } else if (cursor.up.isDown) {
-      dude.setVelocityY(-160);
+      dude.setVelocityY(-100);
     } else if (cursor.down.isDown) {
-      dude.setVelocityY(160);
+      dude.setVelocityY(100);
     } else if (cursor.left.isDown) {
-      dude.setVelocityX(-160);
+      dude.setVelocityX(-100);
     }
     else if (cursor.right.isDown) {
-      dude.setVelocityX(160);
+      dude.setVelocityX(100);
     }
     moveok = true;
    
