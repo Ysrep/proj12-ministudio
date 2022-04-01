@@ -20,7 +20,7 @@ var Ydegrees = 0;
 var degrees = 0;
 var angle = 0;
 var timer = 0;
-var Maxbullets = 10;
+var Maxbullets = 100;
 var Maxzombies = 10;//max amunition. there's still not a realoading system so keep this var with high number so we don't run out of ammo
 //create a group for the bullets
 class BulletGroup extends Phaser.Physics.Arcade.Group
@@ -37,6 +37,7 @@ class BulletGroup extends Phaser.Physics.Arcade.Group
 			visible: false,
 			key: 'bullet'
 		}) 
+
 	}
     //will call the class bullet when triggered
     fireBullet(x, y, Yangle, Xangle) {
@@ -47,6 +48,7 @@ class BulletGroup extends Phaser.Physics.Arcade.Group
 
 		}
 	}
+
 }
 class ZombiesGroup extends Phaser.Physics.Arcade.Group
 {
@@ -79,7 +81,6 @@ class ZombiesGroup extends Phaser.Physics.Arcade.Group
 class Bullet extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y) {
 		super(scene, x, y, 'bullet');
-
 	}
     //fire bullets depending on the postion and angle (angle is calculate in the 'create' part of the scene)
     fire(x, y, Yangle, Xangle) {
@@ -91,6 +92,25 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     this.setVelocityX(Xangle*3);//multiplied by 3 so the bullets are faster
 	}
 
+    preUpdate(time, delta) {
+		super.preUpdate(time, delta);
+
+		if (this.y <= 0) {
+			this.setActive(false);
+			this.setVisible(false);
+		}
+	}
+
+
+  //will call the class bullet when triggered
+  fireBullet(x, y, Yangle, Xangle) {
+    // Get the first available sprite in the group
+    const bullet = this.getFirstDead(false);
+    if (bullet) {
+      bullet.fire(x, y, Yangle, Xangle);
+
+    }
+  }
 }
 class Zombies extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y) {
@@ -129,6 +149,7 @@ class Zombies extends Phaser.Physics.Arcade.Sprite {
     }
   }
 }
+
 
 
 class Map extends Phaser.Scene {
@@ -171,7 +192,7 @@ class Map extends Phaser.Scene {
     this.add.tileSprite(512, 384, 1024, 768, 'map');
     
 
-    //ude = this.physics.add.sprite(100,100, new Dude(this, 100, 100));
+    //dude = this.physics.add.sprite(100,100, new Dude(this, 100, 100));
     dude = this.physics.add.sprite(500, 500, 'carac');
     cursor = this.input.keyboard.createCursorKeys()
     dude.setDepth(1)
