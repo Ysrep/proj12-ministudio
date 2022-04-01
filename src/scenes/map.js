@@ -153,7 +153,7 @@ class Zombies extends Phaser.Physics.Arcade.Sprite {
 
 
 
-class Map1 extends Phaser.Scene {
+class Map extends Phaser.Scene {
   constructor() {
     super({ key: "Map" });
     this.bulletGroup;
@@ -192,8 +192,7 @@ class Map1 extends Phaser.Scene {
     var isoX;
     this.add.tileSprite(512, 384, 1024, 768, 'map');
     
-
-    //ude = this.physics.add.sprite(100,100, new Dude(this, 100, 100));
+    //dude = this.physics.add.sprite(100,100, new Dude(this, 100, 100));
     dude = this.physics.add.sprite(500, 500, 'carac');
     cursor = this.input.keyboard.createCursorKeys()
     dude.setDepth(1)
@@ -206,6 +205,7 @@ class Map1 extends Phaser.Scene {
 
     }
     this.physics.add.collider(dude, this.ZombiesGroup, function () {
+
     }); 
  
     for (let r = 0; r < map.length; r++) {
@@ -246,7 +246,6 @@ class Map1 extends Phaser.Scene {
         isoY = ((400 + r * 23) + (300 + c * 23)) / 2;
 
         this.physics.add.collider(dude, world, function () {
-
           moveok = false;
         });
         this.physics.add.overlap(this.ZombiesGroup, this.bulletGroup, function (ZombiesGroup, bulletGroup) {
@@ -254,7 +253,6 @@ class Map1 extends Phaser.Scene {
           ZombiesGroup.destroy();
           
         });
-
 
         // world = this.add.sprite(r * 50, c * 50, 'grass');
         Phaser.Display.Align.In.Center(world, this.add.zone(isoX, isoY, 800, 600));
