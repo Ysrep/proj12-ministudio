@@ -110,22 +110,57 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     const bullet = this.getFirstDead(false);
     if (bullet) {
       bullet.fire(x, y, Yangle, Xangle);
-
     }
   }
 }
+
+
+class Dude extends Phaser.GameObjects.Image {
+  constructor(scene, x, y) {
+    super(scene, x, y, 'cara', { key: "dude" });
+    this.startX = x;
+    this.startY = y;
+  }
+  getX(){
+    var dudeX = x;
+    return(dudeX);
+  }
+  getY(){
+    var dudeY = x;
+    return(dudeY);
+  }
+
+  update(cursor, moveok, body) {
+    if (moveok === false) {
+      body.setVelocityX(0);
+      body.setVelocityY(0);
+    } else if (cursor.up.isDown) {
+      body.setVelocityY(-160);
+    } else if (cursor.down.isDown) {
+      body.setVelocityY(160);
+    } else if (cursor.left.isDown) {
+      body.setVelocityX(-160);
+    } else if (cursor.right.isDown) {
+      body.setVelocityX(160);
+    }
+    moveok = true;
+    /*zombs.forEach(function (zomb) {
+      zomb.update();
+    });*/
+  }
+}
+
 class Zombies extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y) {
 		super(scene, x, y, 'zomb');
-
 	}
+
     //fire bullets depending on the postion and angle (angle is calculate in the 'create' part of the scene)
     Spawn(x, y) {
 		this.body.reset(x, y);
 		this.setActive(true);
 		this.setVisible(true);
 
-    
 		this.setVelocityY(30);//multiplied by 3 so the bullets are faster
     this.setVelocityX(30);//multiplied by 3 so the bullets are faster
 
@@ -159,6 +194,7 @@ class Map extends Phaser.Scene {
     super({ key: "Map" });
     this.bulletGroup;
     this.ZombiesGroup;
+    this.dude;
   }
   //manage the click and trigger the shoot method
   addEvents() {
@@ -169,12 +205,10 @@ class Map extends Phaser.Scene {
   //trigger the shoot
   shootBullet() {
     this.bulletGroup.fireBullet(dude.x, dude.y, Ydegrees, Xdegrees);
-
   }
 
   updateCounter(){
     this.ZombiesGroup.ZombiesSpwan(Math.random() * 800, Math.random() * 500, Ydegrees, Xdegrees);
-
   }
 
   preload() {
@@ -192,12 +226,10 @@ class Map extends Phaser.Scene {
     var isoY;
     var isoX;
     this.add.tileSprite(512, 384, 1024, 768, 'map');
-    
-
-    //ude = this.physics.add.sprite(100,100, new Dude(this, 100, 100));
-    dude = this.physics.add.sprite(500, 500, 'carac');
-    cursor = this.input.keyboard.createCursorKeys()
-    dude.setDepth(1)
+    //var dude = new Dude(this,100,100);
+    var dude = this.physics.add.sprite(500, 500, 'carac');
+    cursor = this.input.keyboard.createCursorKeys();
+    //dude.setDepth(1)
     this.bulletGroup = new BulletGroup(this);//create a bullet group
     this.ZombiesGroup = new ZombiesGroup(this);//create a bullet group
 
@@ -207,6 +239,7 @@ class Map extends Phaser.Scene {
 
     }
     this.physics.add.collider(dude, this.ZombiesGroup, function () {
+
     }); 
  
     for (let r = 0; r < map.length; r++) {
@@ -247,7 +280,6 @@ class Map extends Phaser.Scene {
         isoY = ((400 + r * 23) + (300 + c * 23)) / 2;
 
         this.physics.add.collider(dude, world, function () {
-
           moveok = false;
         });
         this.physics.add.overlap(this.ZombiesGroup, this.bulletGroup, function (ZombiesGroup, bulletGroup) {
@@ -255,7 +287,6 @@ class Map extends Phaser.Scene {
           ZombiesGroup.destroy();
           
         });
-
 
         // world = this.add.sprite(r * 50, c * 50, 'grass');
         Phaser.Display.Align.In.Center(world, this.add.zone(isoX, isoY, 800, 600));
@@ -291,6 +322,9 @@ class Map extends Phaser.Scene {
   }
 
   update() {
+   /* var xdude = this.dude.getX();
+    console.log(xdude);*/
+    
     if (moveok === false) {
       dude.setVelocityX(0);
       dude.setVelocityY(0);
@@ -305,10 +339,9 @@ class Map extends Phaser.Scene {
       dude.setVelocityX(160);
     }
     moveok = true;
-   
- 
+    
+
       this.ZombiesGroup.x += (dude.x - this.ZombiesGroup.x) * 0.01;
       this.ZombiesGroup.y += (dude.y - this.ZombiesGroup.y) * 0.01;
-
   }
 }
