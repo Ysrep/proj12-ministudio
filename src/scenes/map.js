@@ -237,6 +237,9 @@ class Map extends Phaser.Scene {
     this.load.image('zomb', 'src/assets/sprite/zomb.png');
     this.load.image('bullet', 'src/assets/sprite/bullet.png');
     this.load.image('arche', 'src/assets/sprite/archeeliza.png');
+    this.load.audio('inGame', [
+      'src/assets/SFX/type horror pour in game.mp3'
+    ]);
   }
 
   create () {
@@ -359,6 +362,12 @@ class Map extends Phaser.Scene {
             Ydegrees = -(degrees+180);
         }
     }, this);
+
+    this.musicG = this.sound.add('inGame');
+    this.sound.pauseOnBlur = false;
+    this.musicG.play();
+    this.musicG.setVolume(0.1);
+    this.musicG.setLoop(true);
   }
 
 

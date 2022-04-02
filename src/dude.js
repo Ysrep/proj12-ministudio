@@ -1,4 +1,4 @@
-var cursor = []
+/*var cursor = []
 moveok = false;
 
 class Dude extends Phaser.GameObjects.Image {
@@ -9,4 +9,4 @@ class Dude extends Phaser.GameObjects.Image {
     this.startY = y
   }
 
-}
+}*/
