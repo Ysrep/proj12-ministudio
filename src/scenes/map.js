@@ -1,23 +1,29 @@
 const map = [
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
 var dude;
@@ -65,32 +71,6 @@ class BulletGroup extends Phaser.Physics.Arcade.Group {
 	}
 }
 
-class ZombiesGroup extends Phaser.Physics.Arcade.Group {
-	constructor(scene) {
-		// Call the super constructor, passing in a world and a scene
-		super(scene.physics.world, scene);
-
-		// Initialize the group
-		this.createMultiple({
-			classType: Zombies,
-			frameQuantity: Maxzombies, // Create 30 instances in the pool
-			active: false,
-			visible: false,
-			key: 'zomb'
-		}) 
-
-	}
-    //will call the class bullet when triggered
-    ZombiesSpwan(x, y) {
-		// Get the first available sprite in the group
-		const zombie = this.getFirstDead(false);
-		if (zombie) {
-			zombie.Spawn(x, y);
-
-		}
-	}
-}
-
 //bullet properties
 class Bullet extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y) {
@@ -126,6 +106,32 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     }
   }
 }
+
+class ZombiesGroup extends Phaser.Physics.Arcade.Group {
+	constructor(scene) {
+		// Call the super constructor, passing in a world and a scene
+		super(scene.physics.world, scene);
+
+		// Initialize the group
+		this.createMultiple({
+			classType: Zombies,
+			frameQuantity: Maxzombies, // Create 30 instances in the pool
+			active: false,
+			visible: false,
+			key: 'zomb'
+		}) 
+	}
+    //will call the class bullet when triggered
+    ZombiesSpwan(x, y) {
+		// Get the first available sprite in the group
+		const zombie = this.getFirstDead(false);
+		if (zombie) {
+			zombie.Spawn(x, y);
+
+		}
+	}
+}
+
 class Zombies extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y) {
 		super(scene, x, y, 'zomb');
@@ -213,6 +219,8 @@ class Map extends Phaser.Scene {
     dude.setDepth(1)
     this.bulletGroup = new BulletGroup(this);//create a bullet group
     this.ZombiesGroup = new ZombiesGroup(this);//create a bullet group
+    this.ZombiesGroup.setDepth(1);
+    this.bulletGroup.setDepth(1);
 
     //Camera settings
     this.cameras.main.startFollow(dude, true, 0.09, 0.09);
@@ -221,9 +229,11 @@ class Map extends Phaser.Scene {
     /*Print Score & Timer */
     var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
     scoreText = this.add.text(16, 16, 'score: 0', style);
+    scoreText.setDepth(2)
 
     text = this.add.text(32, 32);
     timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(10000, 10000), loop: true }));
+    text.setDepth(2);
 
 
     for (let i = 0; i < Maxzombies; i++) {
@@ -257,7 +267,7 @@ class Map extends Phaser.Scene {
             break;
           case 4:
             ground = this.add.sprite(500, 500, 'gravel');
-            world = this.physics.add.sprite(123,50, 'arche');
+            world = this.physics.add.sprite(500,500, 'arche');
             world.body.pushable = false;
             break;
           case 5:
@@ -274,8 +284,8 @@ class Map extends Phaser.Scene {
             break;
         }
 
-        isoX = (0 + r * 20) - (0 + c * 20);
-        isoY = ((0 + r * 23) + (0 + c * 23)) / 2;
+        isoX = (600 + r * 20) - (0 + c * 20);
+        isoY = ((-100 + r * 23) + (0 + c * 23)) / 2;
 
         this.physics.add.collider(dude, world, function () {
           moveok = false;
@@ -291,7 +301,7 @@ class Map extends Phaser.Scene {
           
         });
         // world = this.add.sprite(r * 50, c * 50, 'grass');
-        Phaser.Display.Align.In.Center(ground, this.add.zone(isoX, isoY, 800, 600));
+        Phaser.Display.Align.In.Center(ground, this.add.zone(isoX, isoY, 0, 0));
       }
     }
 
@@ -304,22 +314,22 @@ class Map extends Phaser.Scene {
         //calculate the angle of th X and Y axis. angle will be used for the shooting method so the bullet goes in the right direction
 
         if(degrees>0){
-            Xdegrees = (-degrees)+90;
+          Xdegrees = (-degrees)+90;
         }
         if(degrees<=0){
-            Xdegrees= (degrees+90);
+          Xdegrees= (degrees+90);
         }
         if(0<degrees && degrees<=90){
-            Ydegrees = degrees;
+          Ydegrees = degrees;
         }
         if(90<degrees && degrees<=180){
-            Ydegrees = -(degrees)+180;
+          Ydegrees = -(degrees)+180;
         }
         if(0>degrees && degrees>-90){
-            Ydegrees = degrees;
+          Ydegrees = degrees;
         }
         if(-90>degrees && degrees>=-180){
-            Ydegrees = -(degrees+180);
+          Ydegrees = -(degrees+180);
         }
     }, this);
   }
