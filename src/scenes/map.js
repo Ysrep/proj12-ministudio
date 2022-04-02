@@ -205,7 +205,7 @@ class Map extends Phaser.Scene {
   }
 
   create () {
-    this.cameras.main.setBounds(0, 0, 1024, 768);
+    this.cameras.main.setBounds(0, 0, 1080, 720);
     var ground;
     var world;
     var isoY;
