@@ -126,6 +126,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     }
   }
 }
+
 class Zombies extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y) {
 		super(scene, x, y, 'zomb');
@@ -155,6 +156,49 @@ class Zombies extends Phaser.Physics.Arcade.Sprite {
     const zombie = this.getFirstDead(false);
     if (zombie) {
       zombie.Spawn(x, y);
+    }
+  }
+}
+
+class Dude extends Phaser.Physics.Arcade.Sprite {
+  constructor(scene, x, y) {
+    super(scene, x, y, 'carac');
+  }
+
+  Move() {
+    const UP = cursor.up.isDown;
+    const DOWN = cursor.down.isDown;
+    const LEFT = cursor.left.isDown;
+    const RIGHT = cursor.right.isDown;
+
+    if (UP)
+    {
+      dude.setVelocityX(0)
+      dude.setVelocityY(0)
+      dude.setVelocityY(-160)
+    }
+    else if (DOWN)
+    {
+      dude.setVelocityX(0)
+      dude.setVelocityY(0)
+      dude.setVelocityY(160)
+    }
+    else if (LEFT)
+    {
+      dude.setVelocityX(0)
+      dude.setVelocityY(0)
+      dude.setVelocityX(-160)
+    }
+    else if (RIGHT)
+    {
+      dude.setVelocityX(0)
+      dude.setVelocityY(0)
+      dude.setVelocityX(160)
+    }
+    else 
+    {
+      dude.setVelocityX(0)
+      dude.setVelocityY(0)
     }
   }
 }
@@ -202,9 +246,8 @@ class Map extends Phaser.Scene {
     var isoY;
     var isoX;
 
-    
-    
-    //dude = this.physics.add.sprite(100,100, new Dude(this, 100, 100));
+    //dude = new Dude(this, sprite);
+    //dude = this.physics.add.sprite(500, 500, new Dude(this, 500, 500));
     dude = this.physics.add.sprite(500, 500, 'carac');
     cursor = this.input.keyboard.createCursorKeys()
     dude.setDepth(1)
@@ -321,20 +364,29 @@ class Map extends Phaser.Scene {
 
   update()
   {
+    //dude.Move();
     if (cursor.up.isDown)
     {
+      dude.setVelocityX(0)
+      dude.setVelocityY(0)
       dude.setVelocityY(-160)
     }
     else if (cursor.down.isDown)
     {
+      dude.setVelocityX(0)
+      dude.setVelocityY(0)
       dude.setVelocityY(160)
     }
     else if (cursor.left.isDown)
     {
+      dude.setVelocityX(0)
+      dude.setVelocityY(0)
       dude.setVelocityX(-160)
     }
     else if (cursor.right.isDown)
     {
+      dude.setVelocityX(0)
+      dude.setVelocityY(0)
       dude.setVelocityX(160)
     }
     else 
