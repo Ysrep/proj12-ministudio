@@ -1,30 +1,47 @@
 const map = [
-  [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-  [6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5]
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
+var dude;
+var cursor;
+var moveok;
 var Xdegrees = 0;
 var Ydegrees = 0;
 var degrees = 0;
 var angle = 0;
 var timer = 0;
-var Maxbullets = 10;
+var Maxbullets = 100;
 var Maxzombies = 10;//max amunition. there's still not a realoading system so keep this var with high number so we don't run out of ammo
+
+//set Score variables
+var score = 0;
+var scoreText;
+
+var text;
+var timerEvents = [];
+var scoreMultiplicator = 1;
+
+
 //create a group for the bullets
-class BulletGroup extends Phaser.Physics.Arcade.Group
-{
+class BulletGroup extends Phaser.Physics.Arcade.Group {
 	constructor(scene) {
 		// Call the super constructor, passing in a world and a scene
 		super(scene.physics.world, scene);
@@ -37,7 +54,6 @@ class BulletGroup extends Phaser.Physics.Arcade.Group
 			visible: false,
 			key: 'bullet'
 		}) 
-
 	}
     //will call the class bullet when triggered
     fireBullet(x, y, Yangle, Xangle) {
@@ -45,13 +61,11 @@ class BulletGroup extends Phaser.Physics.Arcade.Group
 		const bullet = this.getFirstDead(false);
 		if (bullet) {
 			bullet.fire(x, y, Yangle, Xangle);
-
 		}
 	}
-
 }
-class ZombiesGroup extends Phaser.Physics.Arcade.Group
-{
+
+class ZombiesGroup extends Phaser.Physics.Arcade.Group {
 	constructor(scene) {
 		// Call the super constructor, passing in a world and a scene
 		super(scene.physics.world, scene);
@@ -75,8 +89,8 @@ class ZombiesGroup extends Phaser.Physics.Arcade.Group
 
 		}
 	}
-
 }
+
 //bullet properties
 class Bullet extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y) {
@@ -89,8 +103,8 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 		this.setActive(true);
 		this.setVisible(true);
 
-		this.setVelocityY(Yangle*3);//multiplied by 3 so the bullets are faster
-    this.setVelocityX(Xangle*3);//multiplied by 3 so the bullets are faster
+		this.setVelocityY(Yangle*10);//multiplied by 3 so the bullets are faster
+    this.setVelocityX(Xangle*10);//multiplied by 3 so the bullets are faster
 	}
 
     preUpdate(time, delta) {
@@ -109,14 +123,12 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     const bullet = this.getFirstDead(false);
     if (bullet) {
       bullet.fire(x, y, Yangle, Xangle);
-
     }
   }
 }
 class Zombies extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y) {
 		super(scene, x, y, 'zomb');
-
 	}
     //fire bullets depending on the postion and angle (angle is calculate in the 'create' part of the scene)
     Spawn(x, y) {
@@ -126,7 +138,6 @@ class Zombies extends Phaser.Physics.Arcade.Sprite {
 
 		this.setVelocityY(30);//multiplied by 3 so the bullets are faster
     this.setVelocityX(30);//multiplied by 3 so the bullets are faster
-
 	}
 
     preUpdate(time, delta) {
@@ -138,14 +149,12 @@ class Zombies extends Phaser.Physics.Arcade.Sprite {
 		}
 	}
 
-
   //will call the class bullet when triggered
   ZombiesSpwan(x, y) {
     // Get the first available sprite in the group
     const zombie = this.getFirstDead(false);
     if (zombie) {
       zombie.Spawn(x, y);
-
     }
   }
 }
@@ -165,103 +174,129 @@ class Map extends Phaser.Scene {
   //trigger the shoot
   shootBullet() {
     this.bulletGroup.fireBullet(dude.x, dude.y, Ydegrees, Xdegrees);
-
+    //screenShake
+    this.input.on('pointerdown', function () {
+      this.cameras.main.shake(100, 0.002);
+    }, this);
+    
   }
 
   updateCounter(){
     this.ZombiesGroup.ZombiesSpwan(Math.random() * 800, Math.random() * 500, Ydegrees, Xdegrees);
-
   }
 
   preload() {
     this.load.image('grass', 'src/assets/sprite/grass.png');
+    this.load.image('gravel', 'src/assets/sprite/gravier.png');
     this.load.image('wall', 'src/assets/sprite/wall.png');
     this.load.image('carac', 'src/assets/sprite/cara.png');
     this.load.image('zomb', 'src/assets/sprite/zomb.png');
-    this.load.image('map', 'src/assets/sprite/map.png');
     this.load.image('bullet', 'src/assets/sprite/bullet.png');
-
+    this.load.image('arche', 'src/assets/sprite/archeeliza.png');
   }
 
   create () {
+    this.cameras.main.setBounds(0, 0, 1024, 768);
+    var ground;
     var world;
     var isoY;
     var isoX;
-    this.add.tileSprite(512, 384, 1024, 768, 'map');
-    
 
-    //dude = this.add.existing(new Dude(this, 100, 100));
+    
+    
+    //dude = this.physics.add.sprite(100,100, new Dude(this, 100, 100));
     dude = this.physics.add.sprite(500, 500, 'carac');
     cursor = this.input.keyboard.createCursorKeys()
     dude.setDepth(1)
     this.bulletGroup = new BulletGroup(this);//create a bullet group
     this.ZombiesGroup = new ZombiesGroup(this);//create a bullet group
 
+    //Camera settings
+    this.cameras.main.startFollow(dude, true, 0.09, 0.09);
+    this.cameras.main.setZoom(1.5);
+
+    /*Print Score & Timer */
+    var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+    scoreText = this.add.text(16, 16, 'score: 0', style);
+
+    text = this.add.text(32, 32);
+    timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(10000, 10000), loop: true }));
+
 
     for (let i = 0; i < Maxzombies; i++) {
       this.updateCounter();
     }
     this.physics.add.collider(dude, this.ZombiesGroup, function () {
+
     }); 
  
     for (let r = 0; r < map.length; r++) {
       for (let c = 0; c < map[0].length; c++) {
         switch (map[r][c]) {
           case 0:
-            world = this.add.sprite(500, 500, 'grass');
+            ground = this.add.sprite(500, 500, 'gravel');
             break;
           case 1:
-            world = this.physics.add.sprite(500, 500, 'wall');
-            world.body.pushable = false
+            ground = this.add.sprite(500, 500, 'gravel');
+            world = this.physics.add.sprite(500, 500, 'arche');
+            world.body.pushable = false;
             break;
           case 2:
-            world = this.physics.add.sprite(500, 500, 'wall');
-            world.body.pushable = false
+            ground = this.add.sprite(500, 500, 'gravel');
+            world = this.physics.add.sprite(500, 500, 'arche');
+            world.body.pushable = false;
             break;
           case 3:
-            world = this.physics.add.sprite(500, 500, 'wall');
-            world.body.pushable = false
+            ground = this.add.sprite(500, 500, 'gravel');
+            world = this.physics.add.sprite(500, 500, 'arche');
+            world.body.pushable = false;
             break;
           case 4:
-            world = this.physics.add.sprite(500, 500, 'wall');
-            world.body.pushable = false
+            ground = this.add.sprite(500, 500, 'gravel');
+            world = this.physics.add.sprite(123,50, 'arche');
+            world.body.pushable = false;
             break;
           case 5:
-            world = this.physics.add.sprite(500, 500, 'wall');
-            world.body.pushable = false
+            ground = this.add.sprite(500, 500, 'gravel');
+            world = this.physics.add.sprite(500, 500, 'arche');
+            world.body.pushable = false;
             break;
           case 6:
-            world = this.physics.add.sprite(500, 500, 'wall');
-            world.body.pushable = false
+            ground = this.add.sprite(500, 500, 'gravel');
+            world = this.physics.add.sprite(500, 500, 'arche');
+            world.body.pushable = false;
             break;
           default:
             break;
         }
 
-        isoX = (800 + r * 20) - (300 + c * 20);
-        isoY = ((400 + r * 23) + (300 + c * 23)) / 2;
+        isoX = (0 + r * 20) - (0 + c * 20);
+        isoY = ((0 + r * 23) + (0 + c * 23)) / 2;
 
         this.physics.add.collider(dude, world, function () {
-
           moveok = false;
         });
 
         this.physics.add.overlap(this.ZombiesGroup, this.bulletGroup, function (ZombiesGroup, bulletGroup) {
           bulletGroup.destroy();
           ZombiesGroup.destroy();
+          //update score
+          score += 10*scoreMultiplicator;
+          scoreText.setText('Score: ' + score);
         });
-
-
         // world = this.add.sprite(r * 50, c * 50, 'grass');
-        Phaser.Display.Align.In.Center(world, this.add.zone(isoX, isoY, 800, 600));
+        Phaser.Display.Align.In.Center(ground, this.add.zone(isoX, isoY, 800, 600));
       }
     }
+
 		this.addEvents();//call the method to trigger the shoot
+
     //aiming
     this.input.on('pointermove', function (pointer) {
         angle = Phaser.Math.Angle.BetweenPoints(dude, pointer);//give an angle between the character and the pointer
         degrees = Phaser.Math.RadToDeg(angle);//change the angle in radians into degrees ( easier to work with )
         //calculate the angle of th X and Y axis. angle will be used for the shooting method so the bullet goes in the right direction
+
         if(degrees>0){
             Xdegrees = (-degrees)+90;
         }
@@ -280,32 +315,49 @@ class Map extends Phaser.Scene {
         if(-90>degrees && degrees>=-180){
             Ydegrees = -(degrees+180);
         }
-
-
     }, this);
   }
 
-  update() {
-    if (moveok === false) {
-      dude.setVelocityX(0);
-      dude.setVelocityY(0);
-    } else if (cursor.up.isDown) {
-      dude.setVelocityY(-160);
-    } else if (cursor.down.isDown) {
-      dude.setVelocityY(160);
-    } else if (cursor.left.isDown) {
-      dude.setVelocityX(-160);
-    }
-    else if (cursor.right.isDown) {
-      dude.setVelocityX(160);
-    }
-    moveok = true;
-   
- 
-      this.ZombiesGroup.x += (dude.x - this.ZombiesGroup.x) * 0.01;
-      this.ZombiesGroup.y += (dude.y - this.ZombiesGroup.y) * 0.01;
 
+  update()
+  {
+    if (cursor.up.isDown)
+    {
+      dude.setVelocityY(-160)
+    }
+    else if (cursor.down.isDown)
+    {
+      dude.setVelocityY(160)
+    }
+    else if (cursor.left.isDown)
+    {
+      dude.setVelocityX(-160)
+    }
+    else if (cursor.right.isDown)
+    {
+      dude.setVelocityX(160)
+    }
+    else 
+    {
+      dude.setVelocityX(0)
+      dude.setVelocityY(0)
+    }
+
+    /*zombs.forEach(function (zomb) {
+      zomb.update()
+    })*/
+   
+    this.ZombiesGroup.x += (dude.x - this.ZombiesGroup.x) * 0.01;
+    this.ZombiesGroup.y += (dude.y - this.ZombiesGroup.y) * 0.01;
+
+    //timer reinitialize
+    var output = [];
+    output.push('Event.progress: ' + timerEvents[0].getProgress().toString().substr(0, 4));
+    if (timerEvents[0].getProgress().toString().substr(0, 4) == 0.9) 
+    {
+      console.log("+15 multiplicator");
+      scoreMultiplicator += 1 ;
+    }
+    text.setText(output);
   }
 }
-
-
