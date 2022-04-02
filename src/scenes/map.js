@@ -42,79 +42,79 @@ var scoreMultiplicator = 1;
 
 //create a group for the bullets
 class BulletGroup extends Phaser.Physics.Arcade.Group {
-	constructor(scene) {
-		// Call the super constructor, passing in a world and a scene
-		super(scene.physics.world, scene);
+  constructor(scene) {
+    // Call the super constructor, passing in a world and a scene
+    super(scene.physics.world, scene);
 
-		// Initialize the group
-		this.createMultiple({
-			classType: Bullet,
-			frameQuantity: Maxbullets, // Create 30 instances in the pool
-			active: false,
-			visible: false,
-			key: 'bullet'
-		}) 
-	}
-    //will call the class bullet when triggered
-    fireBullet(x, y, Yangle, Xangle) {
-		// Get the first available sprite in the group
-		const bullet = this.getFirstDead(false);
-		if (bullet) {
-			bullet.fire(x, y, Yangle, Xangle);
-		}
-	}
+    // Initialize the group
+    this.createMultiple({
+      classType: Bullet,
+      frameQuantity: Maxbullets, // Create 30 instances in the pool
+      active: false,
+      visible: false,
+      key: 'bullet'
+    })
+  }
+  //will call the class bullet when triggered
+  fireBullet(x, y, Yangle, Xangle) {
+    // Get the first available sprite in the group
+    const bullet = this.getFirstDead(false);
+    if (bullet) {
+      bullet.fire(x, y, Yangle, Xangle);
+    }
+  }
 }
 
 class ZombiesGroup extends Phaser.Physics.Arcade.Group {
-	constructor(scene) {
-		// Call the super constructor, passing in a world and a scene
-		super(scene.physics.world, scene);
+  constructor(scene) {
+    // Call the super constructor, passing in a world and a scene
+    super(scene.physics.world, scene);
 
-		// Initialize the group
-		this.createMultiple({
-			classType: Zombies,
-			frameQuantity: Maxzombies, // Create 30 instances in the pool
-			active: false,
-			visible: false,
-			key: 'zomb'
-		}) 
+    // Initialize the group
+    this.createMultiple({
+      classType: Zombies,
+      frameQuantity: Maxzombies, // Create 30 instances in the pool
+      active: false,
+      visible: false,
+      key: 'zomb'
+    })
+  }
 
-	}
-    //will call the class bullet when triggered
-    ZombiesSpwan(x, y) {
-		// Get the first available sprite in the group
-		const zombie = this.getFirstDead(false);
-		if (zombie) {
-			zombie.Spawn(x, y);
+  //will call the class bullet when triggered
+  ZombiesSpwan(x, y) {
+    // Get the first available sprite in the group
+    const zombie = this.getFirstDead(false);
+    if (zombie) {
+      zombie.Spawn(x, y);
 
-		}
-	}
+    }
+  }
 }
 
 //bullet properties
 class Bullet extends Phaser.Physics.Arcade.Sprite {
-	constructor(scene, x, y) {
-		super(scene, x, y, 'bullet');
+  constructor(scene, x, y) {
+    super(scene, x, y, 'bullet');
 
-	}
-    //fire bullets depending on the postion and angle (angle is calculate in the 'create' part of the scene)
-    fire(x, y, Yangle, Xangle) {
-		this.body.reset(x, y);
-		this.setActive(true);
-		this.setVisible(true);
+  }
+  //fire bullets depending on the postion and angle (angle is calculate in the 'create' part of the scene)
+  fire(x, y, Yangle, Xangle) {
+    this.body.reset(x, y);
+    this.setActive(true);
+    this.setVisible(true);
 
-		this.setVelocityY(Yangle*10);//multiplied by 3 so the bullets are faster
-    this.setVelocityX(Xangle*10);//multiplied by 3 so the bullets are faster
-	}
+    this.setVelocityY(Yangle * 10);//multiplied by 3 so the bullets are faster
+    this.setVelocityX(Xangle * 10);//multiplied by 3 so the bullets are faster
+  }
 
-    preUpdate(time, delta) {
-		super.preUpdate(time, delta);
+  preUpdate(time, delta) {
+    super.preUpdate(time, delta);
 
-		if (this.y <= 0) {
-			this.setActive(false);
-			this.setVisible(false);
-		}
-	}
+    if (this.y <= 0) {
+      this.setActive(false);
+      this.setVisible(false);
+    }
+  }
 
 
   //will call the class bullet when triggered
@@ -128,27 +128,27 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 }
 
 class Zombies extends Phaser.Physics.Arcade.Sprite {
-	constructor(scene, x, y) {
-		super(scene, x, y, 'zomb');
-	}
-    //fire bullets depending on the postion and angle (angle is calculate in the 'create' part of the scene)
-    Spawn(x, y) {
-		this.body.reset(x, y);
-		this.setActive(true);
-		this.setVisible(true);
+  constructor(scene, x, y) {
+    super(scene, x, y, 'zomb');
+  }
+  //fire bullets depending on the postion and angle (angle is calculate in the 'create' part of the scene)
+  Spawn(x, y) {
+    this.body.reset(x, y);
+    this.setActive(true);
+    this.setVisible(true);
 
-		this.setVelocityY(30);//multiplied by 3 so the bullets are faster
+    this.setVelocityY(30);//multiplied by 3 so the bullets are faster
     this.setVelocityX(30);//multiplied by 3 so the bullets are faster
-	}
+  }
 
-    preUpdate(time, delta) {
-		super.preUpdate(time, delta);
+  preUpdate(time, delta) {
+    super.preUpdate(time, delta);
 
-		if (this.y <= 0) {
-			this.setActive(false);
-			this.setVisible(false);
-		}
-	}
+    if (this.y <= 0) {
+      this.setActive(false);
+      this.setVisible(false);
+    }
+  }
 
   //will call the class bullet when triggered
   ZombiesSpwan(x, y) {
@@ -160,48 +160,21 @@ class Zombies extends Phaser.Physics.Arcade.Sprite {
   }
 }
 
-class Dude extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y) {
-    super(scene, x, y, 'carac');
+/*class DudeGroup extends Phaser.Physics.Arcade.Group {
+  constructor(scene) {
+    super(scene.physics.world, scene);
+
+    this.createMultiple({
+      classType: Dude,
+      frameQuantity: 1,
+      active: true,
+      visible: true,
+      key: 'dude'
+    })
   }
 
-  Move() {
-    const UP = cursor.up.isDown;
-    const DOWN = cursor.down.isDown;
-    const LEFT = cursor.left.isDown;
-    const RIGHT = cursor.right.isDown;
 
-    if (UP)
-    {
-      dude.setVelocityX(0)
-      dude.setVelocityY(0)
-      dude.setVelocityY(-160)
-    }
-    else if (DOWN)
-    {
-      dude.setVelocityX(0)
-      dude.setVelocityY(0)
-      dude.setVelocityY(160)
-    }
-    else if (LEFT)
-    {
-      dude.setVelocityX(0)
-      dude.setVelocityY(0)
-      dude.setVelocityX(-160)
-    }
-    else if (RIGHT)
-    {
-      dude.setVelocityX(0)
-      dude.setVelocityY(0)
-      dude.setVelocityX(160)
-    }
-    else 
-    {
-      dude.setVelocityX(0)
-      dude.setVelocityY(0)
-    }
-  }
-}
+}*/
 
 class Map extends Phaser.Scene {
   constructor() {
@@ -222,10 +195,10 @@ class Map extends Phaser.Scene {
     this.input.on('pointerdown', function () {
       this.cameras.main.shake(100, 0.002);
     }, this);
-    
+
   }
 
-  updateCounter(){
+  updateCounter() {
     this.ZombiesGroup.ZombiesSpwan(Math.random() * 800, Math.random() * 500, Ydegrees, Xdegrees);
   }
 
@@ -242,18 +215,16 @@ class Map extends Phaser.Scene {
     ]);
   }
 
-  create () {
+  create() {
     this.cameras.main.setBounds(0, 0, 1024, 768);
     var ground;
     var world;
     var isoY;
     var isoX;
 
-    //dude = new Dude(this, sprite);
-    //dude = this.physics.add.sprite(500, 500, new Dude(this, 500, 500));
     dude = this.physics.add.sprite(500, 500, 'carac');
-    cursor = this.input.keyboard.createCursorKeys()
-    dude.setDepth(1)
+    dude.setDepth(1);
+    cursor = this.input.keyboard.createCursorKeys();
     this.bulletGroup = new BulletGroup(this);//create a bullet group
     this.ZombiesGroup = new ZombiesGroup(this);//create a bullet group
 
@@ -274,8 +245,8 @@ class Map extends Phaser.Scene {
     }
     this.physics.add.collider(dude, this.ZombiesGroup, function () {
 
-    }); 
- 
+    });
+
     for (let r = 0; r < map.length; r++) {
       for (let c = 0; c < map[0].length; c++) {
         switch (map[r][c]) {
@@ -299,7 +270,7 @@ class Map extends Phaser.Scene {
             break;
           case 4:
             ground = this.add.sprite(500, 500, 'gravel');
-            world = this.physics.add.sprite(123,50, 'arche');
+            world = this.physics.add.sprite(123, 50, 'arche');
             world.body.pushable = false;
             break;
           case 5:
@@ -327,7 +298,7 @@ class Map extends Phaser.Scene {
           bulletGroup.destroy();
           ZombiesGroup.destroy();
           //update score
-          score += 10*scoreMultiplicator;
+          score += 10 * scoreMultiplicator;
           scoreText.setText('Score: ' + score);
         });
         // world = this.add.sprite(r * 50, c * 50, 'grass');
@@ -335,32 +306,32 @@ class Map extends Phaser.Scene {
       }
     }
 
-		this.addEvents();//call the method to trigger the shoot
+    this.addEvents();//call the method to trigger the shoot
 
     //aiming
     this.input.on('pointermove', function (pointer) {
-        angle = Phaser.Math.Angle.BetweenPoints(dude, pointer);//give an angle between the character and the pointer
-        degrees = Phaser.Math.RadToDeg(angle);//change the angle in radians into degrees ( easier to work with )
-        //calculate the angle of th X and Y axis. angle will be used for the shooting method so the bullet goes in the right direction
+      angle = Phaser.Math.Angle.BetweenPoints(dude, pointer);//give an angle between the character and the pointer
+      degrees = Phaser.Math.RadToDeg(angle);//change the angle in radians into degrees ( easier to work with )
+      //calculate the angle of th X and Y axis. angle will be used for the shooting method so the bullet goes in the right direction
 
-        if(degrees>0){
-            Xdegrees = (-degrees)+90;
-        }
-        if(degrees<=0){
-            Xdegrees= (degrees+90);
-        }
-        if(0<degrees && degrees<=90){
-            Ydegrees = degrees;
-        }
-        if(90<degrees && degrees<=180){
-            Ydegrees = -(degrees)+180;
-        }
-        if(0>degrees && degrees>-90){
-            Ydegrees = degrees;
-        }
-        if(-90>degrees && degrees>=-180){
-            Ydegrees = -(degrees+180);
-        }
+      if (degrees > 0) {
+        Xdegrees = (-degrees) + 90;
+      }
+      if (degrees <= 0) {
+        Xdegrees = (degrees + 90);
+      }
+      if (0 < degrees && degrees <= 90) {
+        Ydegrees = degrees;
+      }
+      if (90 < degrees && degrees <= 180) {
+        Ydegrees = -(degrees) + 180;
+      }
+      if (0 > degrees && degrees > -90) {
+        Ydegrees = degrees;
+      }
+      if (-90 > degrees && degrees >= -180) {
+        Ydegrees = -(degrees + 180);
+      }
     }, this);
 
     this.musicG = this.sound.add('inGame');
@@ -371,9 +342,7 @@ class Map extends Phaser.Scene {
   }
 
 
-  update()
-  {
-    //dude.Move();
+  update() {
     if (cursor.up.isDown)
     {
       dude.setVelocityX(0)
@@ -407,17 +376,16 @@ class Map extends Phaser.Scene {
     /*zombs.forEach(function (zomb) {
       zomb.update()
     })*/
-   
+
     this.ZombiesGroup.x += (dude.x - this.ZombiesGroup.x) * 0.01;
     this.ZombiesGroup.y += (dude.y - this.ZombiesGroup.y) * 0.01;
 
     //timer reinitialize
     var output = [];
     output.push('Event.progress: ' + timerEvents[0].getProgress().toString().substr(0, 4));
-    if (timerEvents[0].getProgress().toString().substr(0, 4) == 0.9) 
-    {
+    if (timerEvents[0].getProgress().toString().substr(0, 4) == 0.9) {
       console.log("+15 multiplicator");
-      scoreMultiplicator += 1 ;
+      scoreMultiplicator += 1;
     }
     text.setText(output);
   }

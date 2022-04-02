@@ -6,8 +6,9 @@ class GameOver extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('GO', 'src/assets/sprite/gameover.png');
-    this.load.image('retry', 'src/assets/sprite/retry.png');
+    this.load.image('GO', 'src/assets/sprite/gameOver/gameover.png');
+    this.load.image('retry', 'src/assets/sprite/gameOver/retry.png');
+    this.load.image('pressEnter', 'src/assets/sprite/gameOver/pressEnter.png');
     this.load.audio('GameOverS', [
       'src/assets/SFX/ambiance halloween menu.mp3'
     ]);
@@ -16,6 +17,7 @@ class GameOver extends Phaser.Scene {
   create() {
     this.add.image(540, 300, 'GO').setScale(0.1);
     this.add.image(540, 600, 'retry');
+    this.add.image(540, 635, 'pressEnter');
 
     this.enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
