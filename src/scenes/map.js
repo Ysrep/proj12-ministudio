@@ -369,8 +369,7 @@ class Map extends Phaser.Scene {
     //timer reinitialize
     var output = [];
     output.push('Event.progress: ' + timerEvents[0].getProgress().toString().substr(0, 4));
-    if (timerEvents[0].getProgress().toString().substr(0, 4) == 0.9) 
-    {
+    if (timerEvents[0].getProgress().toString().substr(0, 4) == 0.9)  {
       console.log("+15 multiplicator");
       scoreMultiplicator += 1 ;
     }
