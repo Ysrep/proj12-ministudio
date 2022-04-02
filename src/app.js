@@ -1,7 +1,7 @@
 const config = {
   type: Phaser.AUTO,
-  width: 1024,
-  height: 768,
+  width: 1080,
+  height: 720,
   backgroundColor: '#0d0d0d',
   parent: 'phase-MapS',
   scene:[Map],

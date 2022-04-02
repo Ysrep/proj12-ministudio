@@ -1,37 +1,57 @@
-/*class Dude extends Phaser.GameObjects.Image {
-  constructor(scene, x, y, hp) {
-    super(scene, x, y, 'cara', { key: "dude" });
+export default class Dude extends Phaser.Physics.Arcade.Sprite {
+  constructor(scene, x, y) {
+    super(scene, x, y, hp);
     this.startX = x;
     this.startY = y;
-    hp = 3;
+    this.hp = 5;
+
+    scene.add.existing(this)
   }
 
+
+
   preload() {
-    this.load.image('chara', 'src/assets/sprite/cara.png');
+    this.load.image('mainChar', 'src/assets/sprite/cara.png');
   }
 
   create() {
-    this.add.image(this.x, this.y, 'chara');
+    this.charaDesign = this.add.image(this.x, this.y, 'mainChar');
+    this.cursor = this.input.keyboard.createCursorKeys();
   }
 
-  update(cursor, moveok, dude) {
-    if (moveok === false) {
-      dude.setVelocityX(0);
-      dude.setVelocityY(0);
-    } else if (cursor.up.isDown) {
-      dude.setVelocityY(-160);
-    } else if (cursor.down.isDown) {
-      dude.setVelocityY(160);
-    } else if (cursor.left.isDown) {
-      dude.setVelocityX(-160);
-    } else if (cursor.right.isDown) {
-      dude.setVelocityX(160);
+  Move() {
+    const UP = this.cursor.up.isDown;
+    const DOWN = this.cursor.down.isDown;
+    const LEFT = this.cursor.left.isDown;
+    const RIGHT = this.cursor.right.isDown;
+
+    if (UP) {
+      this.setVelocityX(0);
+      this.setVelocityY(0);
+      this.setVelocityY(-160);
     }
-    moveok = true;
-    /*zombs.forEach(function (zomb) {
-      zomb.update();
-    });
+    else if (DOWN) {
+      this.setVelocityX(0);
+      this.setVelocityY(0);
+      this.setVelocityY(160);
+    }
+    else if (LEFT) {
+      this.setVelocityX(0);
+      this.setVelocityY(0);
+      this.setVelocityX(-160);
+    }
+    else if (RIGHT) {
+      this.setVelocityX(0);
+      this.setVelocityY(0);
+      this.setVelocityX(160);
+    }
+    else {
+      this.setVelocityX(0);
+      this.setVelocityY(0);
+    }
+  }
+
+  update() {
+    this.hp = 2;
   }
 }
-*/
-

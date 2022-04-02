@@ -95,31 +95,30 @@ var Bullet = new Phaser.Class({
 
 
 
-
 class ZombiesGroup extends Phaser.Physics.Arcade.Group {
-	constructor(scene) {
-		// Call the super constructor, passing in a world and a scene
-		super(scene.physics.world, scene);
+  constructor(scene) {
+    // Call the super constructor, passing in a world and a scene
+    super(scene.physics.world, scene);
 
-		// Initialize the group
-		this.createMultiple({
-			classType: Zombies,
-			frameQuantity: Maxzombies, // Create 30 instances in the pool
-			active: false,
-			visible: false,
-			key: 'zomb'
-		}) 
+    // Initialize the group
+    this.createMultiple({
+      classType: Zombies,
+      frameQuantity: Maxzombies, // Create 30 instances in the pool
+      active: false,
+      visible: false,
+      key: 'zomb'
+    })
+  }
 
-	}
-    //will call the class bullet when triggered
-    ZombiesSpwan(x, y) {
-		// Get the first available sprite in the group
-		const zombie = this.getFirstDead(false);
-		if (zombie) {
-			zombie.Spawn(x, y);
+  //will call the class bullet when triggered
+  ZombiesSpwan(x, y) {
+    // Get the first available sprite in the group
+    const zombie = this.getFirstDead(false);
+    if (zombie) {
+      zombie.Spawn(x, y);
 
-		}
-	}
+    }
+  }
 }
 
 class Zombies extends Phaser.Physics.Arcade.Sprite {
@@ -136,14 +135,14 @@ class Zombies extends Phaser.Physics.Arcade.Sprite {
     this.setVelocityX(30);
 	}
 
-    preUpdate(time, delta) {
-		super.preUpdate(time, delta);
+  preUpdate(time, delta) {
+    super.preUpdate(time, delta);
 
-		if (this.y <= 0) {
-			this.setActive(false);
-			this.setVisible(false);
-		}
-	}
+    if (this.y <= 0) {
+      this.setActive(false);
+      this.setVisible(false);
+    }
+  }
 
   
   ZombiesSpwan(x, y) {
@@ -153,6 +152,22 @@ class Zombies extends Phaser.Physics.Arcade.Sprite {
     }
   }
 }
+
+/*class DudeGroup extends Phaser.Physics.Arcade.Group {
+  constructor(scene) {
+    super(scene.physics.world, scene);
+
+    this.createMultiple({
+      classType: Dude,
+      frameQuantity: 1,
+      active: true,
+      visible: true,
+      key: 'dude'
+    })
+  }
+
+
+}*/
 
 class Map extends Phaser.Scene {
   constructor() {
@@ -254,7 +269,7 @@ class Map extends Phaser.Scene {
             break;
           case 4:
             ground = this.add.sprite(500, 500, 'gravel');
-            world = this.physics.add.sprite(123,50, 'arche');
+            world = this.physics.add.sprite(123, 50, 'arche');
             world.body.pushable = false;
             break;
           case 5:
@@ -282,7 +297,7 @@ class Map extends Phaser.Scene {
           playerBullets.destroy();
           ZombiesGroup.destroy();
           //update score
-          score += 10*scoreMultiplicator;
+          score += 10 * scoreMultiplicator;
           scoreText.setText('Score: ' + score);
         });
         
@@ -320,18 +335,26 @@ class Map extends Phaser.Scene {
 
     if (cursor.up.isDown)
     {
+      dude.setVelocityX(0)
+      dude.setVelocityY(0)
       dude.setVelocityY(-160)
     }
     else if (cursor.down.isDown)
     {
+      dude.setVelocityX(0)
+      dude.setVelocityY(0)
       dude.setVelocityY(160)
     }
     else if (cursor.left.isDown)
     {
+      dude.setVelocityX(0)
+      dude.setVelocityY(0)
       dude.setVelocityX(-160)
     }
     else if (cursor.right.isDown)
     {
+      dude.setVelocityX(0)
+      dude.setVelocityY(0)
       dude.setVelocityX(160)
     }
     else 
@@ -347,10 +370,9 @@ class Map extends Phaser.Scene {
     //timer reinitialize
     var output = [];
     output.push('Event.progress: ' + timerEvents[0].getProgress().toString().substr(0, 4));
-    if (timerEvents[0].getProgress().toString().substr(0, 4) == 0.9) 
-    {
+    if (timerEvents[0].getProgress().toString().substr(0, 4) == 0.9) {
       console.log("+15 multiplicator");
-      scoreMultiplicator += 1 ;
+      scoreMultiplicator += 1;
     }
     text.setText(output);
 
