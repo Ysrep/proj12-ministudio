@@ -21,7 +21,7 @@ var game = new Phaser.Game(config);
       debug: true
     }
   },
-  scene: [GameOver, MainMenu, Map]
+  scene: [MainMenu, Map, GameOver],
 };
 
 var game = new Phaser.Game(config);*/
