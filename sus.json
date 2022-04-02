@@ -7,6 +7,14 @@
             "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 40},
             "sourceSize": { "w": 40, "h": 40},
             "duration": 100
+        },
+        "sus 2.ase": {
+            "frame": {"x": 70, "y": 70, "w": 70, "h": 70},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 40},
+            "sourceSize": { "w": 40, "h": 40},
+            "duration": 100
         }
     }
 }
