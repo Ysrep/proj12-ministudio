@@ -13,15 +13,3 @@ const config = {
   }
 }
 var game = new Phaser.Game(config);
-
-  /*physics: {
-    default: 'matter',
-    matter: {
-      gravity : {y:0},
-      debug: true
-    }
-  },
-  scene: [MainMenu, Map, GameOver],
-};
-
-var game = new Phaser.Game(config);*/
