@@ -10,12 +10,12 @@ const map = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -75,6 +75,8 @@ var world;
 var isoY;
 var isoX;
 
+const DUDE_KEY = 'dude'
+
 //set Score variables
 var score = 0;
 var scoreText;
@@ -104,15 +106,16 @@ class Map extends Phaser.Scene {
     this.load.image('arche', 'src/assets/sprite/archeeliza.png');
     this.load.image('wheel', 'src/assets/sprite/wheel.png');
     this.load.image('target', 'src/assets/sprite/crossAim.png');
+    this.load.image('house', 'src/assets/sprite/house.png');
+
+    this.load.spritesheet(DUDE_KEY, 'src/assets/sprite/dude.png', { frameWidth: 33, frameHeight: 56 });
   }
 
   create () {
-    //dude settings
-    dude = this.physics.add.sprite(500, 500, 'carac');
-    hp = 5;
-    dude.setDepth(1);
+    //Spawn player
+    dude = this.physics.add.sprite(500, 500, DUDE_KEY)
+    CreatePlayer()
 
-    
     //bullets settings
     playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
     this.input.on('pointerdown', function (pointer, time, lastFired) {
@@ -173,7 +176,8 @@ class Map extends Phaser.Scene {
             break;
           case 1:
             ground = this.add.sprite(0, 0, 'gravel');
-            world = this.physics.add.sprite(600, 400, 'wheel');
+            //world = this.physics.add.sprite(600, 400, 'wheel');
+            world = this.physics.add.sprite(0, 0, 'house');
             world.body.pushable = false;
             break;
           case 2:
@@ -238,30 +242,26 @@ class Map extends Phaser.Scene {
     // Constrain position of constrainReticle
     constrainReticle(reticle);
 
-    if (cursor.up.isDown) {
-      dude.setVelocityX(0);
-      dude.setVelocityY(0);
-      dude.setVelocityY(-160);
-    }
-    else if (cursor.down.isDown) {
-      dude.setVelocityX(0);
-      dude.setVelocityY(0);
-      dude.setVelocityY(160);
-    }
-    else if (cursor.left.isDown) {
-      dude.setVelocityX(0);
-      dude.setVelocityY(0);
-      dude.setVelocityX(-160);
+    //movement
+    const speedWalk = 200;
+    let dudeVelocity = new Phaser.Math.Vector2();
+
+    if (cursor.left.isDown) {
+      dudeVelocity.x = -1;
+      //dude.anims.play('left', true)
     }
     else if (cursor.right.isDown) {
-      dude.setVelocityX(0);
-      dude.setVelocityY(0);
-      dude.setVelocityX(160);
+      dudeVelocity.x = 1;
+      //dude.anims.play('right', true)
     }
-    else {
-      dude.setVelocityX(0);
-      dude.setVelocityY(0);
+    if (cursor.up.isDown) {
+      dudeVelocity.y = -1;
     }
+    else if (cursor.down.isDown) {
+      dudeVelocity.y = 1;
+    }
+    dudeVelocity.scale(speedWalk);
+    dude.setVelocity(dudeVelocity.x, dudeVelocity.y);
 
     //timer reinitialize
     var output = [];
@@ -276,6 +276,32 @@ class Map extends Phaser.Scene {
       this.scene.start("GameOver");
     }
   }
+}
+
+function CreatePlayer()
+{
+  hp = 5;
+  dude.setDepth(1);
+
+  dude.anims.create({
+    key: 'idle',
+    frames: [{ key: DUDE_KEY, frame: 0 }],
+    frameRate: 20
+  })
+
+  dude.anims.create({
+    key: 'left',
+    frames: dude.anims.generateFrameNumbers(DUDE_KEY, { start: 4, end: 5 }),
+    frameRate: 10,
+    repeat: -1
+  })
+
+  dude.anims.create({
+    key: 'right',
+    frames: dude.anims.generateFrameNumbers(DUDE_KEY, { start: 6, end: 7 }),
+    frameRate: 10,
+    repeat: -1
+  })
 }
 
 /*
