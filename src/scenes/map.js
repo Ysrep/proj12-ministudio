@@ -61,8 +61,8 @@ const map = [
 
 var cursor;
 var moveok;
-var dude = null;
-var healthpoints = null;
+var dude;
+var hp;
 var reticle = null;
 var playerBullets = null;
 var time = 0;
@@ -88,7 +88,6 @@ class Map extends Phaser.Scene {
     super({ key: "Map" });
     this.playerBullets
     this.ZombiesGroup;
-    this.DudeGroup;
   }
 
   updateCounter(){
@@ -110,7 +109,7 @@ class Map extends Phaser.Scene {
   create () {
     //dude settings
     dude = this.physics.add.sprite(500, 500, 'carac');
-    dude.health = 3;
+    hp = 5;
     dude.setDepth(1);
 
     
@@ -138,6 +137,8 @@ class Map extends Phaser.Scene {
       this.updateCounter();
     }
     this.physics.add.collider(dude, this.ZombiesGroup, function () {
+      hp --;
+      console.log(hp);
     }); 
 
     //Collide between Zombies and bullets
@@ -236,26 +237,30 @@ class Map extends Phaser.Scene {
   update() {
     // Constrain position of constrainReticle
     constrainReticle(reticle);
-    
+
     if (cursor.up.isDown) {
-      dude.setVelocityX(0)
-      dude.setVelocityY(0)
-      dude.setVelocityY(-160)
-    }else if (cursor.down.isDown) {
-      dude.setVelocityX(0)
-      dude.setVelocityY(0)
-      dude.setVelocityY(160)
-    }else if (cursor.left.isDown) {
-      dude.setVelocityX(0)
-      dude.setVelocityY(0)
-      dude.setVelocityX(-160)
-    }else if (cursor.right.isDown) {
-      dude.setVelocityX(0)
-      dude.setVelocityY(0)
-      dude.setVelocityX(160)
-    }else  {
-      dude.setVelocityX(0)
-      dude.setVelocityY(0)
+      dude.setVelocityX(0);
+      dude.setVelocityY(0);
+      dude.setVelocityY(-160);
+    }
+    else if (cursor.down.isDown) {
+      dude.setVelocityX(0);
+      dude.setVelocityY(0);
+      dude.setVelocityY(160);
+    }
+    else if (cursor.left.isDown) {
+      dude.setVelocityX(0);
+      dude.setVelocityY(0);
+      dude.setVelocityX(-160);
+    }
+    else if (cursor.right.isDown) {
+      dude.setVelocityX(0);
+      dude.setVelocityY(0);
+      dude.setVelocityX(160);
+    }
+    else {
+      dude.setVelocityX(0);
+      dude.setVelocityY(0);
     }
 
     //timer reinitialize
@@ -266,6 +271,10 @@ class Map extends Phaser.Scene {
       scoreMultiplicator += 1;
     }
     text.setText(output);
+
+    if(hp == 0){
+      this.scene.start("GameOver");
+    }
   }
 }
 

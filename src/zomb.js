@@ -19,7 +19,6 @@ class ZombiesGroup extends Phaser.Physics.Arcade.Group {
     const zombie = this.getFirstDead(false);
     if (zombie) {
       zombie.Spawn(x, y);
-
     }
   }
 }
