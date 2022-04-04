@@ -165,13 +165,17 @@ class Map extends Phaser.Scene {
    
    
     //Print Score & Timer
-    var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
-    scoreText = this.add.text(16, 16, 'score: 0', style);
-    scoreText.setDepth(2)
-    text = this.add.text(32, 32);
+    score = 0;
+    timerEvents = [];
+    scoreMultiplicator = 1;
+
+    var style = { font: "bold 25px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+    scoreText = this.add.text(250, 165, 'Score: 0', style).setScrollFactor(0);
+    scoreText.setDepth(99)
+    text = this.add.text(1080/2-120, 165,'',style).setScrollFactor(0);
     timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(10000, 10000), loop: true }));
     timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(3000, 3000), loop: true }));
-    text.setDepth(2);
+    text.setDepth(99);
 
     //display map
     for (let r = 0; r < map.length; r++) {
