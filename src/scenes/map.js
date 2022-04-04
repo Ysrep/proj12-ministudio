@@ -76,6 +76,7 @@ var isoY;
 var isoX;
 
 const DUDE_KEY = 'dude'
+var touch;
 
 //set Score variables
 var score = 0;
@@ -134,14 +135,18 @@ class Map extends Phaser.Scene {
 
 
     //Zombies settings
+    touch = 1;
     this.ZombiesGroup = new ZombiesGroup(this);//create a zombie group
     this.ZombiesGroup.setDepth(1);
     for (let i = 0; i < Maxzombies; i++) {
       this.updateCounter();
     }
     this.physics.add.collider(dude, this.ZombiesGroup, function () {
-      hp --;
-      console.log(hp);
+      if(touch == 1){
+        hp --;
+        console.log(hp);
+        touch = 0;
+      }
     }); 
 
     //Collide between Zombies and bullets
@@ -165,6 +170,7 @@ class Map extends Phaser.Scene {
     scoreText.setDepth(2)
     text = this.add.text(32, 32);
     timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(10000, 10000), loop: true }));
+    timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(3000, 3000), loop: true }));
     text.setDepth(2);
 
     //display map
@@ -177,7 +183,7 @@ class Map extends Phaser.Scene {
           case 1:
             ground = this.add.sprite(0, 0, 'gravel');
             //world = this.physics.add.sprite(600, 400, 'wheel');
-            world = this.physics.add.sprite(0, 0, 'house');
+            world = this.physics.add.sprite(100, 100, 'house');
             world.body.pushable = false;
             break;
           case 2:
@@ -187,7 +193,7 @@ class Map extends Phaser.Scene {
             break;
           case 3:
             ground = this.add.sprite(0, 0, 'gravel');
-            world = this.physics.add.sprite(0, 0, 'arche');
+            world = this.physics.add.sprite(700, 600, 'wheel');
             world.body.pushable = false;
             break;
           case 4:
@@ -269,6 +275,9 @@ class Map extends Phaser.Scene {
     if (timerEvents[0].getProgress().toString().substr(0, 4) == 0.9)  {
       console.log("+15 multiplicator");
       scoreMultiplicator += 1;
+    }
+    if (timerEvents[1].getProgress().toString().substr(0, 4) == 0.9)  {
+      touch = 1;
     }
     text.setText(output);
 
