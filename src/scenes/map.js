@@ -142,7 +142,7 @@ class Map extends Phaser.Scene {
 
     //Zombies settings
     touch = 1;
-    this.ZombiesGroup = new ZombiesGroup(this);//create a zombie group
+    this.ZombiesGroup = new ZombiesGroup(this, dude); //create a zombie group
     this.ZombiesGroup.setDepth(1);
     for (let i = 0; i < Maxzombies; i++) {
       this.updateCounter();
@@ -295,6 +295,7 @@ class Map extends Phaser.Scene {
     if(hp == 0){
       this.scene.start("GameOver");
     }
+    this.ZombiesGroup.update(dude.x, dude.y);   
   }
 }
 
