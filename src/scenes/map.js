@@ -93,6 +93,7 @@ class Map extends Phaser.Scene {
     this.playerBullets
     this.ZombiesGroup;
   }
+  
 
   updateCounter(){
     this.ZombiesGroup.ZombiesSpawn(Math.random() * 800, Math.random() * 500);
@@ -120,6 +121,8 @@ class Map extends Phaser.Scene {
   }
 
   create () {
+    //this.add.dom(100, 100, 'div', 'background-color: lime; width: 220px; height: 100px; font: 48px Arial', 'phase-MapS');
+
     //Spawn player
     dude = this.physics.add.sprite(500, 500, DUDE_KEY)
     CreatePlayer()
@@ -156,7 +159,7 @@ class Map extends Phaser.Scene {
         console.log(hp);
         touch = 0;
       }
-    }); 
+    });
 
     //Collide between Zombies and bullets
     this.physics.add.overlap(this.ZombiesGroup, playerBullets, function (ZombiesGroup, playerBullets) {
