@@ -10,12 +10,12 @@ const map = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -75,6 +75,9 @@ var world;
 var isoY;
 var isoX;
 
+const DUDE_KEY = 'dude'
+var touch;
+
 //set Score variables
 var score = 0;
 var scoreText;
@@ -82,6 +85,11 @@ var scoreText;
 var text;
 var timerEvents = [];
 var scoreMultiplicator = 1;
+
+var damaged = [];
+var shoot = [];
+var voiceline = [];
+var szomb = [];
 
 class Map extends Phaser.Scene {
   constructor() {
@@ -104,6 +112,7 @@ class Map extends Phaser.Scene {
     this.load.image('arche', 'src/assets/sprite/archeeliza.png');
     this.load.image('wheel', 'src/assets/sprite/wheel.png');
     this.load.image('target', 'src/assets/sprite/crossAim.png');
+    this.load.image('house', 'src/assets/sprite/house.png');
     this.load.audio('cparti', ['src/assets/SFX/cparti.mp3']);
     this.load.audio('cperdu', ['src/assets/SFX/cperdu.mp3']);
     this.load.audio('damaged1', ['src/assets/SFX/damaged1.mp3']);
@@ -132,15 +141,46 @@ class Map extends Phaser.Scene {
     this.load.audio('zomb2', ['src/assets/SFX/zomb2.mp3']);
     this.load.audio('zomb3', ['src/assets/SFX/zomb3.mp3']);
     this.load.audio('zomb4', ['src/assets/SFX/zomb4.mp3']);
+    this.load.spritesheet(DUDE_KEY, 'src/assets/sprite/dude.png', { frameWidth: 33, frameHeight: 56 });
   }
 
   create () {
-    //dude settings
-    dude = this.physics.add.sprite(500, 500, 'carac');
-    hp = 5;
-    dude.setDepth(1);
-
+    //Sound part
+    this.sound.pauseOnBlur = false;
+    this.cparti = this.sound.add('cparti');
+    this.cperdu = this.sound.add('cperdu');
+    damaged.push(this.sound.add('damaged1'));
+    damaged.push(this.sound.add('damaged2'));
+    damaged.push(this.sound.add('damaged3'));
+    damaged.push(this.sound.add('damaged4'));
+    damaged.push(this.sound.add('damaged5'));
+    damaged.push(this.sound.add('damaged6'));
+    this.forain = this.sound.add('forain');
+    this.kill = this.sound.add('kill');
+    this.onepiece = this.sound.add('onepiece');
+    this.piscine = this.sound.add('piscine');
+    this.walking = this.sound.add('walking');
+    shoot.push(this.sound.add('shoot1'));
+    shoot.push(this.sound.add('shoot2'));
+    shoot.push(this.sound.add('shoot3'));
+    shoot.push(this.sound.add('shoot4'));
+    shoot.push(this.sound.add('shoot5'));
+    voiceline.push(this.sound.add('voiceline1'));
+    voiceline.push(this.sound.add('voiceline2'));
+    voiceline.push(this.sound.add('voiceline3'));
+    voiceline.push(this.sound.add('voiceline4'));
+    voiceline.push(this.sound.add('voiceline5'));
+    voiceline.push(this.sound.add('voiceline6'));
+    szomb.push(this.sound.add('zomb1'));
+    szomb.push(this.sound.add('zomb2'));
+    szomb.push(this.sound.add('zomb3'));
+    szomb.push(this.sound.add('zomb4'));
     
+
+    //Spawn player
+    dude = this.physics.add.sprite(500, 500, DUDE_KEY)
+    CreatePlayer()
+
     //bullets settings
     playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
     this.input.on('pointerdown', function (pointer, time, lastFired) {
@@ -150,6 +190,7 @@ class Map extends Phaser.Scene {
       var bullet = playerBullets.get().setActive(true).setVisible(true);
       if (bullet) {
         bullet.fire(dude, reticle);
+        shoot[Math.floor(Math.random()*5)].play();
         this.physics.add.collider(this.ZombiesGroup, bullet, function(){});
       }
     }, this);
@@ -159,14 +200,19 @@ class Map extends Phaser.Scene {
 
 
     //Zombies settings
-    this.ZombiesGroup = new ZombiesGroup(this);//create a zombie group
+    touch = 1;
+    this.ZombiesGroup = new ZombiesGroup(this, dude); //create a zombie group
     this.ZombiesGroup.setDepth(1);
     for (let i = 0; i < Maxzombies; i++) {
       this.updateCounter();
     }
     this.physics.add.collider(dude, this.ZombiesGroup, function () {
-      hp --;
-      console.log(hp);
+      if(touch == 1){
+        hp --;
+        console.log(hp);
+        touch = 0;
+        damaged[Math.floor(Math.random()*6)].play();
+      }
     }); 
 
     //Collide between Zombies and bullets
@@ -185,12 +231,17 @@ class Map extends Phaser.Scene {
    
    
     //Print Score & Timer
-    var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
-    scoreText = this.add.text(16, 16, 'score: 0', style);
-    scoreText.setDepth(2)
-    text = this.add.text(32, 32);
+    score = 0;
+    timerEvents = [];
+    scoreMultiplicator = 1;
+
+    var style = { font: "bold 25px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+    scoreText = this.add.text(250, 165, 'Score: 0', style).setScrollFactor(0);
+    scoreText.setDepth(99)
+    text = this.add.text(1080/2-120, 165,'',style).setScrollFactor(0);
     timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(10000, 10000), loop: true }));
-    text.setDepth(2);
+    timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(3000, 3000), loop: true }));
+    text.setDepth(99);
 
     //display map
     for (let r = 0; r < map.length; r++) {
@@ -201,7 +252,8 @@ class Map extends Phaser.Scene {
             break;
           case 1:
             ground = this.add.sprite(0, 0, 'gravel');
-            world = this.physics.add.sprite(600, 400, 'wheel');
+            //world = this.physics.add.sprite(600, 400, 'wheel');
+            world = this.physics.add.sprite(100, 100, 'house');
             world.body.pushable = false;
             break;
           case 2:
@@ -211,7 +263,7 @@ class Map extends Phaser.Scene {
             break;
           case 3:
             ground = this.add.sprite(0, 0, 'gravel');
-            world = this.physics.add.sprite(0, 0, 'arche');
+            world = this.physics.add.sprite(700, 600, 'wheel');
             world.body.pushable = false;
             break;
           case 4:
@@ -266,30 +318,30 @@ class Map extends Phaser.Scene {
     // Constrain position of constrainReticle
     constrainReticle(reticle);
 
-    if (cursor.up.isDown) {
-      dude.setVelocityX(0);
-      dude.setVelocityY(0);
-      dude.setVelocityY(-160);
-    }
-    else if (cursor.down.isDown) {
-      dude.setVelocityX(0);
-      dude.setVelocityY(0);
-      dude.setVelocityY(160);
-    }
-    else if (cursor.left.isDown) {
-      dude.setVelocityX(0);
-      dude.setVelocityY(0);
-      dude.setVelocityX(-160);
+    //movement
+    const speedWalk = 200;
+    let dudeVelocity = new Phaser.Math.Vector2();
+
+    if (cursor.left.isDown) {
+      this.walking.play();
+      dudeVelocity.x = -1;
+      //dude.anims.play('left', true)
     }
     else if (cursor.right.isDown) {
-      dude.setVelocityX(0);
-      dude.setVelocityY(0);
-      dude.setVelocityX(160);
+      this.walking.play();
+      dudeVelocity.x = 1;
+      //dude.anims.play('right', true)
     }
-    else {
-      dude.setVelocityX(0);
-      dude.setVelocityY(0);
+    if (cursor.up.isDown) {
+      this.walking.play();
+      dudeVelocity.y = -1;
     }
+    else if (cursor.down.isDown) {
+      this.walking.play();
+      dudeVelocity.y = 1;
+    }
+    dudeVelocity.scale(speedWalk);
+    dude.setVelocity(dudeVelocity.x, dudeVelocity.y);
 
     //timer reinitialize
     var output = [];
@@ -298,48 +350,42 @@ class Map extends Phaser.Scene {
       console.log("+15 multiplicator");
       scoreMultiplicator += 1;
     }
+    if (timerEvents[1].getProgress().toString().substr(0, 4) == 0.9)  {
+      touch = 1;
+    }
     text.setText(output);
 
     if(hp == 0){
+      this.onepiece.play();
       this.scene.start("GameOver");
     }
+    //this.walking.stop();
+    //this.ZombiesGroup.update(dude.x, dude.y);   
   }
 }
 
-/*
-function enemyHitCallback(enemyHit, bulletHit){
-    // Reduce health of enemy
-    if (bulletHit.active === true && enemyHit.active === true) {
-      enemyHit.health = enemyHit.health - 1;
-      console.log("Enemy hp: ", enemyHit.health);
+function CreatePlayer()
+{
+  hp = 5;
+  dude.setDepth(1);
 
-      // Kill enemy if health <= 0
-      if (enemyHit.health <= 0){
-        enemyHit.destroy();
-      }
+  dude.anims.create({
+    key: 'idle',
+    frames: [{ key: DUDE_KEY, frame: 0 }],
+    frameRate: 20
+  })
 
-      // Destroy bullet
-      bulletHit.destroy();
-    }
-}*/
-/*
-function playerHitCallback(playerHit, bulletHit){
-    // Reduce health of player
-    if (bulletHit.active === true && playerHit.active === true) {
-      playerHit.health = playerHit.health - 1;
-      console.log("Player hp: ", playerHit.health);
+  dude.anims.create({
+    key: 'left',
+    frames: dude.anims.generateFrameNumbers(DUDE_KEY, { start: 4, end: 5 }),
+    frameRate: 10,
+    repeat: -1
+  })
 
-      // Kill hp sprites and kill player if health <= 0
-      if (playerHit.health == 2) {
-        hp3.destroy();
-      }else if (playerHit.health == 1) {
-        hp2.destroy();
-      }else {
-        hp1.destroy();
-        // Game over state should execute here
-      }
-
-      // Destroy bullet
-      bulletHit.setActive(false).setVisible(false);
-    }
-}*/
+  dude.anims.create({
+    key: 'right',
+    frames: dude.anims.generateFrameNumbers(DUDE_KEY, { start: 6, end: 7 }),
+    frameRate: 10,
+    repeat: -1
+  })
+}
