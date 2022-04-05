@@ -15,7 +15,7 @@ class ZombiesGroup extends Phaser.Physics.Arcade.Group {
   }
 
   //will call the class bullet when triggered
-  ZombiesSpwan(x, y) {
+  ZombiesSpawn(x, y) {
     // Get the first available sprite in the group
     const zombie = this.getFirstDead(false);
     this.x = x;
