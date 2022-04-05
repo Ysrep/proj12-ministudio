@@ -110,6 +110,12 @@ class Map extends Phaser.Scene {
     this.load.image('house', 'src/assets/sprite/house.png');
 
     this.load.spritesheet(DUDE_KEY, 'src/assets/sprite/dude.png', { frameWidth: 33, frameHeight: 56 });
+
+    this.load.audio('menu', [
+      'src/assets/SFX/orchestral pour menu.mp3'
+    ]);
+
+
   }
 
   create () {
@@ -258,6 +264,7 @@ class Map extends Phaser.Scene {
 
     if (cursor.left.isDown) {
       dudeVelocity.x = -1;
+      PlayRandomAudio(0.5, 'menu')
       //dude.anims.play('left', true)
     }
     else if (cursor.right.isDown) {
@@ -316,41 +323,3 @@ function CreatePlayer()
     repeat: -1
   })
 }
-
-/*
-function enemyHitCallback(enemyHit, bulletHit){
-    // Reduce health of enemy
-    if (bulletHit.active === true && enemyHit.active === true) {
-      enemyHit.health = enemyHit.health - 1;
-      console.log("Enemy hp: ", enemyHit.health);
-
-      // Kill enemy if health <= 0
-      if (enemyHit.health <= 0){
-        enemyHit.destroy();
-      }
-
-      // Destroy bullet
-      bulletHit.destroy();
-    }
-}*/
-/*
-function playerHitCallback(playerHit, bulletHit){
-    // Reduce health of player
-    if (bulletHit.active === true && playerHit.active === true) {
-      playerHit.health = playerHit.health - 1;
-      console.log("Player hp: ", playerHit.health);
-
-      // Kill hp sprites and kill player if health <= 0
-      if (playerHit.health == 2) {
-        hp3.destroy();
-      }else if (playerHit.health == 1) {
-        hp2.destroy();
-      }else {
-        hp1.destroy();
-        // Game over state should execute here
-      }
-
-      // Destroy bullet
-      bulletHit.setActive(false).setVisible(false);
-    }
-}*/
