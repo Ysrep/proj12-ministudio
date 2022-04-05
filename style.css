@@ -1,0 +1,10 @@
+body{
+    margin:0;
+}
+p{
+    background-color: blue;
+    color: red;
+}
+canvas{
+    margin-left: 22% ;
+}

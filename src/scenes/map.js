@@ -222,9 +222,7 @@ class Map extends Phaser.Scene {
         isoY = ((-630 + r * 23) + (0 + c * 23)) / 2;
 
         //collide with world
-        this.physics.add.collider(dude, world, function () {
-          moveok = false;
-        });
+        dude.setCollideWorldBounds();
         Phaser.Display.Align.In.TopCenter(ground, this.add.zone(isoX, isoY, 0, 0));
       }
     }      
