@@ -62,6 +62,7 @@ const map = [
 var cursor;
 var moveok;
 var dude;
+var enemy;
 var hp;
 var reticle = null;
 var playerBullets = null;
@@ -94,7 +95,7 @@ class Map extends Phaser.Scene {
   }
 
   updateCounter(){
-    this.ZombiesGroup.ZombiesSpwan(Math.random() * 800, Math.random() * 500);
+    this.ZombiesGroup.ZombiesSpawn(Math.random() * 800, Math.random() * 500);
   }
 
   preload() {
@@ -110,12 +111,20 @@ class Map extends Phaser.Scene {
     this.load.image('house', 'src/assets/sprite/house.png');
 
     this.load.spritesheet(DUDE_KEY, 'src/assets/sprite/dude.png', { frameWidth: 33, frameHeight: 56 });
+
+    this.load.audio('menu', [
+      'src/assets/SFX/orchestral pour menu.mp3'
+    ]);
+
+
   }
 
   create () {
     //Spawn player
     dude = this.physics.add.sprite(500, 500, DUDE_KEY)
     CreatePlayer()
+    enemy = this.physics.add.sprite(500, 400, 'zomb').setDepth(1);
+    this.physics.moveToObject(enemy, dude, 100)
 
     //bullets settings
     playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
@@ -256,6 +265,7 @@ class Map extends Phaser.Scene {
 
     if (cursor.left.isDown) {
       dudeVelocity.x = -1;
+      //PlayRandomAudio(0.5, 'menu')
       //dude.anims.play('left', true)
     }
     else if (cursor.right.isDown) {
@@ -286,7 +296,8 @@ class Map extends Phaser.Scene {
     if(hp == 0){
       this.scene.start("GameOver");
     }
-    this.ZombiesGroup.update(dude.x, dude.y);   
+    this.ZombiesGroup.update(dude.x, dude.y);  
+    this.physics.moveToObject(enemy, dude, 100);
   }
 }
 
