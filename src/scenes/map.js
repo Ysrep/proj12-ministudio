@@ -144,7 +144,7 @@ class Map extends Phaser.Scene {
 
     for (let i = 0; i < Maxzombies; i++) {
          enemy[i] = this.physics.add.sprite(Math.random() * 500, Math.random() * 500, 'zomb').setDepth(1);
-this.physics.moveToObject(enemy[i], dude, 100) 
+    this.physics.moveToObject(enemy[i], dude, 100) 
     }
     this.physics.add.collider(dude, enemy, function () {
       if(touch == 1){
@@ -153,9 +153,7 @@ this.physics.moveToObject(enemy[i], dude, 100)
         touch = 0;
       }
     }); 
-    this.physics.add.collider(enemy, enemy, function () {
-      
-    });
+    this.physics.add.collider(enemy, enemy, function () {}); //collide between zombies
 
     //Collide between Zombies and bullets
     this.physics.add.overlap(enemy, playerBullets, function (enemy, playerBullets) {
