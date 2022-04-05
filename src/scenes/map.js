@@ -150,6 +150,9 @@ this.physics.moveToObject(enemy[i], dude, 100)
         touch = 0;
       }
     }); 
+    this.physics.add.collider(enemy, enemy, function () {
+      
+    });
 
     //Collide between Zombies and bullets
     this.physics.add.overlap(enemy, playerBullets, function (enemy, playerBullets) {
