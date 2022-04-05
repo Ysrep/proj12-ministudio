@@ -4,6 +4,8 @@ const config = {
   height: 720,
   backgroundColor: '#0d0d0d',
   parent: 'phase-MapS',
+  canvasStyle: 'style.css',
+  title: 'Zombie Park',
   scene:[MainMenu, Map, GameOver],
   physics: {
     default: 'arcade',
