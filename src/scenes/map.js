@@ -62,7 +62,6 @@ const map = [
 var cursor;
 var moveok;
 var dude;
-var enemy;
 var hp;
 var reticle = null;
 var playerBullets = null;
@@ -70,7 +69,7 @@ var time = 0;
 var timer = 0;
 var Maxbullets = 100;
 var Maxzombies = 10;//max amunition. there's still not a realoading system so keep this var with high number so we don't run out of ammo
-
+var enemy =[];
 var ground;
 var world;
 var isoY;
@@ -95,7 +94,7 @@ class Map extends Phaser.Scene {
   }
 
   updateCounter(){
-    this.ZombiesGroup.ZombiesSpawn(Math.random() * 800, Math.random() * 500);
+    this.ZombiesGroup.ZombiesSpwan(Math.random() * 800, Math.random() * 500);
   }
 
   preload() {
@@ -111,20 +110,12 @@ class Map extends Phaser.Scene {
     this.load.image('house', 'src/assets/sprite/house.png');
 
     this.load.spritesheet(DUDE_KEY, 'src/assets/sprite/dude.png', { frameWidth: 33, frameHeight: 56 });
-
-    this.load.audio('menu', [
-      'src/assets/SFX/orchestral pour menu.mp3'
-    ]);
-
-
   }
 
   create () {
     //Spawn player
     dude = this.physics.add.sprite(500, 500, DUDE_KEY)
     CreatePlayer()
-    enemy = this.physics.add.sprite(500, 400, 'zomb').setDepth(1);
-    this.physics.moveToObject(enemy, dude, 100)
 
     //bullets settings
     playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
@@ -147,10 +138,12 @@ class Map extends Phaser.Scene {
     touch = 1;
     this.ZombiesGroup = new ZombiesGroup(this, dude); //create a zombie group
     this.ZombiesGroup.setDepth(1);
+
     for (let i = 0; i < Maxzombies; i++) {
-      this.updateCounter();
+         enemy[i] = this.physics.add.sprite(Math.random() * 500, Math.random() * 500, 'zomb').setDepth(1);
+this.physics.moveToObject(enemy[i], dude, 100) 
     }
-    this.physics.add.collider(dude, this.ZombiesGroup, function () {
+    this.physics.add.collider(dude, enemy, function () {
       if(touch == 1){
         hp --;
         console.log(hp);
@@ -159,13 +152,15 @@ class Map extends Phaser.Scene {
     }); 
 
     //Collide between Zombies and bullets
-    this.physics.add.overlap(this.ZombiesGroup, playerBullets, function (ZombiesGroup, playerBullets) {
+    this.physics.add.overlap(enemy, playerBullets, function (enemy, playerBullets) {
       playerBullets.destroy();
-      ZombiesGroup.destroy();
+      enemy.destroy();
+      
       //update score
       score += 10 * scoreMultiplicator;
       scoreText.setText('Score: ' + score);
     });
+   
 
     //Camera settings
     this.cameras.main.startFollow(dude, true, 0.09, 0.09);
@@ -259,7 +254,7 @@ class Map extends Phaser.Scene {
 
   update() {
     // Constrain position of constrainReticle
-    constrainReticle(reticle);
+    //constrainReticle(reticle);
 
     //movement
     const speedWalk = 200;
@@ -267,7 +262,6 @@ class Map extends Phaser.Scene {
 
     if (cursor.left.isDown) {
       dudeVelocity.x = -1;
-      //PlayRandomAudio(0.5, 'menu')
       //dude.anims.play('left', true)
     }
     else if (cursor.right.isDown) {
@@ -298,8 +292,15 @@ class Map extends Phaser.Scene {
     if(hp == 0){
       this.scene.start("GameOver");
     }
-    this.ZombiesGroup.update(dude.x, dude.y);  
-    this.physics.moveToObject(enemy, dude, 100);
+    for (let i = 0; i < Maxzombies; i++) {
+      if (enemy[i].active == true){
+        
+        this.physics.moveToObject(enemy[i], dude, 100);
+      }
+      
+ }
+    //this.physics.moveToObject(enemy, dude, 100);
+    //this.ZombiesGroup.update(dude.x, dude.y);   
   }
 }
 
