@@ -104,6 +104,34 @@ class Map extends Phaser.Scene {
     this.load.image('arche', 'src/assets/sprite/archeeliza.png');
     this.load.image('wheel', 'src/assets/sprite/wheel.png');
     this.load.image('target', 'src/assets/sprite/crossAim.png');
+    this.load.audio('cparti', ['src/assets/SFX/cparti.mp3']);
+    this.load.audio('cperdu', ['src/assets/SFX/cperdu.mp3']);
+    this.load.audio('damaged1', ['src/assets/SFX/damaged1.mp3']);
+    this.load.audio('damaged2', ['src/assets/SFX/damaged2.mp3']);
+    this.load.audio('damaged3', ['src/assets/SFX/damaged3.mp3']);
+    this.load.audio('damaged4', ['src/assets/SFX/damaged4.mp3']);
+    this.load.audio('damaged5', ['src/assets/SFX/damaged5.mp3']);
+    this.load.audio('damaged6', ['src/assets/SFX/damaged6.mp3']);
+    this.load.audio('forain', ['src/assets/SFX/forain.mp3']);
+    this.load.audio('kill', ['src/assets/SFX/kill.mp3']);
+    this.load.audio('onepiece', ['src/assets/SFX/onepiece.mp3']);
+    this.load.audio('piscine', ['src/assets/SFX/piscine.mp3']);
+    this.load.audio('shoot1', ['src/assets/SFX/shoot1.mp3']);
+    this.load.audio('shoot2', ['src/assets/SFX/shoot2.mp3']);
+    this.load.audio('shoot3', ['src/assets/SFX/shoot3.mp3']);
+    this.load.audio('shoot4', ['src/assets/SFX/shoot4.mp3']);
+    this.load.audio('shoot5', ['src/assets/SFX/shoot5.mp3']);
+    this.load.audio('voiceline1', ['src/assets/SFX/voiceline1.mp3']);
+    this.load.audio('voiceline2', ['src/assets/SFX/voiceline2.mp3']);
+    this.load.audio('voiceline3', ['src/assets/SFX/voiceline3.mp3']);
+    this.load.audio('voiceline4', ['src/assets/SFX/voiceline4.mp3']);
+    this.load.audio('voiceline5', ['src/assets/SFX/voiceline5.mp3']);
+    this.load.audio('voiceline6', ['src/assets/SFX/voiceline6.mp3']);
+    this.load.audio('walking', ['src/assets/SFX/walking.mp3']);
+    this.load.audio('zomb1', ['src/assets/SFX/zomb1.mp3']);
+    this.load.audio('zomb2', ['src/assets/SFX/zomb2.mp3']);
+    this.load.audio('zomb3', ['src/assets/SFX/zomb3.mp3']);
+    this.load.audio('zomb4', ['src/assets/SFX/zomb4.mp3']);
   }
 
   create () {
