@@ -69,7 +69,7 @@ var time = 0;
 var timer = 0;
 var Maxbullets = 100;
 var Maxzombies = 10;//max amunition. there's still not a realoading system so keep this var with high number so we don't run out of ammo
-
+var enemy =[];
 var ground;
 var world;
 var isoY;
@@ -97,6 +97,7 @@ class Map extends Phaser.Scene {
     this.playerBullets
     this.ZombiesGroup;
   }
+  
 
   updateCounter(){
     this.ZombiesGroup.ZombiesSpwan(Math.random() * 800, Math.random() * 500);
@@ -203,10 +204,12 @@ class Map extends Phaser.Scene {
     touch = 1;
     this.ZombiesGroup = new ZombiesGroup(this, dude); //create a zombie group
     this.ZombiesGroup.setDepth(1);
+
     for (let i = 0; i < Maxzombies; i++) {
-      this.updateCounter();
+         enemy[i] = this.physics.add.sprite(Math.random() * 500, Math.random() * 500, 'zomb').setDepth(1);
+    this.physics.moveToObject(enemy[i], dude, 100) 
     }
-    this.physics.add.collider(dude, this.ZombiesGroup, function () {
+    this.physics.add.collider(dude, enemy, function () {
       if(touch == 1){
         hp --;
         console.log(hp);
@@ -214,15 +217,18 @@ class Map extends Phaser.Scene {
         damaged[Math.floor(Math.random()*6)].play();
       }
     }); 
+    this.physics.add.collider(enemy, enemy, function () {}); //collide between zombies
 
     //Collide between Zombies and bullets
-    this.physics.add.overlap(this.ZombiesGroup, playerBullets, function (ZombiesGroup, playerBullets) {
+    this.physics.add.overlap(enemy, playerBullets, function (enemy, playerBullets) {
       playerBullets.destroy();
-      ZombiesGroup.destroy();
+      enemy.destroy();
+      
       //update score
       score += 10 * scoreMultiplicator;
       scoreText.setText('Score: ' + score);
     });
+   
 
     //Camera settings
     this.cameras.main.startFollow(dude, true, 0.09, 0.09);
@@ -288,9 +294,7 @@ class Map extends Phaser.Scene {
         isoY = ((-630 + r * 23) + (0 + c * 23)) / 2;
 
         //collide with world
-        this.physics.add.collider(dude, world, function () {
-          moveok = false;
-        });
+        dude.setCollideWorldBounds();
         Phaser.Display.Align.In.TopCenter(ground, this.add.zone(isoX, isoY, 0, 0));
       }
     }      
@@ -316,7 +320,7 @@ class Map extends Phaser.Scene {
 
   update() {
     // Constrain position of constrainReticle
-    constrainReticle(reticle);
+    //constrainReticle(reticle);
 
     //movement
     const speedWalk = 200;
@@ -360,6 +364,13 @@ class Map extends Phaser.Scene {
       this.scene.start("GameOver");
     }
     //this.walking.stop();
+    for (let i = 0; i < Maxzombies; i++) {
+      if (enemy[i].active == true){
+        this.physics.moveToObject(enemy[i], dude, 100);
+      }
+      
+ }
+    //this.physics.moveToObject(enemy, dude, 100);
     //this.ZombiesGroup.update(dude.x, dude.y);   
   }
 }

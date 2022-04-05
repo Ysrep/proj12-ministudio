@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    margin:0;
+    background: linear-gradient(0.25turn, #271111, #551f1f);
+}
+p{
+    color: #fff;
+    font-size: 21px;
+    font-family: 'Rubik Wet Paint', cursive;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+canvas{
+    margin-top: 50px;
+    margin-left: 22% ;
+    border-radius: 1vh;
+}
+
+.absolute {
+    position: absolute;
+    bottom: 55px;
+    left: 24%;
+    display: flex;
+    justify-content: space-between;
+    vertical-align: baseline;    
+}
+
+.absolute img {
+    width: 150px;
+    height: 130px;
+}
