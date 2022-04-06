@@ -24,7 +24,7 @@ class MainMenu extends Phaser.Scene {
     this.musicM = this.sound.add('menu');
     this.sound.pauseOnBlur = false;
     this.musicM.play();
-    this.musicM.setVolume(0.15);
+    this.musicM.setVolume(0.3);
     this.musicM.setLoop(true);
   }
 
