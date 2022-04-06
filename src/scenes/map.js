@@ -1,4 +1,4 @@
-/*const map = [
+const map = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -57,7 +57,7 @@
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-];*/
+];
 
 var cursor;
 var moveok;
@@ -146,10 +146,6 @@ class Map extends Phaser.Scene {
   }
 
   create () {
-<<<<<<< HEAD
-    //this.add.dom(100, 100, 'div', 'background-color: lime; width: 220px; height: 100px; font: 48px Arial', 'phase-MapS');
-    //this.add.image(0, 0, 'base')
-=======
     //Sound part
     this.sound.pauseOnBlur = false;
     this.cparti = this.sound.add('cparti');
@@ -181,7 +177,6 @@ class Map extends Phaser.Scene {
     szomb.push(this.sound.add('zomb3'));
     szomb.push(this.sound.add('zomb4'));
     
->>>>>>> 600aa2efd97dc7c3ceb195cef63ec1803bc346e4
 
     //Spawn player
     dude = this.physics.add.sprite(500, 500, DUDE_KEY)
@@ -255,7 +250,7 @@ class Map extends Phaser.Scene {
     text.setDepth(99);
 
     //display map
-    /*for (let r = 0; r < map.length; r++) {
+    for (let r = 0; r < map.length; r++) {
       for (let c = 0; c < map[0].length; c++) {
         switch (map[r][c]) {
           case 0:
@@ -302,7 +297,7 @@ class Map extends Phaser.Scene {
         dude.setCollideWorldBounds();
         Phaser.Display.Align.In.TopCenter(ground, this.add.zone(isoX, isoY, 0, 0));
       }
-    }      */
+    }
         
     // Pointer lock will only work after mousedown
     game.canvas.addEventListener('mousedown', function () {
