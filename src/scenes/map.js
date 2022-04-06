@@ -168,6 +168,7 @@ class Map extends Phaser.Scene {
     this.load.audio('zomb2', ['src/assets/SFX/zomb2.mp3']);
     this.load.audio('zomb3', ['src/assets/SFX/zomb3.mp3']);
     this.load.audio('zomb4', ['src/assets/SFX/zomb4.mp3']);
+    this.load.audio('orchestral', ['src/assets/SFX/orchestral.mp3'])
     this.load.spritesheet(DUDE_KEY, 'src/assets/sprite/dude.png', { frameWidth: 33, frameHeight: 56 });
     this.load.spritesheet('zombi', 'src/assets/sprite/animZ.png', { frameWidth: 33, frameHeight: 56 });
   }
@@ -203,6 +204,10 @@ class Map extends Phaser.Scene {
     szomb.push(this.sound.add('zomb2'));
     szomb.push(this.sound.add('zomb3'));
     szomb.push(this.sound.add('zomb4'));
+    this.orchestral = this.sound.add('orchestral');
+    this.orchestral.play();
+    this.orchestral.setVolume(0.1);
+    this.orchestral.setLoop(true);
     
 
     //Spawn player
@@ -255,7 +260,7 @@ class Map extends Phaser.Scene {
     this.physics.add.overlap(enemy, playerBullets, function (enemy, playerBullets) {
       playerBullets.destroy();
       enemy.destroy();
-      
+      //this.kill.play();
       //update score
       score += 10 * scoreMultiplicator;
       scoreText.setText('Score: ' + score);
@@ -366,25 +371,23 @@ class Map extends Phaser.Scene {
     let dudeVelocity = new Phaser.Math.Vector2();
 
     if (cursor.left.isDown) {
-      this.walking.play();
       dudeVelocity.x = -1;
       //dude.anims.play('left', true)
     }
     else if (cursor.right.isDown) {
-      this.walking.play();
       dudeVelocity.x = 1;
       //dude.anims.play('right', true)
     }
     if (cursor.up.isDown) {
-      this.walking.play();
       dudeVelocity.y = -1;
     }
     else if (cursor.down.isDown) {
-      this.walking.play();
       dudeVelocity.y = 1;
     }
+
     dudeVelocity.scale(speedWalk);
     dude.setVelocity(dudeVelocity.x, dudeVelocity.y);
+
 
     //timer reinitialize
     var output = [];
@@ -404,7 +407,7 @@ class Map extends Phaser.Scene {
       
       //console.log(enemy.length);
     }
-    if (timerEvents[1].getProgress().toString().substr(0, 4) == 0.9)  {
+    if (timerEvents[1].getProgress().toString().substr(0, 3) == 0.9)  {
       touch = 1;
       
     }
@@ -416,6 +419,14 @@ class Map extends Phaser.Scene {
       }
       wave =0;
       this.onepiece.play();
+      if(Math.floor(Math.random()*2) == 1){
+        this.piscine.play();
+        this.piscine.setVolume(3);
+      } else {
+        this.onepiece.play();
+        this.onepiece.setVolume(3);
+      }
+      this.orchestral.stop();
       this.scene.start("GameOver");
     }
     //this.walking.stop();
