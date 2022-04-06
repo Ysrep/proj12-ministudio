@@ -86,6 +86,11 @@ var text;
 var timerEvents = [];
 var scoreMultiplicator = 1;
 
+var damaged = [];
+var shoot = [];
+var voiceline = [];
+var szomb = [];
+
 class Map extends Phaser.Scene {
   constructor() {
     super({ key: "Map" });
@@ -109,12 +114,69 @@ class Map extends Phaser.Scene {
     this.load.image('wheel', 'src/assets/sprite/wheel.png');
     this.load.image('target', 'src/assets/sprite/crossAim.png');
     this.load.image('house', 'src/assets/sprite/house.png');
-
+    this.load.audio('cparti', ['src/assets/SFX/cparti.mp3']);
+    this.load.audio('cperdu', ['src/assets/SFX/cperdu.mp3']);
+    this.load.audio('damaged1', ['src/assets/SFX/damaged1.mp3']);
+    this.load.audio('damaged2', ['src/assets/SFX/damaged2.mp3']);
+    this.load.audio('damaged3', ['src/assets/SFX/damaged3.mp3']);
+    this.load.audio('damaged4', ['src/assets/SFX/damaged4.mp3']);
+    this.load.audio('damaged5', ['src/assets/SFX/damaged5.mp3']);
+    this.load.audio('damaged6', ['src/assets/SFX/damaged6.mp3']);
+    this.load.audio('forain', ['src/assets/SFX/forain.mp3']);
+    this.load.audio('kill', ['src/assets/SFX/kill.mp3']);
+    this.load.audio('onepiece', ['src/assets/SFX/onepiece.mp3']);
+    this.load.audio('piscine', ['src/assets/SFX/piscine.mp3']);
+    this.load.audio('shoot1', ['src/assets/SFX/shoot1.mp3']);
+    this.load.audio('shoot2', ['src/assets/SFX/shoot2.mp3']);
+    this.load.audio('shoot3', ['src/assets/SFX/shoot3.mp3']);
+    this.load.audio('shoot4', ['src/assets/SFX/shoot4.mp3']);
+    this.load.audio('shoot5', ['src/assets/SFX/shoot5.mp3']);
+    this.load.audio('voiceline1', ['src/assets/SFX/voiceline1.mp3']);
+    this.load.audio('voiceline2', ['src/assets/SFX/voiceline2.mp3']);
+    this.load.audio('voiceline3', ['src/assets/SFX/voiceline3.mp3']);
+    this.load.audio('voiceline4', ['src/assets/SFX/voiceline4.mp3']);
+    this.load.audio('voiceline5', ['src/assets/SFX/voiceline5.mp3']);
+    this.load.audio('voiceline6', ['src/assets/SFX/voiceline6.mp3']);
+    this.load.audio('walking', ['src/assets/SFX/walking.mp3']);
+    this.load.audio('zomb1', ['src/assets/SFX/zomb1.mp3']);
+    this.load.audio('zomb2', ['src/assets/SFX/zomb2.mp3']);
+    this.load.audio('zomb3', ['src/assets/SFX/zomb3.mp3']);
+    this.load.audio('zomb4', ['src/assets/SFX/zomb4.mp3']);
     this.load.spritesheet(DUDE_KEY, 'src/assets/sprite/dude.png', { frameWidth: 33, frameHeight: 56 });
   }
 
   create () {
-    //this.add.dom(100, 100, 'div', 'background-color: lime; width: 220px; height: 100px; font: 48px Arial', 'phase-MapS');
+    //Sound part
+    this.sound.pauseOnBlur = false;
+    this.cparti = this.sound.add('cparti');
+    this.cperdu = this.sound.add('cperdu');
+    damaged.push(this.sound.add('damaged1'));
+    damaged.push(this.sound.add('damaged2'));
+    damaged.push(this.sound.add('damaged3'));
+    damaged.push(this.sound.add('damaged4'));
+    damaged.push(this.sound.add('damaged5'));
+    damaged.push(this.sound.add('damaged6'));
+    this.forain = this.sound.add('forain');
+    this.kill = this.sound.add('kill');
+    this.onepiece = this.sound.add('onepiece');
+    this.piscine = this.sound.add('piscine');
+    this.walking = this.sound.add('walking');
+    shoot.push(this.sound.add('shoot1'));
+    shoot.push(this.sound.add('shoot2'));
+    shoot.push(this.sound.add('shoot3'));
+    shoot.push(this.sound.add('shoot4'));
+    shoot.push(this.sound.add('shoot5'));
+    voiceline.push(this.sound.add('voiceline1'));
+    voiceline.push(this.sound.add('voiceline2'));
+    voiceline.push(this.sound.add('voiceline3'));
+    voiceline.push(this.sound.add('voiceline4'));
+    voiceline.push(this.sound.add('voiceline5'));
+    voiceline.push(this.sound.add('voiceline6'));
+    szomb.push(this.sound.add('zomb1'));
+    szomb.push(this.sound.add('zomb2'));
+    szomb.push(this.sound.add('zomb3'));
+    szomb.push(this.sound.add('zomb4'));
+    
 
     //Spawn player
     dude = this.physics.add.sprite(500, 500, DUDE_KEY)
@@ -129,6 +191,7 @@ class Map extends Phaser.Scene {
       var bullet = playerBullets.get().setActive(true).setVisible(true);
       if (bullet) {
         bullet.fire(dude, reticle);
+        shoot[Math.floor(Math.random()*5)].play();
         this.physics.add.collider(this.ZombiesGroup, bullet, function(){});
       }
     }, this);
@@ -144,18 +207,17 @@ class Map extends Phaser.Scene {
 
     for (let i = 0; i < Maxzombies; i++) {
          enemy[i] = this.physics.add.sprite(Math.random() * 500, Math.random() * 500, 'zomb').setDepth(1);
-this.physics.moveToObject(enemy[i], dude, 100) 
+    this.physics.moveToObject(enemy[i], dude, 100) 
     }
     this.physics.add.collider(dude, enemy, function () {
       if(touch == 1){
         hp --;
         console.log(hp);
         touch = 0;
+        damaged[Math.floor(Math.random()*6)].play();
       }
     }); 
-    this.physics.add.collider(enemy, enemy, function () {
-      
-    });
+    this.physics.add.collider(enemy, enemy, function () {}); //collide between zombies
 
     //Collide between Zombies and bullets
     this.physics.add.overlap(enemy, playerBullets, function (enemy, playerBullets) {
@@ -265,17 +327,21 @@ this.physics.moveToObject(enemy[i], dude, 100)
     let dudeVelocity = new Phaser.Math.Vector2();
 
     if (cursor.left.isDown) {
+      this.walking.play();
       dudeVelocity.x = -1;
       //dude.anims.play('left', true)
     }
     else if (cursor.right.isDown) {
+      this.walking.play();
       dudeVelocity.x = 1;
       //dude.anims.play('right', true)
     }
     if (cursor.up.isDown) {
+      this.walking.play();
       dudeVelocity.y = -1;
     }
     else if (cursor.down.isDown) {
+      this.walking.play();
       dudeVelocity.y = 1;
     }
     dudeVelocity.scale(speedWalk);
@@ -294,11 +360,12 @@ this.physics.moveToObject(enemy[i], dude, 100)
     text.setText(output);
 
     if(hp == 0){
+      this.onepiece.play();
       this.scene.start("GameOver");
     }
+    //this.walking.stop();
     for (let i = 0; i < Maxzombies; i++) {
       if (enemy[i].active == true){
-        
         this.physics.moveToObject(enemy[i], dude, 100);
       }
       

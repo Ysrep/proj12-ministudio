@@ -9,7 +9,7 @@ class MainMenu extends Phaser.Scene {
     this.load.image('start', 'src/assets/sprite/menu/startButton.png');
     this.load.image('logo', 'src/assets/sprite/menu/ZOMBIE_PARC.png');
     this.load.audio('menu', [
-      'src/assets/SFX/orchestral pour menu.mp3'
+      'src/assets/SFX/menu.mp3'
     ]);
   }
 
