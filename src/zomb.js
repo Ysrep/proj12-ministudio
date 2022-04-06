@@ -34,8 +34,10 @@ class ZombiesGroup extends Phaser.Physics.Arcade.Group {
 
     if (dirx > 0) {
       zombVelocity.x = -1;
+      enemy.anims.play('right');
     } else if (dirx < 0) {
       zombVelocity.x = 1;
+      enemy.anims.play('left');
     } else if (dirx == 0) {
       zombVelocity.x = 0;
     }
@@ -47,6 +49,27 @@ class ZombiesGroup extends Phaser.Physics.Arcade.Group {
     } else if (diry == 0) {
       zombVelocity.y = 0;
     }
+
+
+    enemy.anims.create({
+      key: 'idle',
+      frames: [{ key: 'zombi', frame: 6 }],
+      frameRate: 20
+    })
+
+    enemy.anims.create({
+      key: 'left',
+      frames: enemy.anims.generateFrameNumbers('zombi', { start: 0, end: 2 }),
+      frameRate: 10,
+      repeat: -1
+    })
+
+    enemy.anims.create({
+      key: 'right',
+      frames: enemy.anims.generateFrameNumbers("zombi", { start: 3, end: 5 }),
+      frameRate: 10,
+      repeat: -1
+    })
 
     zombVelocity.scale(speedWalk);
     this.setVelocity(zombVelocity.x, zombVelocity.y);

@@ -62,6 +62,7 @@ const map = [
 var cursor;
 var moveok;
 var dude;
+var enemyZomb;
 var hp;
 var reticle = null;
 var playerBullets = null;
@@ -181,7 +182,10 @@ class Map extends Phaser.Scene {
 
     //Spawn player
     dude = this.physics.add.sprite(500, 500, DUDE_KEY)
+    enemyZomb = this.physics.add.sprite(400, 400, 'zombi').setDepth(1);
     CreatePlayer()
+    //zombAnim()
+    
 
     //bullets settings
     playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
@@ -328,15 +332,17 @@ class Map extends Phaser.Scene {
     const speedWalk = 200;
     let dudeVelocity = new Phaser.Math.Vector2();
 
+
     if (cursor.left.isDown) {
       this.walking.play();
       dudeVelocity.x = -1;
-      //dude.anims.play('left', true)
+      dude.anims.play('left', true)
+      
     }
     else if (cursor.right.isDown) {
       this.walking.play();
       dudeVelocity.x = 1;
-      //dude.anims.play('right', true)
+      dude.anims.play('right', true)
     }
     if (cursor.up.isDown) {
       this.walking.play();
@@ -346,6 +352,7 @@ class Map extends Phaser.Scene {
       this.walking.play();
       dudeVelocity.y = 1;
     }
+    
     dudeVelocity.scale(speedWalk);
     dude.setVelocity(dudeVelocity.x, dudeVelocity.y);
 
@@ -371,8 +378,6 @@ class Map extends Phaser.Scene {
         this.physics.moveToObject(enemy[i], dude, 100);
       } 
     }
-    //this.physics.moveToObject(enemy, dude, 100);
-    //this.ZombiesGroup.update(dude.x, dude.y);   
   }
 }
 
@@ -402,27 +407,7 @@ function CreatePlayer()
   })
 }
 /*
-
 function zombAnim(){
-  for (let i = 0; i < Maxzombies; i++) {
-    enemy[i].anims.create({
-      key: 'idle',
-      frames: [{ key: 'zombi', frame: 6 }],
-      frameRate: 20
-    })
 
-    enemy[i].anims.create({
-      key: 'left',
-      frames: enemy[i].anims.generateFrameNumbers('zombi', { start: 0, end: 2 }),
-      frameRate: 10,
-      repeat: -1
-    })
-
-    enemy[i].anims.create({
-      key: 'right',
-      frames: enemy[i].anims.generateFrameNumbers("zombi", { start: 3, end: 5 }),
-      frameRate: 10,
-      repeat: -1
-    })
 }
-} */
+*/
