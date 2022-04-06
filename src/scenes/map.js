@@ -276,7 +276,9 @@ class Map extends Phaser.Scene {
     
     
     // Constrain position of constrainReticle
-    //constrainReticle(reticle);
+    constrainReticle(reticle);
+
+    
     /*for (let i = 0; i < Maxzombies; i++) {
     var temp=Phaser.Math.Angle.Between(enemy[i].x,enemy[i].y,dude.x,dude.y);
         var angle = Phaser.Math.RadToDeg(temp);
