@@ -24,10 +24,9 @@ canvas{
 .absolute {
     position: absolute;
     bottom: 55px;
-    left: 24%;
     display: flex;
-    justify-content: space-between;
-    vertical-align: baseline;    
+    justify-content: space-around;
+    vertical-align: baseline;
 }
 
 .absolute img {

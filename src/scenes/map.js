@@ -62,7 +62,6 @@ const map = [
 var cursor;
 var moveok;
 var dude;
-var enemyZomb;
 var hp;
 var reticle = null;
 var playerBullets = null;
@@ -81,7 +80,9 @@ var touch;
 
 //set Score variables
 var score = 0;
+var highScore = [];
 var scoreText;
+var highScoreText;
 
 var text;
 var timerEvents = [];
@@ -96,14 +97,7 @@ class Map extends Phaser.Scene {
   constructor() {
     super({ key: "Map" });
     this.playerBullets
-    this.ZombiesGroup;
   }
-  
-
-  updateCounter(){
-    this.ZombiesGroup.ZombiesSpwan(Math.random() * 800, Math.random() * 500);
-  }
-
   preload() {
     this.load.image('grass', 'src/assets/sprite/grass.png');
     this.load.image('gravel', 'src/assets/sprite/ground/gravel.png');
@@ -148,6 +142,9 @@ class Map extends Phaser.Scene {
   }
 
   create () {
+    localStorage.clear()
+    
+    
     //Sound part
     this.sound.pauseOnBlur = false;
     this.cparti = this.sound.add('cparti');
@@ -182,10 +179,7 @@ class Map extends Phaser.Scene {
 
     //Spawn player
     dude = this.physics.add.sprite(500, 500, DUDE_KEY)
-    enemyZomb = this.physics.add.sprite(400, 400, 'zombi').setDepth(1);
     CreatePlayer()
-    //zombAnim()
-    
 
     //bullets settings
     playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
@@ -197,7 +191,6 @@ class Map extends Phaser.Scene {
       if (bullet) {
         bullet.fire(dude, reticle);
         shoot[Math.floor(Math.random()*5)].play();
-        this.physics.add.collider(this.ZombiesGroup, bullet, function(){});
       }
     }, this);
     reticle = this.physics.add.sprite(700, 500, 'target');
@@ -207,12 +200,9 @@ class Map extends Phaser.Scene {
 
     //Zombies settings
     touch = 1;
-    this.ZombiesGroup = new ZombiesGroup(this, dude); //create a zombie group
-    this.ZombiesGroup.setDepth(1);
 
     for (let i = 0; i < Maxzombies; i++) {
          enemy[i] = this.physics.add.sprite(Math.random() * 500, Math.random() * 500, 'zombi').setDepth(1);
-         
     this.physics.moveToObject(enemy[i], dude, 100) 
     }
     this.physics.add.collider(dude, enemy, function () {
@@ -322,16 +312,35 @@ class Map extends Phaser.Scene {
       reticle.y += pointer.movementY;
     }
   }, this);
+  
+  
+  
+  
 }
 
   update() {
+    
+    
     // Constrain position of constrainReticle
     //constrainReticle(reticle);
-
+    for (let i = 0; i < Maxzombies; i++) {
+    var temp=Phaser.Math.Angle.Between(enemy[i].x,enemy[i].y,dude.x,dude.y);
+        var angle = Phaser.Math.RadToDeg(temp);
+        
+        if(angle>0){
+          enemy[i].frame
+          
+        }
+        if(angle<90){
+          enemy[i].sprite;
+          
+        }
+      }
     //movement
     const speedWalk = 200;
     let dudeVelocity = new Phaser.Math.Vector2();
 
+   
 
     if (cursor.left.isDown) {
       this.walking.play();
@@ -352,7 +361,6 @@ class Map extends Phaser.Scene {
       this.walking.play();
       dudeVelocity.y = 1;
     }
-    
     dudeVelocity.scale(speedWalk);
     dude.setVelocity(dudeVelocity.x, dudeVelocity.y);
 
@@ -370,15 +378,18 @@ class Map extends Phaser.Scene {
 
     if(hp == 0){
       this.onepiece.play();
+      getScore();
       this.scene.start("GameOver");
     }
+
+    //zombies movement
     //this.walking.stop();
     for (let i = 0; i < Maxzombies; i++) {
       if (enemy[i].active == true){
         this.physics.moveToObject(enemy[i], dude, 100);
       } 
     }
-  }
+  } 
 }
 
 function CreatePlayer()
@@ -405,9 +416,4 @@ function CreatePlayer()
     frameRate: 10,
     repeat: -1
   })
-}
-/*
-function zombAnim(){
-
-}
-*/
+} 
