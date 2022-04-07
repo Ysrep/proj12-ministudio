@@ -1,18 +1,19 @@
 var i;
 
 function getScore(){
-    localStorage.setItem('highScore', score);
-    //highScore.sort();
-    var temp = localStorage.getItem('highScore');
+    i=0;
+    localStorage.setItem('Score', score);
     while(highScore[i]!=null && i<=10){
         i += 1;
     }
-    /*
+//highScore.sort();
     if(i==10){
-        while((localStorage.getItem('highScore'))>=highScore[i]){
+        while(localStorage.getItem('Score')>=highScore[i]){
             i -= 1;
         }
-    }*/
-    highScore[i]=temp;
+    }
+    
+    highScore=localStorage.getItem('Score');
+    localStorage.setItem('highScore',highScore);
     console.log(highScore);
 }
