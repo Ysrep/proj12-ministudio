@@ -375,8 +375,7 @@ class Map extends Phaser.Scene {
   }
 }
 
-function CreatePlayer()
-{
+function CreatePlayer() {
   hp = 5;
   dude.setDepth(1);
 
@@ -399,4 +398,8 @@ function CreatePlayer()
     frameRate: 10,
     repeat: -1
   })
+}
+
+function Probability() {
+  
 }
