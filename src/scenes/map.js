@@ -103,6 +103,7 @@ class Map extends Phaser.Scene {
     this.load.spritesheet(DUDE_KEY, 'src/assets/sprite/dude.png', { frameWidth: 33, frameHeight: 56 });
     this.load.spritesheet('zombi', 'src/assets/sprite/animZ.png', { frameWidth: 33, frameHeight: 56 });
     this.load.image('base_tiles', 'src/assets/tiles/assets01.png');
+    this.load.image('sol_tiles', 'src/assets/tiles/sol.png');
     this.load.tilemapTiledJSON('map', 'src/assets/map.json');
   }
 
@@ -110,9 +111,8 @@ class Map extends Phaser.Scene {
     //Map
     var map = this.add.tilemap('map');
     var tileset1 = map.addTilesetImage('assets', 'base_tiles');
-    map.createLayer('ground', [tileset1]);
-    map.createLayer('walls', [tileset1]);
-    map.createLayer('walls2', [tileset1]);
+    var tileset2 = map.addTilesetImage('sol', 'sol_tiles');
+    map.createLayer('ground', [tileset2]);
     map.createLayer('portals', [tileset1]);
     map.createLayer('assets', [tileset1]);
     const col = map.createStaticLayer('col', [tileset1]);
@@ -262,17 +262,21 @@ class Map extends Phaser.Scene {
 
     if (cursor.left.isDown) {
       dudeVelocity.x = -1;
+
       dude.anims.play('left', true)
     }
     else if (cursor.right.isDown) {
       dudeVelocity.x = 1;
+
       dude.anims.play('right', true)
     }
     if (cursor.up.isDown) {
       dudeVelocity.y = -1;
+
     }
     else if (cursor.down.isDown) {
       dudeVelocity.y = 1;
+
     }
 
     dudeVelocity.scale(speedWalk);
