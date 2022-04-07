@@ -103,11 +103,15 @@ class Map extends Phaser.Scene {
     //this.load.spritesheet(DUDE_KEY, 'src/assets/sprite/dude.png', { frameWidth: 33, frameHeight: 56 });
     this.load.spritesheet('zombi', 'src/assets/sprite/animZ.png', { frameWidth: 33, frameHeight: 56 });
     this.load.atlas(DUDE_KEY, 'src/assets/sprite/WalkProfil.png', 'src/assets/sprite/WalkProfil.json' )
+    this.load.atlas('leftKey', 'src/assets/sprite/WalkProfilLeft.png', 'src/assets/sprite/WalkProfilLeft.json' )
     this.load.image('base_tiles', 'src/assets/tiles/assets01.png');
     this.load.tilemapTiledJSON('map', 'src/assets/map.json');
   }
 
   create() {
+    
+    
+
     //Map
     var map = this.add.tilemap('map');
     var tileset1 = map.addTilesetImage('assets', 'base_tiles');
@@ -268,19 +272,26 @@ class Map extends Phaser.Scene {
 
     if (cursor.left.isDown) {
       dudeVelocity.x = -1;
-      //dude.anims.play('left', true)
+      dude.flipX;
+      dude.anims.play('left', true)
     }
     else if (cursor.right.isDown) {
       dudeVelocity.x = 1;
-      //dude.anims.play('right', true)
+      dude.anims.play('right', true)
     }
-    if (cursor.up.isDown) {
+    else{
+      dude.anims.play('idle', true)
+    }
+     if (cursor.up.isDown) {
       dudeVelocity.y = -1;
     }
     else if (cursor.down.isDown) {
       dudeVelocity.y = 1;
     }
-
+    
+      
+    
+    
     dudeVelocity.scale(speedWalk);
     dude.setVelocity(dudeVelocity.x, dudeVelocity.y);
 
@@ -354,49 +365,54 @@ class Map extends Phaser.Scene {
 function CreatePlayer() {
   hp = 5;
   dude.setDepth(5);
-/*
+
   dude.anims.create({
-    key: 'righ',
+    key: 'idle',
+    frames: [{ key: DUDE_KEY, frame: 'WalkProfil1.png'  }],
+  })
+
+  dude.anims.create({
+    key: 'right',
     frames: [{
       key: DUDE_KEY,
-      frame: 'WalkProfil4.png'
+      frame: 'WalkProfil1.png'
     }, {
       key: DUDE_KEY,
       frame: 'WalkProfil2.png'
     },{
       key: DUDE_KEY,
-      frame: 'WalkProfil5.png'
-    },{
-      key: DUDE_KEY,
       frame: 'WalkProfil3.png'
     },{
       key: DUDE_KEY,
-      frame: 'WalkProfil1.png'
+      frame: 'WalkProfil4.png'
+    },{
+      key: DUDE_KEY,
+      frame: 'WalkProfil5.png'
     }],
-    frameRate: 8,
+    frameRate: 1,
     repeat: -1
   })
 
   dude.anims.create({
     key: 'left',
     frames: [{
-      key: DUDE_KEY,
-      frame: 'WalkProfil4.png'
+      key: 'leftKey',
+      frame: 'WalkProfilLeft1.png'
     }, {
-      key: DUDE_KEY,
-      frame: 'WalkProfil2.png'
+      key: 'leftKey',
+      frame: 'WalkProfilLeft2.png'
     },{
-      key: DUDE_KEY,
-      frame: 'WalkProfil5.png'
+      key: 'leftKey',
+      frame: 'WalkProfilLeft3.png'
     },{
-      key: DUDE_KEY,
-      frame: 'WalkProfil3.png'
+      key: 'leftKey',
+      frame: 'WalkProfilLeft4.png'
     },{
-      key: DUDE_KEY,
-      frame: 'WalkProfil1.png'
+      key: 'leftKey', 
+      frame: 'WalkProfilLeft5.png'
     }],
-    frameRate: 8,
+    frameRate: 1,
     repeat: -1
   })
-  */
+  
 } 
