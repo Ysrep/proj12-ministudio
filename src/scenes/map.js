@@ -70,11 +70,14 @@ class Map extends Phaser.Scene {
   preload() {
     this.load.image('carac', 'src/assets/sprite/cara.png');
     this.load.image('zomb', 'src/assets/sprite/zomb.png');
-    this.load.image('bullet', 'src/assets/sprite/uwu.png');
+    this.load.image('bullet', 'src/assets/sprite/bulletg.png');
     this.load.image('arche', 'src/assets/sprite/archeeliza.png');
     this.load.image('wheel', 'src/assets/sprite/wheel.png');
     this.load.image('target', 'src/assets/sprite/crossAim.png');
     this.load.image('house', 'src/assets/sprite/house.png');
+    this.load.image('pv5', 'src/assets/sprite/PV/Full_life.png');
+    this.load.image('pv4', 'src/assets/sprite/PV/Life_-1.png');
+    this.load.image('pv3', 'src/assets/sprite/PV/Life-2.png');
     this.load.audio('damaged1', ['src/assets/SFX/damaged1.mp3']);
     this.load.audio('damaged2', ['src/assets/SFX/damaged2.mp3']);
     this.load.audio('damaged3', ['src/assets/SFX/damaged3.mp3']);
@@ -120,13 +123,7 @@ class Map extends Phaser.Scene {
     map.createLayer('building2', [tileset1]);
     const col = map.createStaticLayer('col', [tileset1]);
 
-
-    /*for (let i = 2; i < 8; i++) {
-      map.createLayer('Tile Layer ' + i, [tileset1]);
-    }*/
-
     localStorage.clear()
-    
     
     //Sound part
     this.sound.pauseOnBlur = false;
@@ -166,7 +163,7 @@ class Map extends Phaser.Scene {
 
     //Spawn player
     dude = this.physics.add.sprite(500, 500, DUDE_KEY)
-    CreatePlayer()
+    CreatePlayer();
 
     //bullets settings
     playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
@@ -208,7 +205,6 @@ class Map extends Phaser.Scene {
         touch = 0;
         damaged[Math.floor(Math.random()*6)].play();
         shake =1;
-        
       }
     }); 
   
@@ -219,7 +215,7 @@ class Map extends Phaser.Scene {
     this.physics.add.overlap(enemy, playerBullets, function (enemy, playerBullets) {
       playerBullets.destroy();
       enemy.destroy();
-      //this.kill.play();
+      
       //update score
       score += 10 * scoreMultiplicator;
       scoreText.setText('Score: ' + score);
@@ -239,7 +235,7 @@ class Map extends Phaser.Scene {
 
     var style = { font: "bold 25px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
     scoreText = this.add.text(250, 165, 'Score: 0', style).setScrollFactor(0);
-    scoreText.setDepth(99)
+    scoreText.setDepth(99);
     text = this.add.text(1080/2-120, 165,'',style).setScrollFactor(0);
     timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(1000, 1000), loop: true }));
     timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(3000, 3000), loop: true }));
@@ -269,8 +265,7 @@ class Map extends Phaser.Scene {
 }
 
   update() {
-    
-    
+
     // Constrain position of constrainReticle
     constrainReticle(reticle);
 
@@ -335,9 +330,6 @@ class Map extends Phaser.Scene {
         wave++;
       }
         
-      
-      
-      //console.log(enemy.length);
     }
     if (timerEvents[1].getProgress().toString().substr(0, 3) == 0.9)  {
       touch = 1;
