@@ -112,10 +112,11 @@ class Map extends Phaser.Scene {
     var tileset1 = map.addTilesetImage('assets', 'base_tiles');
     map.createLayer('ground', [tileset1]);
     map.createLayer('walls', [tileset1]);
-    map.createLayer('road', [tileset1]);
-    map.createLayer('building', [tileset1]);
-    map.createLayer('building2', [tileset1]);
+    map.createLayer('walls2', [tileset1]);
+    map.createLayer('portals', [tileset1]);
+    map.createLayer('assets', [tileset1]);
     const col = map.createStaticLayer('col', [tileset1]);
+
     localStorage.clear()
 
     //Sound part
