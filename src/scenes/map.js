@@ -66,7 +66,7 @@ class Map extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('bullet', 'src/assets/sprite/bullet.png');
+    this.load.image('bullet', 'src/assets/sprite/bulletg.png');
     this.load.image('target', 'src/assets/sprite/crossAim.png');
     this.load.image('fulllife', 'src/assets/sprite/full_life.png');
     this.load.image('life-1', 'src/assets/sprite/life-1.png');
