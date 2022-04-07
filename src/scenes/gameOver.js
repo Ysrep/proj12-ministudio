@@ -17,7 +17,7 @@ class GameOver extends Phaser.Scene {
     this.add.image(540, 635, 'pressEnter');
     this.enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
-    highScoreText = this.add.text(690, 165, 'highScore: 0' , style).setScrollFactor(0);
+    highScoreText = this.add.text(690, 165, 'highScore: ' , style).setScrollFactor(0);
    
     
   }
