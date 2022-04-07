@@ -66,11 +66,7 @@ class Map extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('carac', 'src/assets/sprite/cara.png');
-    this.load.image('zomb', 'src/assets/sprite/zomb.png');
     this.load.image('bullet', 'src/assets/sprite/bullet.png');
-    this.load.image('arche', 'src/assets/sprite/archeeliza.png');
-    this.load.image('wheel', 'src/assets/sprite/wheel.png');
     this.load.image('target', 'src/assets/sprite/crossAim.png');
     this.load.image('fulllife', 'src/assets/sprite/full_life.png');
     this.load.image('life-1', 'src/assets/sprite/life-1.png');
@@ -120,9 +116,6 @@ class Map extends Phaser.Scene {
     map.createLayer('building', [tileset1]);
     map.createLayer('building2', [tileset1]);
     const col = map.createStaticLayer('col', [tileset1]);
-    /*for (let i = 2; i < 8; i++) {
-      map.createLayer('Tile Layer ' + i, [tileset1]);
-    }*/
     localStorage.clear()
     
     //Sound part
@@ -160,7 +153,7 @@ class Map extends Phaser.Scene {
     
     //Spawn player
     dude = this.physics.add.sprite(500, 500, DUDE_KEY)
-    CreatePlayer()
+    CreatePlayer();
 
     //bullets settings
     playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
@@ -258,19 +251,6 @@ class Map extends Phaser.Scene {
   update() {
     // Constrain position of constrainReticle
     constrainReticle(reticle);
-    /*for (let i = 0; i < Maxzombies; i++) {
-    var temp=Phaser.Math.Angle.Between(enemy[i].x,enemy[i].y,dude.x,dude.y);
-        var angle = Phaser.Math.RadToDeg(temp);
-        
-        if(angle>0){
-          enemy[i].frame
-          
-        }
-        if(angle<90){
-          enemy[i].sprite;
-          
-        }
-      }*/
     if(shake == 1){ 
       this.cameras.main.shake(200,0.005);
       shake = 0;
