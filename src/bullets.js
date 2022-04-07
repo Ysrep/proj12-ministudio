@@ -46,15 +46,14 @@ var Bullet = new Phaser.Class({
 function constrainReticle(reticle) {
   var distX = reticle.x-dude.x; // X distance between player & reticle
   var distY = reticle.y-dude.y; // Y distance between player & reticle
-
   // Ensures reticle cannot be moved offscreen (player follow)
-  if (distX > 330)
-    reticle.x = dude.x+330;
-  else if (distX < -330)
-    reticle.x = dude.x-330;
+  if (distX > 320)
+    reticle.x = dude.x+320;
+  else if (distX < -320)
+    reticle.x = dude.x-320;
 
-  if (distY > 240)
-    reticle.y = dude.y+240;
-  else if (distY < -240)
-    reticle.y = dude.y-240;
+  if (distY > 220)
+    reticle.y = dude.y+220;
+  else if (distY < -220)
+    reticle.y = dude.y-220;
 }

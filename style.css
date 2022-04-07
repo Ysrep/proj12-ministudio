@@ -4,6 +4,8 @@
 }
 
 body{
+    display: flex;
+    justify-content: center;
     margin:0;
     background: linear-gradient(0.25turn, #271111, #551f1f);
 }
@@ -16,17 +18,15 @@ p{
 }
 canvas{
     margin-top: 50px;
-    margin-left: 22% ;
     border-radius: 1vh;
 }
 
 .absolute {
     position: absolute;
     bottom: 55px;
-    left: 24%;
     display: flex;
-    justify-content: space-between;
-    vertical-align: baseline;    
+    justify-content: space-around;
+    vertical-align: baseline;
 }
 
 .absolute img {
