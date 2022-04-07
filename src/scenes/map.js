@@ -100,14 +100,19 @@ class Map extends Phaser.Scene {
     this.load.audio('zomb3', ['src/assets/SFX/zomb3.mp3']);
     this.load.audio('zomb4', ['src/assets/SFX/zomb4.mp3']);
     this.load.audio('orchestral', ['src/assets/SFX/orchestral.mp3'])
-    this.load.spritesheet(DUDE_KEY, 'src/assets/sprite/dude.png', { frameWidth: 33, frameHeight: 56 });
+    //this.load.spritesheet(DUDE_KEY, 'src/assets/sprite/dude.png', { frameWidth: 33, frameHeight: 56 });
     this.load.spritesheet('zombi', 'src/assets/sprite/animZ.png', { frameWidth: 33, frameHeight: 56 });
+    this.load.atlas(DUDE_KEY, 'src/assets/sprite/WalkProfil.png', 'src/assets/sprite/WalkProfil.json' )
+    this.load.atlas('leftKey', 'src/assets/sprite/WalkProfilLeft.png', 'src/assets/sprite/WalkProfilLeft.json' )
     this.load.image('base_tiles', 'src/assets/tiles/assets01.png');
     this.load.image('sol_tiles', 'src/assets/tiles/sol.png');
     this.load.tilemapTiledJSON('map', 'src/assets/map.json');
   }
 
   create() {
+    
+    
+
     //Map
     var map = this.add.tilemap('map');
     var tileset1 = map.addTilesetImage('assets', 'base_tiles');
@@ -117,8 +122,12 @@ class Map extends Phaser.Scene {
     map.createLayer('assets', [tileset1]);
     const col = map.createStaticLayer('col', [tileset1]);
 
-    localStorage.clear()
 
+    /*for (let i = 2; i < 8; i++) {
+      map.createLayer('Tile Layer ' + i, [tileset1]);
+    }*/
+
+    
     //Sound part
     this.sound.pauseOnBlur = false;
     damaged.push(this.sound.add('damaged1'));
@@ -256,13 +265,14 @@ class Map extends Phaser.Scene {
       this.cameras.main.shake(200,0.005);
       shake = 0;
     }
+
     //movement
     const speedWalk = 200;
     let dudeVelocity = new Phaser.Math.Vector2();
 
     if (cursor.left.isDown) {
       dudeVelocity.x = -1;
-
+      dude.flipX;
       dude.anims.play('left', true)
     }
     else if (cursor.right.isDown) {
@@ -270,7 +280,10 @@ class Map extends Phaser.Scene {
 
       dude.anims.play('right', true)
     }
-    if (cursor.up.isDown) {
+    else{
+      dude.anims.play('idle', true)
+    }
+     if (cursor.up.isDown) {
       dudeVelocity.y = -1;
 
     }
@@ -278,7 +291,10 @@ class Map extends Phaser.Scene {
       dudeVelocity.y = 1;
 
     }
-
+    
+      
+    
+    
     dudeVelocity.scale(speedWalk);
     dude.setVelocity(dudeVelocity.x, dudeVelocity.y);
 
@@ -355,21 +371,51 @@ function CreatePlayer() {
 
   dude.anims.create({
     key: 'idle',
-    frames: [{ key: DUDE_KEY, frame: 0 }],
-    frameRate: 20
-  })
-
-  dude.anims.create({
-    key: 'left',
-    frames: dude.anims.generateFrameNumbers(DUDE_KEY, { start: 4, end: 5 }),
-    frameRate: 10,
-    repeat: -1
+    frames: [{ key: DUDE_KEY, frame: 'WalkProfil1.png'  }],
   })
 
   dude.anims.create({
     key: 'right',
-    frames: dude.anims.generateFrameNumbers(DUDE_KEY, { start: 6, end: 7 }),
-    frameRate: 10,
+    frames: [{
+      key: DUDE_KEY,
+      frame: 'WalkProfil1.png'
+    }, {
+      key: DUDE_KEY,
+      frame: 'WalkProfil2.png'
+    },{
+      key: DUDE_KEY,
+      frame: 'WalkProfil3.png'
+    },{
+      key: DUDE_KEY,
+      frame: 'WalkProfil4.png'
+    },{
+      key: DUDE_KEY,
+      frame: 'WalkProfil5.png'
+    }],
+    frameRate: 1,
     repeat: -1
   })
+
+  dude.anims.create({
+    key: 'left',
+    frames: [{
+      key: 'leftKey',
+      frame: 'WalkProfilLeft1.png'
+    }, {
+      key: 'leftKey',
+      frame: 'WalkProfilLeft2.png'
+    },{
+      key: 'leftKey',
+      frame: 'WalkProfilLeft3.png'
+    },{
+      key: 'leftKey',
+      frame: 'WalkProfilLeft4.png'
+    },{
+      key: 'leftKey', 
+      frame: 'WalkProfilLeft5.png'
+    }],
+    frameRate: 1,
+    repeat: -1
+  })
+  
 } 

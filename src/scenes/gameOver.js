@@ -1,5 +1,6 @@
 var ex;
-var style = { font: "bold 25px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+var style = { font: "bold 80px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+
 class GameOver extends Phaser.Scene {
   constructor() {
     super({ key: "GameOver" });
@@ -19,15 +20,16 @@ class GameOver extends Phaser.Scene {
     this.add.image(540, 635, 'pressEnter');
     this.enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
-    highScoreText = this.add.text(690, 165, 'highScore: 0' , style).setScrollFactor(0);
+    highScoreText = this.add.text(675, 300, '' , style);
   }
 
   update() {
-    for (let i = 0; i <= 10; i++) {
-      highScoreText.setText('highScore: '+highScore[i]);
-    }
+    
+    
+    highScoreText.setText(localStorage.getItem('Score'));
+    
     if (Phaser.Input.Keyboard.JustDown(this.enter)) {
-      this.scene.start("Map");
+      this.scene.start("Map"); 
     }
   }
 }
