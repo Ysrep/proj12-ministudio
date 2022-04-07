@@ -22,8 +22,10 @@ var score = 0;
 var highScore = [];
 var scoreText;
 var highScoreText;
+var lifeDisp = [];
 
 var text;
+var time = 0 ;
 var timerEvents = [];
 var scoreMultiplicator = 1;
 
@@ -60,23 +62,17 @@ class Map extends Phaser.Scene {
         default:
           break;
       }
-
-
     }
-
-    
   }
 
   preload() {
-    this.load.image('carac', 'src/assets/sprite/cara.png');
-    this.load.image('zomb', 'src/assets/sprite/zomb.png');
-    this.load.image('bullet', 'src/assets/sprite/uwu.png');
-    this.load.image('arche', 'src/assets/sprite/archeeliza.png');
-    this.load.image('wheel', 'src/assets/sprite/wheel.png');
+    this.load.image('bullet', 'src/assets/sprite/bullet.png');
     this.load.image('target', 'src/assets/sprite/crossAim.png');
-    this.load.image('house', 'src/assets/sprite/house.png');
-    this.load.audio('cparti', ['src/assets/SFX/cparti.mp3']);
-    this.load.audio('cperdu', ['src/assets/SFX/cperdu.mp3']);
+    this.load.image('fulllife', 'src/assets/sprite/full_life.png');
+    this.load.image('life-1', 'src/assets/sprite/life-1.png');
+    this.load.image('life-2', 'src/assets/sprite/life-2.png');
+    this.load.image('life-3', 'src/assets/sprite/life-3.png');
+    this.load.image('life-4', 'src/assets/sprite/life-4.png');
     this.load.audio('damaged1', ['src/assets/SFX/damaged1.mp3']);
     this.load.audio('damaged2', ['src/assets/SFX/damaged2.mp3']);
     this.load.audio('damaged3', ['src/assets/SFX/damaged3.mp3']);
@@ -104,8 +100,9 @@ class Map extends Phaser.Scene {
     this.load.audio('zomb3', ['src/assets/SFX/zomb3.mp3']);
     this.load.audio('zomb4', ['src/assets/SFX/zomb4.mp3']);
     this.load.audio('orchestral', ['src/assets/SFX/orchestral.mp3'])
-    this.load.spritesheet(DUDE_KEY, 'src/assets/sprite/dude.png', { frameWidth: 33, frameHeight: 56 });
+    //this.load.spritesheet(DUDE_KEY, 'src/assets/sprite/dude.png', { frameWidth: 33, frameHeight: 56 });
     this.load.spritesheet('zombi', 'src/assets/sprite/animZ.png', { frameWidth: 33, frameHeight: 56 });
+    this.load.atlas(DUDE_KEY, 'src/assets/sprite/WalkProfil.png', 'src/assets/sprite/WalkProfil.json' )
     this.load.image('base_tiles', 'src/assets/tiles/assets01.png');
     this.load.tilemapTiledJSON('map', 'src/assets/map.json');
   }
@@ -113,7 +110,6 @@ class Map extends Phaser.Scene {
   create() {
     //Map
     var map = this.add.tilemap('map');
-    
     var tileset1 = map.addTilesetImage('assets', 'base_tiles');
     map.createLayer('ground', [tileset1]);
     map.createLayer('walls', [tileset1]);
@@ -130,8 +126,6 @@ class Map extends Phaser.Scene {
     
     //Sound part
     this.sound.pauseOnBlur = false;
-    this.cparti = this.sound.add('cparti');
-    this.cperdu = this.sound.add('cperdu');
     damaged.push(this.sound.add('damaged1'));
     damaged.push(this.sound.add('damaged2'));
     damaged.push(this.sound.add('damaged3'));
@@ -163,12 +157,9 @@ class Map extends Phaser.Scene {
     this.orchestral.setVolume(0.1);
     this.orchestral.setLoop(true);
     
-    
-    
-
     //Spawn player
     dude = this.physics.add.sprite(500, 500, DUDE_KEY)
-    CreatePlayer()
+    CreatePlayer();
 
     //bullets settings
     playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
@@ -191,15 +182,9 @@ class Map extends Phaser.Scene {
     this.physics.add.collider(dude, col);
     col.setCollisionByProperty({collides:true});
     col.setCollision([4]);
-    
-    
-    
-    
-
 
     //Zombies settings
     touch = 1;
-
     for (let i = 0; i < 5; i++) {
          enemy[i] = this.physics.add.sprite(Math.random() * 500, Math.random() * 500, 'zombi').setDepth(1);
     this.physics.moveToObject(enemy[i], dude, 100) 
@@ -209,30 +194,23 @@ class Map extends Phaser.Scene {
         hp --;
         touch = 0;
         damaged[Math.floor(Math.random()*6)].play();
-        shake =1;
-        
+        shake =1; 
       }
     }); 
-  
-    
     this.physics.add.collider(enemy, enemy, function () {}); //collide between zombies
 
     //Collide between Zombies and bullets
     this.physics.add.overlap(enemy, playerBullets, function (enemy, playerBullets) {
       playerBullets.destroy();
       enemy.destroy();
-      //this.kill.play();
       //update score
       score += 10 * scoreMultiplicator;
       scoreText.setText('Score: ' + score);
     });
 
-
     //Camera settings
     this.cameras.main.startFollow(dude, true, 0.09, 0.09);
     this.cameras.main.setZoom(1.7);
-    
-   
    
     //Print Score & Timer
     score = 0;
@@ -241,10 +219,20 @@ class Map extends Phaser.Scene {
 
     var style = { font: "bold 25px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
     scoreText = this.add.text(250, 165, 'Score: 0', style).setScrollFactor(0);
-    scoreText.setDepth(99)
+    lifeDisp.push(this.add.image(250 , 350, 'fulllife').setScrollFactor(0));
+    lifeDisp.push(this.add.image(250 , 350, 'life-1').setScrollFactor(0));
+    lifeDisp.push(this.add.image(250 , 350, 'life-2').setScrollFactor(0));
+    lifeDisp.push(this.add.image(250 , 350, 'life-3').setScrollFactor(0));
+    lifeDisp.push(this.add.image(250 , 350, 'life-4').setScrollFactor(0));
+    lifeDisp[1].setVisible(0);
+    lifeDisp[2].setVisible(0);
+    lifeDisp[3].setVisible(0);
+    lifeDisp[4].setVisible(0);
+    scoreText.setDepth(99); 
     text = this.add.text(1080/2-120, 165,'',style).setScrollFactor(0);
-    timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(1000, 1000), loop: true }));
-    timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(3000, 3000), loop: true }));
+    timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(4999, 5000), loop: true }));
+    timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(2999, 3000), loop: true }));
+    timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(999, 1000), loop: true }));
     text.setDepth(99);
 
     // Pointer lock will only work after mousedown
@@ -264,55 +252,27 @@ class Map extends Phaser.Scene {
       reticle.y += pointer.movementY;
     }
   }, this);
-/*
-  enemy.anims.create({
-    key: 'left',
-    frames: [{ key: 'zombi', frame: 0 }],
-    repeat: -1
-  })
-
-  enemy.anims.create({
-    key: 'right',
-    frames: [{ key: 'zombi', frame: 1 }],
-    repeat: -1
-  })
-  */
 }
 
   update() {
-    
-    
     // Constrain position of constrainReticle
     constrainReticle(reticle);
-/*
-    var temp = Phaser.Math.Angle.Between(enemy.x, enemy.y, dude.x, dude.y);
-    var angle = Phaser.Math.RadToDeg(temp);
-    if(angle<90)enemy.anims.play('left');
-    if(angle>90)enemy.anims.play('right');
-    console.log(angle);
-*/
-    
-
-      if(shake == 1)
-    { 
-      this.cameras.main.shake(200,0.005
-          );
+    if(shake == 1){ 
+      this.cameras.main.shake(200,0.005);
       shake = 0;
     }
+
     //movement
     const speedWalk = 200;
     let dudeVelocity = new Phaser.Math.Vector2();
 
-   
-
     if (cursor.left.isDown) {
       dudeVelocity.x = -1;
-      dude.anims.play('left', true)
-      
+      //dude.anims.play('left', true)
     }
     else if (cursor.right.isDown) {
       dudeVelocity.x = 1;
-      dude.anims.play('right', true)
+      //dude.anims.play('right', true)
     }
     if (cursor.up.isDown) {
       dudeVelocity.y = -1;
@@ -324,37 +284,51 @@ class Map extends Phaser.Scene {
     dudeVelocity.scale(speedWalk);
     dude.setVelocity(dudeVelocity.x, dudeVelocity.y);
 
-
     //timer reinitialize
     var output = [];
-    output.push('timer : ' + timerEvents[0].getProgress().toString().substr(0, 4));
-    if (timerEvents[0].getProgress().toString().substr(0, 4) == 0.9)  {
-      
+    if (timerEvents[0].getProgress().toString().substr(0, 5) == 0.9)  {
+      voiceline[Math.floor(Math.random()*5)].play();
       scoreMultiplicator += 1;
       this.updateCounter()
       if (wave == 10){
         wave = 10;
-      }
+      }  
       else{
         wave++;
-      }
-        
-      
-      
-      //console.log(enemy.length);
+      }  
     }
-    if (timerEvents[1].getProgress().toString().substr(0, 3) == 0.9)  {
+    if (timerEvents[2].getProgress().toString() == 0.9){
+      time ++;
+      console.log(time);
+    }
+    output.push('Timer : ' + time + 's');
+    if (timerEvents[1].getProgress().toString().substr(0, 5) == 0.9)  {
       touch = 1;
-      
     }
     text.setText(output);
+
+    if(hp == 4){
+      lifeDisp[0].setVisible(0);
+      lifeDisp[1].setVisible(1);
+    }
+    if(hp == 3){
+      lifeDisp[1].setVisible(0);
+      lifeDisp[2].setVisible(1);
+    }
+    if(hp == 2){
+      lifeDisp[2].setVisible(0);
+      lifeDisp[3].setVisible(1);
+    }
+    if(hp == 1){
+      lifeDisp[3].setVisible(0);
+      lifeDisp[4].setVisible(1);
+    }
 
     if(hp == 0){
       for (let i = 0; i < enemy.length; i++) {
         enemy[i]=0;
       }
-      wave =0;
-      this.onepiece.play();
+      wave =0; 
       if(Math.floor(Math.random()*2) == 1){
         this.piscine.play();
         this.piscine.setVolume(3);
@@ -368,7 +342,6 @@ class Map extends Phaser.Scene {
     }
 
     //zombies movement
-    //this.walking.stop();
     for (let i = 0; i < enemy.length; i++) {
       if (enemy[i].active == true){
         this.physics.moveToObject(enemy[i], dude, 100);
@@ -380,24 +353,49 @@ class Map extends Phaser.Scene {
 function CreatePlayer() {
   hp = 5;
   dude.setDepth(5);
-
+/*
   dude.anims.create({
-    key: 'idle',
-    frames: [{ key: DUDE_KEY, frame: 0 }],
-    frameRate: 20
+    key: 'righ',
+    frames: [{
+      key: DUDE_KEY,
+      frame: 'WalkProfil4.png'
+    }, {
+      key: DUDE_KEY,
+      frame: 'WalkProfil2.png'
+    },{
+      key: DUDE_KEY,
+      frame: 'WalkProfil5.png'
+    },{
+      key: DUDE_KEY,
+      frame: 'WalkProfil3.png'
+    },{
+      key: DUDE_KEY,
+      frame: 'WalkProfil1.png'
+    }],
+    frameRate: 8,
+    repeat: -1
   })
 
   dude.anims.create({
     key: 'left',
-    frames: dude.anims.generateFrameNumbers(DUDE_KEY, { start: 4, end: 5 }),
-    frameRate: 10,
+    frames: [{
+      key: DUDE_KEY,
+      frame: 'WalkProfil4.png'
+    }, {
+      key: DUDE_KEY,
+      frame: 'WalkProfil2.png'
+    },{
+      key: DUDE_KEY,
+      frame: 'WalkProfil5.png'
+    },{
+      key: DUDE_KEY,
+      frame: 'WalkProfil3.png'
+    },{
+      key: DUDE_KEY,
+      frame: 'WalkProfil1.png'
+    }],
+    frameRate: 8,
     repeat: -1
   })
-
-  dude.anims.create({
-    key: 'right',
-    frames: dude.anims.generateFrameNumbers(DUDE_KEY, { start: 6, end: 7 }),
-    frameRate: 10,
-    repeat: -1
-  })
+  */
 } 
