@@ -22,8 +22,10 @@ var score = 0;
 var highScore = [];
 var scoreText;
 var highScoreText;
+var lifeDisp = [];
 
 var text;
+var time = 0 ;
 var timerEvents = [];
 var scoreMultiplicator = 1;
 
@@ -60,24 +62,17 @@ class Map extends Phaser.Scene {
         default:
           break;
       }
-
-
     }
-
-
   }
 
   preload() {
-    this.load.image('carac', 'src/assets/sprite/cara.png');
-    this.load.image('zomb', 'src/assets/sprite/zomb.png');
-    this.load.image('bullet', 'src/assets/sprite/bulletg.png');
-    this.load.image('arche', 'src/assets/sprite/archeeliza.png');
-    this.load.image('wheel', 'src/assets/sprite/wheel.png');
+    this.load.image('bullet', 'src/assets/sprite/bullet.png');
     this.load.image('target', 'src/assets/sprite/crossAim.png');
-    this.load.image('house', 'src/assets/sprite/house.png');
-    this.load.image('pv5', 'src/assets/sprite/PV/Full_life.png');
-    this.load.image('pv4', 'src/assets/sprite/PV/Life_-1.png');
-    this.load.image('pv3', 'src/assets/sprite/PV/Life-2.png');
+    this.load.image('fulllife', 'src/assets/sprite/full_life.png');
+    this.load.image('life-1', 'src/assets/sprite/life-1.png');
+    this.load.image('life-2', 'src/assets/sprite/life-2.png');
+    this.load.image('life-3', 'src/assets/sprite/life-3.png');
+    this.load.image('life-4', 'src/assets/sprite/life-4.png');
     this.load.audio('damaged1', ['src/assets/SFX/damaged1.mp3']);
     this.load.audio('damaged2', ['src/assets/SFX/damaged2.mp3']);
     this.load.audio('damaged3', ['src/assets/SFX/damaged3.mp3']);
@@ -114,7 +109,6 @@ class Map extends Phaser.Scene {
   create() {
     //Map
     var map = this.add.tilemap('map');
-
     var tileset1 = map.addTilesetImage('assets', 'base_tiles');
     map.createLayer('ground', [tileset1]);
     map.createLayer('walls', [tileset1]);
@@ -122,7 +116,6 @@ class Map extends Phaser.Scene {
     map.createLayer('building', [tileset1]);
     map.createLayer('building2', [tileset1]);
     const col = map.createStaticLayer('col', [tileset1]);
-
     localStorage.clear()
 
     //Sound part
@@ -157,10 +150,7 @@ class Map extends Phaser.Scene {
     this.orchestral.play();
     this.orchestral.setVolume(0.1);
     this.orchestral.setLoop(true);
-
-
-
-
+    
     //Spawn player
     dude = this.physics.add.sprite(500, 500, DUDE_KEY)
     CreatePlayer();
@@ -189,7 +179,6 @@ class Map extends Phaser.Scene {
 
     //Zombies settings
     touch = 1;
-
     for (let i = 0; i < 5; i++) {
       enemy[i] = this.physics.add.sprite(Math.random() * 500, Math.random() * 500, 'zombi').setDepth(1);
       this.physics.moveToObject(enemy[i], dude, 100)
@@ -198,18 +187,16 @@ class Map extends Phaser.Scene {
       if (touch == 1) {
         hp--;
         touch = 0;
-        damaged[Math.floor(Math.random() * 6)].play();
-        shake = 1;
+        damaged[Math.floor(Math.random()*6)].play();
+        shake =1; 
       }
-    });
-
-    this.physics.add.collider(enemy, enemy, function () { }); //collide between zombies
+    }); 
+    this.physics.add.collider(enemy, enemy, function () {}); //collide between zombies
 
     //Collide between Zombies and bullets
     this.physics.add.overlap(enemy, playerBullets, function (enemy, playerBullets) {
       playerBullets.destroy();
       enemy.destroy();
-
       //update score
       score += 10 * scoreMultiplicator;
       scoreText.setText('Score: ' + score);
@@ -218,7 +205,7 @@ class Map extends Phaser.Scene {
     //Camera settings
     this.cameras.main.startFollow(dude, true, 0.09, 0.09);
     this.cameras.main.setZoom(1.7);
-
+   
     //Print Score & Timer
     score = 0;
     timerEvents = [];
@@ -226,10 +213,20 @@ class Map extends Phaser.Scene {
 
     var style = { font: "bold 25px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
     scoreText = this.add.text(250, 165, 'Score: 0', style).setScrollFactor(0);
-    scoreText.setDepth(99);
-    text = this.add.text(1080 / 2 - 120, 165, '', style).setScrollFactor(0);
-    timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(1000, 1000), loop: true }));
-    timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(3000, 3000), loop: true }));
+    lifeDisp.push(this.add.image(250 , 350, 'fulllife').setScrollFactor(0));
+    lifeDisp.push(this.add.image(250 , 350, 'life-1').setScrollFactor(0));
+    lifeDisp.push(this.add.image(250 , 350, 'life-2').setScrollFactor(0));
+    lifeDisp.push(this.add.image(250 , 350, 'life-3').setScrollFactor(0));
+    lifeDisp.push(this.add.image(250 , 350, 'life-4').setScrollFactor(0));
+    lifeDisp[1].setVisible(0);
+    lifeDisp[2].setVisible(0);
+    lifeDisp[3].setVisible(0);
+    lifeDisp[4].setVisible(0);
+    scoreText.setDepth(99); 
+    text = this.add.text(1080/2-120, 165,'',style).setScrollFactor(0);
+    timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(4999, 5000), loop: true }));
+    timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(2999, 3000), loop: true }));
+    timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(999, 1000), loop: true }));
     text.setDepth(99);
 
     // Pointer lock will only work after mousedown
@@ -243,37 +240,19 @@ class Map extends Phaser.Scene {
         game.input.mouse.releasePointerLock();
     }, 0, this);
 
-    this.input.on('pointermove', function (pointer) {
-      if (this.input.mouse.locked) {
-        reticle.x += pointer.movementX;
-        reticle.y += pointer.movementY;
-      }
-    }, this);
-  }
+  this.input.on('pointermove', function (pointer) {
+    if (this.input.mouse.locked) {
+      reticle.x += pointer.movementX;
+      reticle.y += pointer.movementY;
+    }
+  }, this);
+}
 
   update() {
-
     // Constrain position of constrainReticle
     constrainReticle(reticle);
-
-
-    /*for (let i = 0; i < Maxzombies; i++) {
-    var temp=Phaser.Math.Angle.Between(enemy[i].x,enemy[i].y,dude.x,dude.y);
-        var angle = Phaser.Math.RadToDeg(temp);
-        
-        if(angle>0){
-          enemy[i].frame
-          
-        }
-        if(angle<90){
-          enemy[i].sprite;
-          
-        }
-      }*/
-
-    if (shake == 1) {
-      this.cameras.main.shake(200, 0.005
-      );
+    if(shake == 1){ 
+      this.cameras.main.shake(200,0.005);
       shake = 0;
     }
     //movement
@@ -283,7 +262,6 @@ class Map extends Phaser.Scene {
     if (cursor.left.isDown) {
       dudeVelocity.x = -1;
       dude.anims.play('left', true)
-
     }
     else if (cursor.right.isDown) {
       dudeVelocity.x = 1;
@@ -301,25 +279,46 @@ class Map extends Phaser.Scene {
 
     //timer reinitialize
     var output = [];
-    output.push('timer : ' + timerEvents[0].getProgress().toString().substr(0, 4));
-    if (timerEvents[0].getProgress().toString().substr(0, 4) == 0.9) {
-
+    if (timerEvents[0].getProgress().toString().substr(0, 5) == 0.9)  {
+      voiceline[Math.floor(Math.random()*5)].play();
       scoreMultiplicator += 1;
       this.updateCounter()
       if (wave == 10) {
         wave = 10;
-      }
-      else {
+      }  
+      else{
         wave++;
-      }
+      }  
     }
-    if (timerEvents[1].getProgress().toString().substr(0, 3) == 0.9) {
+    if (timerEvents[2].getProgress().toString() == 0.9){
+      time ++;
+      console.log(time);
+    }
+    output.push('Timer : ' + time + 's');
+    if (timerEvents[1].getProgress().toString().substr(0, 5) == 0.9)  {
       touch = 1;
     }
     
     text.setText(output);
 
-    if (hp == 0) {
+    if(hp == 4){
+      lifeDisp[0].setVisible(0);
+      lifeDisp[1].setVisible(1);
+    }
+    if(hp == 3){
+      lifeDisp[1].setVisible(0);
+      lifeDisp[2].setVisible(1);
+    }
+    if(hp == 2){
+      lifeDisp[2].setVisible(0);
+      lifeDisp[3].setVisible(1);
+    }
+    if(hp == 1){
+      lifeDisp[3].setVisible(0);
+      lifeDisp[4].setVisible(1);
+    }
+
+    if(hp == 0){
       for (let i = 0; i < enemy.length; i++) {
         enemy[i] = 0;
       }
@@ -337,7 +336,6 @@ class Map extends Phaser.Scene {
     }
 
     //zombies movement
-    //this.walking.stop();
     for (let i = 0; i < enemy.length; i++) {
       if (enemy[i].active == true) {
         this.physics.moveToObject(enemy[i], dude, 100);
