@@ -1,0 +1,125 @@
+{
+	"textures": [
+		{
+			"image": "WalkProfil.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 183,
+				"h": 62
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "WalkProfil4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 0,
+						"w": 42,
+						"h": 60
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 42,
+						"h": 60
+					}
+				},
+				{
+					"filename": "WalkProfil2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 1,
+						"w": 40,
+						"h": 59
+					},
+					"frame": {
+						"x": 45,
+						"y": 1,
+						"w": 40,
+						"h": 59
+					}
+				},
+				{
+					"filename": "WalkProfil5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 1,
+						"w": 33,
+						"h": 59
+					},
+					"frame": {
+						"x": 87,
+						"y": 1,
+						"w": 33,
+						"h": 59
+					}
+				},
+				{
+					"filename": "WalkProfil3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 1,
+						"w": 32,
+						"h": 59
+					},
+					"frame": {
+						"x": 122,
+						"y": 1,
+						"w": 32,
+						"h": 59
+					}
+				},
+				{
+					"filename": "WalkProfil1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 14,
+						"y": 1,
+						"w": 26,
+						"h": 59
+					},
+					"frame": {
+						"x": 156,
+						"y": 1,
+						"w": 26,
+						"h": 59
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:31cfb5e2dbbc5a005096cf7245b2b5bf:42a14f9191dcde5d89f65f5699960370:4202e6c3e3eff8ec409ac5716c6b8e9b$"
+	}
+}

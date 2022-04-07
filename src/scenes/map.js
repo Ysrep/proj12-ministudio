@@ -14,7 +14,6 @@ var isoY;
 var ground;
 var wave = 1;
 
-const DUDE_KEY = 'dude'
 var touch;
 
 //set Score variables
@@ -102,7 +101,12 @@ class Map extends Phaser.Scene {
     this.load.audio('zomb3', ['src/assets/SFX/zomb3.mp3']);
     this.load.audio('zomb4', ['src/assets/SFX/zomb4.mp3']);
     this.load.audio('orchestral', ['src/assets/SFX/orchestral.mp3'])
-    this.load.spritesheet(DUDE_KEY, 'src/assets/sprite/dude.png', { frameWidth: 33, frameHeight: 56 });
+    this.load.atlas('dude1', 'src/assets/sprite/FaceWalk.png', 'src/assets/sprite/FaceWalk.json')
+    this.load.atlas('dude2', 'src/assets/sprite/BackWalk.png', 'src/assets/sprite/BackWalk.json')
+    this.load.atlas('dude3', 'src/assets/sprite/WalkDiagoBack.png', 'src/assets/sprite/WalkDiagoBack.json')
+    this.load.atlas('dude4', 'src/assets/sprite/WalkDiagoFace.png', 'src/assets/sprite/WalkDiagoFace.json')
+    this.load.atlas('dude5', 'src/assets/sprite/WalkProfil.png', 'src/assets/sprite/WalkProfil.json')
+    this.load.atlas('dude6', 'src/assets/sprite/WalkProfilLeft.png', 'src/assets/sprite/WalkProfilLeft.json')
     this.load.spritesheet('zombi', 'src/assets/sprite/animZ.png', { frameWidth: 33, frameHeight: 56 });
     this.load.image('base_tiles', 'src/assets/tiles/assets01.png');
     this.load.tilemapTiledJSON('map', 'src/assets/map.json');
@@ -165,7 +169,7 @@ class Map extends Phaser.Scene {
     
 
     //Spawn player
-    dude = this.physics.add.sprite(500, 500, DUDE_KEY)
+    dude = this.physics.add.sprite(500, 500, 'dude1')
     CreatePlayer()
 
     //bullets settings
@@ -312,9 +316,11 @@ class Map extends Phaser.Scene {
     }
     if (cursor.up.isDown) {
       dudeVelocity.y = -1;
+      dude.anims.play('up', true)
     }
     else if (cursor.down.isDown) {
       dudeVelocity.y = 1;
+      dude.anims.play('down', true)
     }
 
     dudeVelocity.scale(speedWalk);
@@ -378,20 +384,98 @@ function CreatePlayer() {
 
   dude.anims.create({
     key: 'idle',
-    frames: [{ key: DUDE_KEY, frame: 0 }],
+    frames: dude.anims.generateFrameNumbers('dude1', { start: 0, end: 0 }),
     frameRate: 20
   })
 
   dude.anims.create({
     key: 'left',
-    frames: dude.anims.generateFrameNumbers(DUDE_KEY, { start: 4, end: 5 }),
+    frames: [{ 
+      key: 'dude6',
+      frame: 'WalkProfilLeft1.png'
+    }, {
+      key: 'dude6',
+      frame: 'WalkProfilLeft2.png'
+    }, {
+      key: 'dude6',
+      frame: 'WalkProfilLeft3.png'
+    }, {
+      key: 'dude6',
+      frame: 'WalkProfilLeft4.png'
+    }, {
+      key: 'dude6',
+      frame: 'WalkProfilLeft5.png'
+    },
+    ],
     frameRate: 10,
     repeat: -1
   })
 
   dude.anims.create({
     key: 'right',
-    frames: dude.anims.generateFrameNumbers(DUDE_KEY, { start: 6, end: 7 }),
+    frames: [{ 
+      key: 'dude5',
+      frame: 'WalkProfil1.png'
+    }, {
+      key: 'dude5',
+      frame: 'WalkProfil2.png'
+    }, {
+      key: 'dude5',
+      frame: 'WalkProfil3.png'
+    }, {
+      key: 'dude5',
+      frame: 'WalkProfil4.png'
+    }, {
+      key: 'dude5',
+      frame: 'WalkProfil5.png'
+    },
+    ],
+    frameRate: 10,
+    repeat: -1
+  })
+
+  dude.anims.create({
+    key: 'up',
+    frames: [{ 
+      key: 'dude2',
+      frame: 'BackWalk1.png'
+    }, {
+      key: 'dude2',
+      frame: 'BackWalk2.png'
+    }, {
+      key: 'dude2',
+      frame: 'BackWalk3.png'
+    }, {
+      key: 'dude2',
+      frame: 'BackWalk4.png'
+    }, {
+      key: 'dude2',
+      frame: 'BackWalk5.png'
+    },
+    ],
+    frameRate: 10,
+    repeat: -1
+  })
+
+  dude.anims.create({
+    key: 'down',
+    frames: [{ 
+      key: 'dude1',
+      frame: 'FaceWalk1.png'
+    }, {
+      key: 'dude1',
+      frame: 'FaceWalk2.png'
+    }, {
+      key: 'dude1',
+      frame: 'FaceWalk3.png'
+    }, {
+      key: 'dude1',
+      frame: 'FaceWalk4.png'
+    }, {
+      key: 'dude1',
+      frame: 'FaceWalk5.png'
+    },
+    ],
     frameRate: 10,
     repeat: -1
   })

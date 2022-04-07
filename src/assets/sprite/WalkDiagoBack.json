@@ -1,0 +1,125 @@
+{
+	"textures": [
+		{
+			"image": "WalkDiagoBack.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 136,
+				"h": 62
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "WalkDiagoBack4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 0,
+						"w": 32,
+						"h": 60
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 32,
+						"h": 60
+					}
+				},
+				{
+					"filename": "WalkDiagoBack2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 12,
+						"y": 0,
+						"w": 25,
+						"h": 60
+					},
+					"frame": {
+						"x": 35,
+						"y": 1,
+						"w": 25,
+						"h": 60
+					}
+				},
+				{
+					"filename": "WalkDiagoBack3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 11,
+						"y": 0,
+						"w": 25,
+						"h": 60
+					},
+					"frame": {
+						"x": 62,
+						"y": 1,
+						"w": 25,
+						"h": 60
+					}
+				},
+				{
+					"filename": "WalkDiagoBack1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 14,
+						"y": 0,
+						"w": 22,
+						"h": 60
+					},
+					"frame": {
+						"x": 89,
+						"y": 1,
+						"w": 22,
+						"h": 60
+					}
+				},
+				{
+					"filename": "WalkDiagoBack5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 15,
+						"y": 0,
+						"w": 22,
+						"h": 60
+					},
+					"frame": {
+						"x": 113,
+						"y": 1,
+						"w": 22,
+						"h": 60
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:cf75c9220d02a1c4d46072a604954ece:92f73eda113d931e0eb788b661540ea2:a0f0bfbf27dc94a8863bac59e26acaf3$"
+	}
+}
