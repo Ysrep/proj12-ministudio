@@ -176,8 +176,6 @@ class Map extends Phaser.Scene {
     this.load.atlas('dude5', 'src/assets/sprite/WalkProfil.png', 'src/assets/sprite/WalkProfil.json')
     this.load.atlas('dude6', 'src/assets/sprite/WalkProfilLeft.png', 'src/assets/sprite/WalkProfilLeft.json')
     this.load.spritesheet('zombi', 'src/assets/sprite/animZ.png', { frameWidth: 33, frameHeight: 56 });
-    this.load.atlas(DUDE_KEY, 'src/assets/sprite/WalkProfil.png', 'src/assets/sprite/WalkProfil.json' )
-    this.load.atlas('leftKey', 'src/assets/sprite/WalkProfilLeft.png', 'src/assets/sprite/WalkProfilLeft.json' )
     this.load.image('collider', 'src/assets/sprite/col.png');
     this.load.image('gravel', 'src/assets/sprite/ground/gravel.png');
     this.load.image('grass', 'src/assets/sprite/grass.png');
@@ -420,7 +418,7 @@ class Map extends Phaser.Scene {
       dude.anims.play('down', true)
     }
 
-    }
+    
 
 
 
