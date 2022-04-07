@@ -1,5 +1,6 @@
 var ex;
 var style = { font: "bold 25px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+
 class GameOver extends Phaser.Scene {
   constructor() {
     super({ key: "GameOver" });
@@ -23,11 +24,12 @@ class GameOver extends Phaser.Scene {
   }
 
   update() {
+    
     for (let i = 0; i <= 10; i++) {
-      highScoreText.setText('highScore: '+highScore[i]);
+      highScoreText.setText('highScore: '+localStorage.getItem('Score'));
     }
     if (Phaser.Input.Keyboard.JustDown(this.enter)) {
-      this.scene.start("Map");
+      this.scene.start("Map"); 
     }
   }
 }

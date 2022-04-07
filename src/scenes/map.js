@@ -127,8 +127,6 @@ class Map extends Phaser.Scene {
       map.createLayer('Tile Layer ' + i, [tileset1]);
     }*/
 
-    localStorage.clear()
-    
     
     //Sound part
     this.sound.pauseOnBlur = false;
@@ -266,10 +264,19 @@ class Map extends Phaser.Scene {
       reticle.y += pointer.movementY;
     }
   }, this);
-  
-  
-  
-  
+/*
+  enemy.anims.create({
+    key: 'left',
+    frames: [{ key: 'zombi', frame: 0 }],
+    repeat: -1
+  })
+
+  enemy.anims.create({
+    key: 'right',
+    frames: [{ key: 'zombi', frame: 1 }],
+    repeat: -1
+  })
+  */
 }
 
   update() {
@@ -277,21 +284,14 @@ class Map extends Phaser.Scene {
     
     // Constrain position of constrainReticle
     constrainReticle(reticle);
-
+/*
+    var temp = Phaser.Math.Angle.Between(enemy.x, enemy.y, dude.x, dude.y);
+    var angle = Phaser.Math.RadToDeg(temp);
+    if(angle<90)enemy.anims.play('left');
+    if(angle>90)enemy.anims.play('right');
+    console.log(angle);
+*/
     
-    /*for (let i = 0; i < Maxzombies; i++) {
-    var temp=Phaser.Math.Angle.Between(enemy[i].x,enemy[i].y,dude.x,dude.y);
-        var angle = Phaser.Math.RadToDeg(temp);
-        
-        if(angle>0){
-          enemy[i].frame
-          
-        }
-        if(angle<90){
-          enemy[i].sprite;
-          
-        }
-      }*/
 
       if(shake == 1)
     { 
@@ -374,7 +374,7 @@ class Map extends Phaser.Scene {
         this.physics.moveToObject(enemy[i], dude, 100);
       }
     }
-  } 
+  }
 }
 
 function CreatePlayer() {
