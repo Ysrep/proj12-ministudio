@@ -39,7 +39,7 @@ class Map extends Phaser.Scene {
     this.playerBullets
   }
 
-  updateCounter(){
+  updateCounter() {
     var Spawn
     for (let i = 0; i < wave; i++) {
       Spawn = Math.floor(Math.random() * 4)
@@ -64,7 +64,7 @@ class Map extends Phaser.Scene {
 
     }
 
-    
+
   }
 
   preload() {
@@ -114,7 +114,7 @@ class Map extends Phaser.Scene {
   create() {
     //Map
     var map = this.add.tilemap('map');
-    
+
     var tileset1 = map.addTilesetImage('assets', 'base_tiles');
     map.createLayer('ground', [tileset1]);
     map.createLayer('walls', [tileset1]);
@@ -124,7 +124,7 @@ class Map extends Phaser.Scene {
     const col = map.createStaticLayer('col', [tileset1]);
 
     localStorage.clear()
-    
+
     //Sound part
     this.sound.pauseOnBlur = false;
     damaged.push(this.sound.add('damaged1'));
@@ -157,9 +157,9 @@ class Map extends Phaser.Scene {
     this.orchestral.play();
     this.orchestral.setVolume(0.1);
     this.orchestral.setLoop(true);
-    
-    
-    
+
+
+
 
     //Spawn player
     dude = this.physics.add.sprite(500, 500, DUDE_KEY)
@@ -173,9 +173,9 @@ class Map extends Phaser.Scene {
       // Get bullet from bullets group
       var bullet = playerBullets.get().setActive(true).setVisible(true);
       if (bullet) {
-        
+
         bullet.fire(dude, reticle);
-        shoot[Math.floor(Math.random()*5)].play();
+        shoot[Math.floor(Math.random() * 5)].play();
       }
     }, this);
     reticle = this.physics.add.sprite(700, 500, 'target');
@@ -184,50 +184,41 @@ class Map extends Phaser.Scene {
 
     //world collider
     this.physics.add.collider(dude, col);
-    col.setCollisionByProperty({collides:true});
+    col.setCollisionByProperty({ collides: true });
     col.setCollision([4]);
-    
-    
-    
-    
-
 
     //Zombies settings
     touch = 1;
 
     for (let i = 0; i < 5; i++) {
-         enemy[i] = this.physics.add.sprite(Math.random() * 500, Math.random() * 500, 'zombi').setDepth(1);
-    this.physics.moveToObject(enemy[i], dude, 100) 
+      enemy[i] = this.physics.add.sprite(Math.random() * 500, Math.random() * 500, 'zombi').setDepth(1);
+      this.physics.moveToObject(enemy[i], dude, 100)
     }
     this.physics.add.collider(dude, enemy, function () {
-      if(touch == 1){
-        hp --;
+      if (touch == 1) {
+        hp--;
         touch = 0;
-        damaged[Math.floor(Math.random()*6)].play();
-        shake =1;
+        damaged[Math.floor(Math.random() * 6)].play();
+        shake = 1;
       }
-    }); 
-  
-    
-    this.physics.add.collider(enemy, enemy, function () {}); //collide between zombies
+    });
+
+    this.physics.add.collider(enemy, enemy, function () { }); //collide between zombies
 
     //Collide between Zombies and bullets
     this.physics.add.overlap(enemy, playerBullets, function (enemy, playerBullets) {
       playerBullets.destroy();
       enemy.destroy();
-      
+
       //update score
       score += 10 * scoreMultiplicator;
       scoreText.setText('Score: ' + score);
     });
 
-
     //Camera settings
     this.cameras.main.startFollow(dude, true, 0.09, 0.09);
     this.cameras.main.setZoom(1.7);
-    
-   
-   
+
     //Print Score & Timer
     score = 0;
     timerEvents = [];
@@ -236,7 +227,7 @@ class Map extends Phaser.Scene {
     var style = { font: "bold 25px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
     scoreText = this.add.text(250, 165, 'Score: 0', style).setScrollFactor(0);
     scoreText.setDepth(99);
-    text = this.add.text(1080/2-120, 165,'',style).setScrollFactor(0);
+    text = this.add.text(1080 / 2 - 120, 165, '', style).setScrollFactor(0);
     timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(1000, 1000), loop: true }));
     timerEvents.push(this.time.addEvent({ delay: Phaser.Math.Between(3000, 3000), loop: true }));
     text.setDepth(99);
@@ -252,24 +243,20 @@ class Map extends Phaser.Scene {
         game.input.mouse.releasePointerLock();
     }, 0, this);
 
-  this.input.on('pointermove', function (pointer) {
-    if (this.input.mouse.locked) {
-      reticle.x += pointer.movementX;
-      reticle.y += pointer.movementY;
-    }
-  }, this);
-  
-  
-  
-  
-}
+    this.input.on('pointermove', function (pointer) {
+      if (this.input.mouse.locked) {
+        reticle.x += pointer.movementX;
+        reticle.y += pointer.movementY;
+      }
+    }, this);
+  }
 
   update() {
 
     // Constrain position of constrainReticle
     constrainReticle(reticle);
 
-    
+
     /*for (let i = 0; i < Maxzombies; i++) {
     var temp=Phaser.Math.Angle.Between(enemy[i].x,enemy[i].y,dude.x,dude.y);
         var angle = Phaser.Math.RadToDeg(temp);
@@ -284,22 +271,19 @@ class Map extends Phaser.Scene {
         }
       }*/
 
-      if(shake == 1)
-    { 
-      this.cameras.main.shake(200,0.005
-          );
+    if (shake == 1) {
+      this.cameras.main.shake(200, 0.005
+      );
       shake = 0;
     }
     //movement
     const speedWalk = 200;
     let dudeVelocity = new Phaser.Math.Vector2();
 
-   
-
     if (cursor.left.isDown) {
       dudeVelocity.x = -1;
       dude.anims.play('left', true)
-      
+
     }
     else if (cursor.right.isDown) {
       dudeVelocity.x = 1;
@@ -315,34 +299,32 @@ class Map extends Phaser.Scene {
     dudeVelocity.scale(speedWalk);
     dude.setVelocity(dudeVelocity.x, dudeVelocity.y);
 
-
     //timer reinitialize
     var output = [];
     output.push('timer : ' + timerEvents[0].getProgress().toString().substr(0, 4));
-    if (timerEvents[0].getProgress().toString().substr(0, 4) == 0.9)  {
-      
+    if (timerEvents[0].getProgress().toString().substr(0, 4) == 0.9) {
+
       scoreMultiplicator += 1;
       this.updateCounter()
-      if (wave == 10){
+      if (wave == 10) {
         wave = 10;
       }
-      else{
+      else {
         wave++;
       }
-        
     }
-    if (timerEvents[1].getProgress().toString().substr(0, 3) == 0.9)  {
+    if (timerEvents[1].getProgress().toString().substr(0, 3) == 0.9) {
       touch = 1;
-      
     }
+    
     text.setText(output);
 
-    if(hp == 0){
+    if (hp == 0) {
       for (let i = 0; i < enemy.length; i++) {
-        enemy[i]=0;
+        enemy[i] = 0;
       }
-      wave =0; 
-      if(Math.floor(Math.random()*2) == 1){
+      wave = 0;
+      if (Math.floor(Math.random() * 2) == 1) {
         this.piscine.play();
         this.piscine.setVolume(3);
       } else {
@@ -357,11 +339,11 @@ class Map extends Phaser.Scene {
     //zombies movement
     //this.walking.stop();
     for (let i = 0; i < enemy.length; i++) {
-      if (enemy[i].active == true){
+      if (enemy[i].active == true) {
         this.physics.moveToObject(enemy[i], dude, 100);
       }
     }
-  } 
+  }
 }
 
 function CreatePlayer() {
